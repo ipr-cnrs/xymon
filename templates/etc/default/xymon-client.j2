@@ -20,7 +20,7 @@ XYMONSERVERS="127.0.0.1"
 # CLIENTHOSTNAME=""
 # CLIENTOS="rhel3"
 
-CLIENTHOSTNAME="hostname.domain.local"
+CLIENTHOSTNAME="{{ xymon_cli_hostname }}"
 
 # Optionally mount a tmpfs on /var/lib/xymon/tmp. On client systems this has
 # the advantage that client reports will continue to work even if the /var
