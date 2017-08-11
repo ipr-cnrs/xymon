@@ -17,6 +17,16 @@
     - '{{ xymon_cli_pkg_list }}'
   when: xymon_cli_manage
 
+- name: CONFIG xymon-client
+  template:
+    src: '{{ xymon_cli_default_conf_tpl }}'
+    dest: '{{ xymon_cli_default_conf_path }}'
+    owner:  root
+    group:  root
+    mode:   0644
+    backup: true
+  when: xymon_cli_manage
+
 ## service
 - name: SERVICE manage '{{ xymon_cli_service_name }}'
   service:
