@@ -1,0 +1,6 @@
+---
+# defaults file for ipr.ansible.xymon
+
+# client
+xymon_cli_manage: true
+xymon_cli_pkg_state: 'installed'
