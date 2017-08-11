@@ -17,6 +17,9 @@ Manage Xymon (client) installation and configuration.
 
 * **xymon_cli_manage** : If `xymon-client` should be managed with this role [default : `true`].
 * **xymon_cli_pkg_state** : State of new `xymon-client` package(s) [default : `installed`].
+* **xymon_cli_service_manage** : If `xymon-client` service should be managed with this role [default : `true`].
+* **xymon_cli_service_name** : `xymon-client` service name [default : `xymon-client`].
+* **xymon_cli_service_enabled** : Set `xymon-client` service available at startup [default : `true`].
 
 ### OS Specific Variables
 
@@ -38,6 +41,7 @@ Please see default value by Operating System file in [vars][vars directory] dire
 
 This role will :
 * Install needed packages to provide `xymon-client`.
+* Manage `xymon-client` service.
 
 ## Development
 

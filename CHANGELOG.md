@@ -3,3 +3,4 @@
 
 ### Features
 * Install `xymon-client` packages for Debian based distros.
+* Manage `xymon-client` service.

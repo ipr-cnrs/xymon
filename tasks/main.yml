@@ -17,4 +17,11 @@
     - '{{ xymon_cli_pkg_list }}'
   when: xymon_cli_manage
 
+## service
+- name: SERVICE manage '{{ xymon_cli_service_name }}'
+  service:
+    name: '{{ xymon_cli_service_name }}'
+    state: started
+    enabled: '{{ xymon_cli_service_enabled }}'
+  when: xymon_cli_service_manage
 # }}}
