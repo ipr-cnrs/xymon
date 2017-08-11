@@ -15,3 +15,6 @@ xymon_cli_hostname: "{{ ansible_fqdn }}"
 xymon_cli_service_manage: true
 xymon_cli_service_name: 'xymon-client'
 xymon_cli_service_enabled: true
+
+# server
+xymon_srv_list: "monitoring.{{ ansible_domain }}"

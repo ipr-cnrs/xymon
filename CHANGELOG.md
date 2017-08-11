@@ -6,3 +6,4 @@
 * Manage `xymon-client` default configuration file.
 * Manage `xymon-client` service.
 * Add possibility to set the value of CLIENTHOSTNAME `xymon-client` value.
+* Allow to set Xymon servers list for `xymon-client` config.

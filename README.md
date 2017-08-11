@@ -23,6 +23,7 @@ Manage Xymon (client) installation and configuration.
 * **xymon_cli_service_manage** : If `xymon-client` service should be managed with this role [default : `true`].
 * **xymon_cli_service_name** : `xymon-client` service name [default : `xymon-client`].
 * **xymon_cli_service_enabled** : Set `xymon-client` service available at startup [default : `true`].
+* **xymon_srv_list** : The list of Xymon servers (you must give an hostname, IP,… reachable from any clients) [defaults : `monitoring.{{ ansible_domain }}`].
 
 ### OS Specific Variables
 
