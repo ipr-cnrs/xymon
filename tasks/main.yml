@@ -26,6 +26,7 @@
     mode:   0644
     backup: true
   when: xymon_cli_manage
+  notify: restart xymon-client service
 
 ## service
 - name: SERVICE manage '{{ xymon_cli_service_name }}'
