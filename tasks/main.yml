@@ -17,7 +17,7 @@
     - '{{ xymon_cli_pkg_list }}'
   when: xymon_cli_manage
 
-- name: CONFIG xymon-client
+- name: CONFIG xymon-client service
   template:
     src: '{{ xymon_cli_default_conf_tpl }}'
     dest: '{{ xymon_cli_default_conf_path }}'
@@ -26,6 +26,12 @@
     mode:   0644
     backup: true
   when: xymon_cli_manage
+  notify: restart xymon-client service
+
+- name: CONFIG xymon user's groups
+  user:
+    name: xymon
+    groups: '{{ xymon_user_groups }}'
   notify: restart xymon-client service
 
 ## service

@@ -20,6 +20,7 @@ Manage Xymon (client) installation and configuration.
 * **xymon_cli_default_conf_path** : Configuration file for `xymon-client` [default : `/etc/default/xymon-client`].
 * **xymon_cli_default_conf_tpl** : Template used to generate the previous config file [default : `etc/default/xymon-client.j2`].
 * **xymon_cli_hostname** : Allow to override default value of CLIENTHOSTNAME var [default : `{{ ansible_fqdn }}`].
+* **xymon_user_groups** : List of 'xymon' user's groups [default : `xymon`].
 * **xymon_cli_service_manage** : If `xymon-client` service should be managed with this role [default : `true`].
 * **xymon_cli_service_name** : `xymon-client` service name [default : `xymon-client`].
 * **xymon_cli_service_enabled** : Set `xymon-client` service available at startup [default : `true`].
@@ -46,6 +47,7 @@ Please see default value by Operating System file in [vars][vars directory] dire
 This role will :
 * Install needed packages to provide `xymon-client`.
 * Manage `xymon-client` configuration and service.
+* Add 'xymon' user to new groups.
 
 ## Development
 

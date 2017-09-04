@@ -10,6 +10,7 @@ xymon_cli_pkg_state: 'installed'
 xymon_cli_default_conf_path: '/etc/default/xymon-client'
 xymon_cli_default_conf_tpl: 'etc/default/xymon-client.j2'
 xymon_cli_hostname: "{{ ansible_fqdn }}"
+xymon_user_groups: 'xymon'
 
 ## service
 xymon_cli_service_manage: true

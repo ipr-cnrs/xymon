@@ -1,4 +1,9 @@
 
+## v1.x
+
+### Features
+* Add the possibility to manage 'xymon' user's groups.
+
 ## v1.0
 
 ### Features
