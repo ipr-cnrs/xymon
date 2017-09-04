@@ -53,4 +53,14 @@
     mode:   0644
   when: xymon_plug_manage
   notify: restart xymon-client service
+
+- name: PLUGIN libs
+  template:
+    src: '{{ xymon_plug_libs_tpl }}'
+    dest: '{{ xymon_plug_libs_path }}'
+    owner:  root
+    group:  root
+    mode:   0644
+  when: xymon_plug_manage
+  notify: restart xymon-client service
 # }}}

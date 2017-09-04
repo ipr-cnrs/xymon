@@ -1,0 +1,6 @@
+[libs]
+	{{ '#DISABLED' if xymon_plug_libs_state else 'DISABLED' }}
+	ENVFILE /etc/xymon/xymonclient.cfg
+	CMD $XYMONCLIENTHOME/ext/libs
+	LOGFILE /var/log/xymon/xymonclient.log
+	INTERVAL 5m

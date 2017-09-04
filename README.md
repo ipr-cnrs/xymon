@@ -30,6 +30,9 @@ Manage Xymon (client) installation and configuration.
 * **xymon_plug_mq_state** : The state of plugin `mq` [default : `true`].
 * **xymon_plug_mq_path** : Configuration file for the `mq` plugin [default : `/etc/xymon/clientlaunch.d/mq.cfg`].
 * **xymon_plug_mq_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/mq.cfg.j2`].
+* **xymon_plug_libs_state** : The state of plugin `libs` [default : `true`].
+* **xymon_plug_libs_path** : Configuration file for the `libs` plugin [default : `/etc/xymon/clientlaunch.d/libs.cfg`].
+* **xymon_plug_libs_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/libs.cfg.j2`].
 
 ### OS Specific Variables
 
@@ -57,6 +60,7 @@ This role will :
 ## Plugins
 
 Some plugins and options can be managed with this role :
+* libs : Check for running processes with upgraded libraries.
 * mq : Check mail queue.
 
 ## Development
