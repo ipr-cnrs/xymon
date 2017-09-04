@@ -5,9 +5,10 @@
      * [OS Specific Variables](#os-specific-variables)
 3. [Example Playbook](#example-playbook)
 4. [Configuration](#configuration)
-5. [Development](#development)
-6. [License](#license)
-7. [Author Information](#author-information)
+4. [Plugins](#plugins)
+6. [Development](#development)
+7. [License](#license)
+8. [Author Information](#author-information)
 
 ## Overview
 
@@ -25,6 +26,9 @@ Manage Xymon (client) installation and configuration.
 * **xymon_cli_service_name** : `xymon-client` service name [default : `xymon-client`].
 * **xymon_cli_service_enabled** : Set `xymon-client` service available at startup [default : `true`].
 * **xymon_srv_list** : The list of Xymon servers (you must give an hostname, IP,… reachable from any clients) [defaults : `monitoring.{{ ansible_domain }}`].
+* **xymon_plug_manage** : [default : `true`].
+* **xymon_plug_mq_path** : [default : `/etc/xymon/clientlaunch.d/mq.cfg`].
+* **xymon_plug_mq_tpl** : [default : `etc/xymon/clientlaunch.d/mq.cfg.j2`].
 
 ### OS Specific Variables
 
@@ -48,6 +52,11 @@ This role will :
 * Install needed packages to provide `xymon-client`.
 * Manage `xymon-client` configuration and service.
 * Add 'xymon' user to new groups.
+
+## Plugins
+
+Some plugins and options can be managed with this role :
+* mq : Check mail queue.
 
 ## Development
 

@@ -42,3 +42,15 @@
     enabled: '{{ xymon_cli_service_enabled }}'
   when: xymon_cli_service_manage
 # }}}
+
+# plugins {{{
+- name: PLUGIN mq
+  template:
+    src: '{{ xymon_plug_mq_tpl }}'
+    dest: '{{ xymon_plug_mq_path }}'
+    owner:  root
+    group:  root
+    mode:   0644
+  when: xymon_plug_manage
+  notify: restart xymon-client service
+# }}}

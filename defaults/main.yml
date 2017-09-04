@@ -19,3 +19,8 @@ xymon_cli_service_enabled: true
 
 # server
 xymon_srv_list: "monitoring.{{ ansible_domain }}"
+
+# plugins
+xymon_plug_manage: true
+xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
+xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
