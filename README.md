@@ -26,9 +26,10 @@ Manage Xymon (client) installation and configuration.
 * **xymon_cli_service_name** : `xymon-client` service name [default : `xymon-client`].
 * **xymon_cli_service_enabled** : Set `xymon-client` service available at startup [default : `true`].
 * **xymon_srv_list** : The list of Xymon servers (you must give an hostname, IP,… reachable from any clients) [defaults : `monitoring.{{ ansible_domain }}`].
-* **xymon_plug_manage** : [default : `true`].
-* **xymon_plug_mq_path** : [default : `/etc/xymon/clientlaunch.d/mq.cfg`].
-* **xymon_plug_mq_tpl** : [default : `etc/xymon/clientlaunch.d/mq.cfg.j2`].
+* **xymon_plug_manage** : If this role should manage plugins configuration [default : `true`].
+* **xymon_plug_mq_state** : The state of plugin `mq` [default : `true`].
+* **xymon_plug_mq_path** : Configuration file for the `mq` plugin [default : `/etc/xymon/clientlaunch.d/mq.cfg`].
+* **xymon_plug_mq_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/mq.cfg.j2`].
 
 ### OS Specific Variables
 

@@ -3,7 +3,7 @@
 
 ### Features
 * Add the possibility to manage 'xymon' user's groups.
-* Manage `mq` plugin.
+* Manage `mq` plugin and state.
 
 ## v1.0
 
