@@ -1,7 +1,7 @@
 
-## v1.x
+## v1.0.1
 
-### Features
+### Minor Features
 * Add the possibility to manage 'xymon' user's groups.
 * Manage `mq` plugin and state.
 * Manage `libs` plugin and state.
