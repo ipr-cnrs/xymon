@@ -63,6 +63,15 @@
   when: xymon_plug_manage
   notify: restart xymon-client service
 
+- name: PLUGIN libs packages
+  package:
+    name: '{{ item }}'
+    state: '{{ "present" if xymon_plug_libs_state else "absent" }}'
+  with_items:
+    - '{{ xymon_plug_libs_package }}'
+  when: xymon_plug_manage
+  notify: restart xymon-client service
+
 - name: PLUGIN libs
   template:
     src: '{{ xymon_plug_libs_tpl }}'

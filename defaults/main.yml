@@ -27,5 +27,6 @@ xymon_plug_mq_package: [ 'libtimedate-perl' ]
 xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
 xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
 xymon_plug_libs_state: true
+xymon_plug_libs_package: [ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libsort-naturally-perl' ]
 xymon_plug_libs_path: '/etc/xymon/clientlaunch.d/libs.cfg'
 xymon_plug_libs_tpl: 'etc/xymon/clientlaunch.d/libs.cfg.j2'

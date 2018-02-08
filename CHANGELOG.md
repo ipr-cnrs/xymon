@@ -3,6 +3,7 @@
 
 ## Enhancements
 * Add possibility to install `mq` dependancies.
+* Add possibility to install `libs` dependancies.
 
 ## v1.0.1
 

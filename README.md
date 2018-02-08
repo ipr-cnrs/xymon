@@ -32,6 +32,7 @@ Manage Xymon (client) installation and configuration.
 * **xymon_plug_mq_path** : Configuration file for the `mq` plugin [default : `/etc/xymon/clientlaunch.d/mq.cfg`].
 * **xymon_plug_mq_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/mq.cfg.j2`].
 * **xymon_plug_libs_state** : The state of plugin `libs` [default : `true`].
+* **xymon_plug_libs_package** : The packages to install to provide `libs` plugin [default : `[ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libsort-naturally-perl' ]`].
 * **xymon_plug_libs_path** : Configuration file for the `libs` plugin [default : `/etc/xymon/clientlaunch.d/libs.cfg`].
 * **xymon_plug_libs_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/libs.cfg.j2`].
 
