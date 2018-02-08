@@ -1,9 +1,10 @@
 
-## v1.X
+## v1.1
 
 ## Enhancements
 * Add possibility to install `mq` dependancies.
 * Add possibility to install `libs` dependancies.
+* Add whitelist settings for `libs` plugin.
 
 ## v1.0.1
 

@@ -20,13 +20,34 @@ xymon_cli_service_enabled: true
 # server
 xymon_srv_list: "monitoring.{{ ansible_domain }}"
 
-# plugins
+# plugins {{{
 xymon_plug_manage: true
+
+## mq {{{
 xymon_plug_mq_state: true
 xymon_plug_mq_package: [ 'libtimedate-perl' ]
 xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
 xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
+## }}}
+
+# libs {{{
 xymon_plug_libs_state: true
 xymon_plug_libs_package: [ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libsort-naturally-perl' ]
 xymon_plug_libs_path: '/etc/xymon/clientlaunch.d/libs.cfg'
 xymon_plug_libs_tpl: 'etc/xymon/clientlaunch.d/libs.cfg.j2'
+
+xymon_plug_libs_default_whitelist:
+  /lib/systemd/systemd:
+    - '.*'
+  /usr/lib/x86_64-linux-gnu/sssd/sssd_be:
+    - '.*'
+  /usr/sbin/sssd:
+    - '.*'
+  /sbin/multipathd:
+    - '.*'
+xymon_plug_libs_group_whitelist: {}
+xymon_plug_libs_host_whitelist: {}
+
+## }}}
+#
+# }}}

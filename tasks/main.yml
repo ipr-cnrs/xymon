@@ -81,4 +81,15 @@
     mode:   0644
   when: xymon_plug_manage
   notify: restart xymon-client service
+
+- name: PLUGIN libs whitelist
+  template:
+    src: 'etc/xymon/libs.local.yaml.j2'
+    dest: '/etc/xymon/libs.local.yaml'
+    owner: root
+    group: root
+    mode: 0644
+  when: xymon_plug_manage
+  notify: restart xymon-client service
+
 # }}}

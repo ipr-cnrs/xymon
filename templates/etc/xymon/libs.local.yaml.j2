@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+{% set inputmerged = xymon_plug_libs_default_whitelist.copy() %}
+{% set _ = inputmerged.update(xymon_plug_libs_group_whitelist) %}
+{% set _ = inputmerged.update(xymon_plug_libs_host_whitelist) %}
+---
+whitelist:
+{% for group, rules in inputmerged|dictsort  %}
+  {{ group }}:
+{% if not rules %}
+# (none)
+{% endif %}
+{% for rule in rules %}
+    - '{{ rule }}'
+{% endfor %}
+{% endfor %}
