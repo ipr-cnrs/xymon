@@ -44,6 +44,15 @@
 # }}}
 
 # plugins {{{
+- name: PLUGIN mq packages
+  package:
+    name: '{{ item }}'
+    state: '{{ "present" if xymon_plug_mq_state else "absent" }}'
+  with_items:
+    - '{{ xymon_plug_mq_package }}'
+  when: xymon_plug_manage
+  notify: restart xymon-client service
+
 - name: PLUGIN mq
   template:
     src: '{{ xymon_plug_mq_tpl }}'

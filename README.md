@@ -28,6 +28,7 @@ Manage Xymon (client) installation and configuration.
 * **xymon_srv_list** : The list of Xymon servers (you must give an hostname, IP,… reachable from any clients) [defaults : `monitoring.{{ ansible_domain }}`].
 * **xymon_plug_manage** : If this role should manage plugins configuration [default : `true`].
 * **xymon_plug_mq_state** : The state of plugin `mq` [default : `true`].
+* **xymon_plug_mq_package** : The packages to install to provide `mq` plugin [default : `[ 'libtimedate-perl' ]`].
 * **xymon_plug_mq_path** : Configuration file for the `mq` plugin [default : `/etc/xymon/clientlaunch.d/mq.cfg`].
 * **xymon_plug_mq_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/mq.cfg.j2`].
 * **xymon_plug_libs_state** : The state of plugin `libs` [default : `true`].

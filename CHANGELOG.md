@@ -1,4 +1,9 @@
 
+## v1.X
+
+## Enhancements
+* Add possibility to install `mq` dependancies.
+
 ## v1.0.1
 
 ### Minor Features
