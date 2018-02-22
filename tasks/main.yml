@@ -32,6 +32,7 @@
   user:
     name: xymon
     groups: '{{ xymon_user_groups }}'
+    append: True
   notify: restart xymon-client service
 
 ## service

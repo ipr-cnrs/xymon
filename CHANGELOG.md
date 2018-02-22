@@ -1,4 +1,9 @@
 
+## v1.1.X
+
+## Enhancements
+* Ensure to not override groups of 'xymon' user.
+
 ## v1.1
 
 ## Enhancements
