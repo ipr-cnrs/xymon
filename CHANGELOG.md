@@ -3,12 +3,13 @@
 
 ## Enhancements
 * Ensure to not override groups of 'xymon' user.
+* Add possibility to install `apt` plugin dependencies.
 
 ## v1.1
 
 ## Enhancements
-* Add possibility to install `mq` dependancies.
-* Add possibility to install `libs` dependancies.
+* Add possibility to install `mq` plugin dependencies.
+* Add possibility to install `libs` plugin dependencies.
 * Add whitelist settings for `libs` plugin.
 
 ## v1.0.1

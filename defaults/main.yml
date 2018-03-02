@@ -23,6 +23,14 @@ xymon_srv_list: "monitoring.{{ ansible_domain }}"
 # plugins {{{
 xymon_plug_manage: true
 
+## apt {{{
+xymon_plug_apt_state: True
+xymon_plug_apt_package: [ 'dctrl-tools' ]
+xymon_plug_apt_path: '/etc/xymon/clientlaunch.d/apt.cfg'
+xymon_plug_apt_tpl: 'etc/xymon/clientlaunch.d/apt.cfg.j2'
+
+## }}}
+
 ## mq {{{
 xymon_plug_mq_state: true
 xymon_plug_mq_package: [ 'libtimedate-perl' ]

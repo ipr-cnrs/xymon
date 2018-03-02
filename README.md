@@ -27,6 +27,10 @@ Manage Xymon (client) installation and configuration.
 * **xymon_cli_service_enabled** : Set `xymon-client` service available at startup [default : `true`].
 * **xymon_srv_list** : The list of Xymon servers (you must give an hostname, IP,… reachable from any clients) [defaults : `monitoring.{{ ansible_domain }}`].
 * **xymon_plug_manage** : If this role should manage plugins configuration [default : `true`].
+* **xymon_plug_apt_state** : The state of plugin `apt` [default : `true`].
+* **xymon_plug_apt_package** : The packages to install to provide `apt` plugin [default : `[ 'libtimedate-perl' ]`].
+* **xymon_plug_apt_path** : Configuration file for the `apt` plugin [default : `/etc/xymon/clientlaunch.d/apt.cfg`].
+* **xymon_plug_apt_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/apt.cfg.j2`].
 * **xymon_plug_mq_state** : The state of plugin `mq` [default : `true`].
 * **xymon_plug_mq_package** : The packages to install to provide `mq` plugin [default : `[ 'libtimedate-perl' ]`].
 * **xymon_plug_mq_path** : Configuration file for the `mq` plugin [default : `/etc/xymon/clientlaunch.d/mq.cfg`].
@@ -65,6 +69,7 @@ This role will :
 ## Plugins
 
 Some plugins and options can be managed with this role :
+* apt : Check state of packages and repositories.
 * libs : Check for running processes with upgraded libraries.
 * mq : Check mail queue.
 
