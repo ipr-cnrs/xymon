@@ -15,7 +15,7 @@
     state: '{{ xymon_cli_pkg_state }}'
   with_items:
     - '{{ xymon_cli_pkg_list }}'
-  when: xymon_cli_manage
+  when: xymon_cli_manage|bool
 
 - name: CONFIG xymon-client service
   template:
@@ -25,7 +25,7 @@
     group:  root
     mode:   0644
     backup: true
-  when: xymon_cli_manage
+  when: xymon_cli_manage|bool
   notify: restart xymon-client service
 
 - name: CONFIG xymon user's groups
@@ -33,6 +33,7 @@
     name: xymon
     groups: '{{ xymon_user_groups }}'
     append: True
+  when: xymon_cli_manage|bool
   notify: restart xymon-client service
 
 ## service
@@ -41,7 +42,8 @@
     name: '{{ xymon_cli_service_name }}'
     state: started
     enabled: '{{ xymon_cli_service_enabled }}'
-  when: xymon_cli_service_manage
+  when: (xymon_cli_manage|bool and
+         xymon_cli_service_manage|bool)
 # }}}
 
 # plugins {{{
@@ -51,7 +53,8 @@
     state: '{{ "present" if xymon_plug_apt_state else "absent" }}'
   with_items:
     - '{{ xymon_plug_apt_package }}'
-  when: xymon_plug_manage
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
   notify: restart xymon-client service
 
 - name: PLUGIN apt
@@ -61,7 +64,8 @@
     owner:  root
     group:  root
     mode:   0644
-  when: xymon_plug_manage
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
   notify: restart xymon-client service
 
 - name: PLUGIN mq packages
@@ -70,7 +74,8 @@
     state: '{{ "present" if xymon_plug_mq_state else "absent" }}'
   with_items:
     - '{{ xymon_plug_mq_package }}'
-  when: xymon_plug_manage
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
   notify: restart xymon-client service
 
 - name: PLUGIN mq
@@ -80,7 +85,8 @@
     owner:  root
     group:  root
     mode:   0644
-  when: xymon_plug_manage
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
   notify: restart xymon-client service
 
 - name: PLUGIN libs packages
@@ -89,7 +95,8 @@
     state: '{{ "present" if xymon_plug_libs_state else "absent" }}'
   with_items:
     - '{{ xymon_plug_libs_package }}'
-  when: xymon_plug_manage
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
   notify: restart xymon-client service
 
 - name: PLUGIN libs
@@ -99,7 +106,8 @@
     owner:  root
     group:  root
     mode:   0644
-  when: xymon_plug_manage
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
   notify: restart xymon-client service
 
 - name: PLUGIN libs whitelist
@@ -109,7 +117,8 @@
     owner: root
     group: root
     mode: 0644
-  when: xymon_plug_manage
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
   notify: restart xymon-client service
 
 # }}}
