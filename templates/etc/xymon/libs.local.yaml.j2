@@ -1,5 +1,6 @@
 # {{ ansible_managed }}
 {% set inputmerged = xymon_plug_libs_default_whitelist.copy() %}
+{% set _ = inputmerged.update(xymon_plug_libs_whitelist) %}
 {% set _ = inputmerged.update(xymon_plug_libs_group_whitelist) %}
 {% set _ = inputmerged.update(xymon_plug_libs_host_whitelist) %}
 ---

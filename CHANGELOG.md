@@ -6,6 +6,7 @@
 * Add possibility to install `apt` plugin dependencies.
 * Ensure to apply the config only if wanted.
 * Some yamllint fix.
+* Add a all hosts variable for the plugin "list" whitelist.
 
 ## v1.1
 

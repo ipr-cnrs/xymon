@@ -40,6 +40,7 @@ Manage Xymon (client) installation and configuration.
 * **xymon_plug_libs_path** : Configuration file for the `libs` plugin [default : `/etc/xymon/clientlaunch.d/libs.cfg`].
 * **xymon_plug_libs_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/libs.cfg.j2`].
 * **xymon_plug_libs_default_whitelist** : Default whitelist of processes that should not be monitored with `libs` plugin.
+* **xymon_plug_libs_whitelist** : All hosts whitelist of processes that should not be monitored with `libs` plugin.
 * **xymon_plug_libs_group_whitelist** : Group whitelist of processes that should not be monitored with `libs` plugin.
 * **xymon_plug_libs_host_whitelist** : Host whitelist of processes that should not be monitored with `libs` plugin.
 

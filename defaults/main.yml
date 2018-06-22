@@ -76,6 +76,7 @@ xymon_plug_libs_default_whitelist:
     - '.*'
   /sbin/multipathd:
     - '.*'
+xymon_plug_libs_whitelist: {}
 xymon_plug_libs_group_whitelist: {}
 xymon_plug_libs_host_whitelist: {}
 
