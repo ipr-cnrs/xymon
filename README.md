@@ -43,6 +43,11 @@ Manage Xymon (client) installation and configuration.
 * **xymon_plug_libs_whitelist** : All hosts whitelist of processes that should not be monitored with `libs` plugin.
 * **xymon_plug_libs_group_whitelist** : Group whitelist of processes that should not be monitored with `libs` plugin.
 * **xymon_plug_libs_host_whitelist** : Host whitelist of processes that should not be monitored with `libs` plugin.
+* **xymon_cli__plug_zfs_state** : The state of plugin `zfs` [default : `false`].
+* **xymon_cli__plug_zfs_script_path** : Path to the ZFS script [default : `/usr/lib/xymon/client/ext/zfs`].
+* **xymon_cli__plug_zfs_script_tpl** : Template used to generate the previous script [default : `usr/lib/xymon/client/ext/zfs.j2`].
+* **xymon_cli__plug_zfs_path** : Configuration file for the `zfs` plugin [default : `/etc/xymon/clientlaunch.d/zfs.cfg`].
+* **xymon_cli__plug_zfs_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/zfs.cfg.j2`].
 
 ### OS Specific Variables
 
@@ -73,6 +78,7 @@ Some plugins and options can be managed with this role :
 * apt : Check state of packages and repositories.
 * libs : Check for running processes with upgraded libraries.
 * mq : Check mail queue.
+* zfs : Check ZFS pools status.
 
 ## Development
 

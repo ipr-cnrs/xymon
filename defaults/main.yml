@@ -46,7 +46,6 @@ xymon_srv_list: "monitoring.{{ ansible_domain }}"
 # Plugins management [[[
 # ----------------------
 
-# plugins [[[
 xymon_plug_manage: true
 
 ## Plugin apt [[[
@@ -80,7 +79,14 @@ xymon_plug_libs_whitelist: {}
 xymon_plug_libs_group_whitelist: {}
 xymon_plug_libs_host_whitelist: {}
 
-## ]]]
+                                                                   # ]]]
+## Plugin zfs [[[
+xymon_cli__plug_zfs_state: false
+xymon_cli__plug_zfs_script_path: '/usr/lib/xymon/client/ext/zfs'
+xymon_cli__plug_zfs_script_tpl: 'usr/lib/xymon/client/ext/zfs.j2'
+xymon_cli__plug_zfs_path: '/etc/xymon/clientlaunch.d/zfs.cfg'
+xymon_cli__plug_zfs_tpl: 'etc/xymon/clientlaunch.d/zfs.cfg.j2'
+
                                                                    # ]]]
 
 # ]]]

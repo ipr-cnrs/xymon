@@ -7,6 +7,7 @@
 * Ensure to apply the config only if wanted.
 * Some yamllint fix.
 * Add a all hosts variable for the plugin "list" whitelist.
+* Add a ZFS plugin (both config file and script).
 
 ## v1.1
 

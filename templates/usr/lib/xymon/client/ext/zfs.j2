@@ -1,0 +1,123 @@
+#!/bin/ksh
+# Revision History:
+# 1. Mike Rowell <Mike.Rowell@Rightmove.co.uk>, original
+# 2. Uwe Kirbach <U.Kirbach@EnBW.com>
+# 3. T.J. Yang: add in some comments.
+# 4. Vernon Everett <everett.vernon@gmail.com : Added check for old snapshots
+#                                             : Added graphing data
+# 5. Pierre ROLLAND : Fixing column parsing when using the command zpool list -H
+
+DISKYELL=80
+DISKRED=90
+SNAPRED=90  # Days old
+SNAPYELL=60 # Days old
+SNAPCOL=true  # Set to true if snapshot age should effect test colour
+CHECKSNAPS=true # Set to true to do snapshot checking
+TEST="zfs"
+DISPCOLOR="green"
+FIRST_LINE="zfs - okay"
+FIRST_LINE_HEALTH="okay"
+FIRST_LINE_CAP="okay"
+DATA=""
+
+#What: beautify the page display by html code.
+STRING="<table border=1 cellpadding=10><tr><th></th><th>Zpool Name</th><th>Status</th><th>Capacity</th></tr>"
+#What: a loop to parse output of "zpool list -H" output.
+# bash-3.00# zpool list
+# NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+# mypool                 33.8G   84.5K   33.7G     0%  ONLINE     -
+# bash-3.00# zpool list -H
+# mypool  33.8G   84.5K   33.7G   0%      ONLINE  -
+# bash-3.00#
+
+if [ ! -f /sbin/zpool ]; then
+  exit 0
+fi
+
+#/sbin/zpool list -H | while read name size used avail cap health altroot
+/sbin/zpool list -H | while read name size used avail expandsz frag cap dedup health altroot
+do
+  LINE_COLOR="green"
+
+  if [ "${health}" == "ONLINE" ]; then
+    HEALTH_COLOR="green"
+  elif [ "${health}" == "DEGRADED" ]; then
+    HEALTH_COLOR="yellow"
+  elif [ "${health}" == "FAULTED" ]; then
+    HEALTH_COLOR="red"
+  fi
+
+  CAP_COLOR="green"
+  cap=`echo ${cap} | cut -d% -f1`
+  if [ "${cap}" -ge $DISKYELL ]; then
+    CAP_COLOR="yellow"
+  elif [ "${cap}" -gt $DISKRED ]; then
+    CAP_COLOR="red"
+  fi
+  DATA=$(echo "$name : $cap\n$DATA")
+
+# Determine the line colours
+  [ "$HEALTH_COLOR" == "yellow" -o "$CAP_COLOR" == "yellow" ] && LINE_COLOR="yellow"
+  [ "$HEALTH_COLOR" == "red" -o "$CAP_COLOR" == "red" ] && LINE_COLOR="red"
+
+# Determine the messages
+  [ "$HEALTH_COLOR" == "yellow" -a "$FIRST_LINE_HEALTH" != "faulted" ] && FIRST_LINE_HEALTH="degraded"
+  [ "$HEALTH_COLOR" == "red" ] && FIRST_LINE_HEALTH="faulted"
+  [ "$CAP_COLOR" == "yellow" -a "$FIRST_LINE_CAP" != "full" ] && FIRST_LINE_CAP="nearly full"
+  [ "$CAP_COLOR" = "yellow" ] && FIRST_LINE_CAP="full"
+
+#Determine the final colour status
+  [ "$LINE_COLOR" == "yellow" -a "$DISPCOLOR" != "red" ] && DISPCOLOR="yellow"
+  [ "$LINE_COLOR" == "red" ] && DISPCOLOR="red"
+
+  STRING="$STRING <tr><td>&${LINE_COLOR}</td><td>${name}</td><td>${health}</td><td>${cap} %</td></tr>"
+done
+DATA=$(echo "$DATA \n\n")
+
+STRING="$STRING </table><br><br>"
+STRING="$STRING`/sbin/zpool status -xv`"
+FIRST_LINE="zfs - health: $FIRST_LINE_HEALTH - capacity: $FIRST_LINE_CAP"
+
+# Snapshot check
+if [ "$CHECKSNAPS" = "true" ]
+then
+   NOW=$(perl -e 'print time(), "\n" ')
+   SNAPLIST=$(zfs list | grep @ |awk '{ print $1 }' \
+                       | while read a
+                         do
+                            echo "$(zfs get -H -o name,value -p creation $a) $( zfs get -H -o value used $a)"
+                         done)
+   if [ -z "$SNAPLIST" ]
+   then
+      SNAPTABLE="<br>&green No snapshots found"
+   else
+      SNAPTABLE="<table border=1 cellpadding=10><tr><th></th><th>Snapshot</th><th>Age</th><th>Size</th></tr>"
+      echo "$SNAPLIST" | while read SNAPSHOT CREATION SIZE
+      do
+         LINE_COLOR=green
+         ((SNAPREDS=SNAPRED*43200))
+         ((SNAPYELLS=SNAPYELL*43200))
+         ((AGES=NOW-CREATION)) # AGES=Age in seconds
+         [ $AGES -gt $SNAPYELLS ] && LINE_COLOR=yellow
+         [ $AGES -gt $SNAPREDS ] && LINE_COLOR=red
+         [ $AGES -gt 120 ] && ((AGE=AGES/60))&& AGE="$AGE Minutes"
+         [ $AGES -gt 7200 ] && ((AGE=AGES/3600)) && AGE="$AGE Hours"
+         [ $AGES -gt 172800 ] && ((AGE=AGES/86400)) && AGE="$AGE Days"
+         SNAPTABLE="$SNAPTABLE <tr><td>&${LINE_COLOR}</td><td>${SNAPSHOT}</td><td>${AGE}</td><td>${SIZE}</td></tr>"
+         if [ "$SNAPCOL" = "true" ] #Only if true will it effect test colour
+         then
+            if [ "$DISPCOLOR" != "red" ] # If it's already red, it's not getting any worse
+            then
+               [ "$LINE_COLOR" != "green" ] && DISPCOLOR=$LINE_COLOR
+            fi
+         fi
+      done
+      SNAPTABLE="$SNAPTABLE </table><br><br>"
+   fi
+   STRING="$STRING <br><br><B>SNAPSHOT STATUS</B> $SNAPTABLE"
+fi
+# What: Sent out the final bb message to hobbit server.
+$XYMON $XYMONSRV $XYMONSERVERS "status $MACHINE.$TEST $DISPCOLOR `date` $FIRST_LINE $STRING"
+echo "$XYMON $XYMONSRV $XYMONSERVERS --debug status $MACHINE.$TEST $DISPCOLOR `date` $FIRST_LINE $STRING" > /tmp/xymon_zfs
+$XYMON $XYMONSRV $XYMONSERVERS "data $MACHINE.$TEST $DISPCOLOR $(echo; echo "$DATA" ;echo;echo)"
+

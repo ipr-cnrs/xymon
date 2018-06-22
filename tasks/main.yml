@@ -125,3 +125,24 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+# Manage zfs plugin [[[1
+- name: PLUGIN zfs config file
+  template:
+    src: '{{ xymon_cli__plug_zfs_tpl }}'
+    dest: '{{ xymon_cli__plug_zfs_path }}'
+    owner: root
+    group: root
+    mode: 0644
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
+- name: PLUGIN zfs script file
+  template:
+    src: '{{ xymon_cli__plug_zfs_script_tpl }}'
+    dest: '{{ xymon_cli__plug_zfs_script_path }}'
+    owner: root
+    group: xymon
+    mode: 0755
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
