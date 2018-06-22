@@ -5,6 +5,7 @@
 * Ensure to not override groups of 'xymon' user.
 * Add possibility to install `apt` plugin dependencies.
 * Ensure to apply the config only if wanted.
+* Some yamllint fix.
 
 ## v1.1
 

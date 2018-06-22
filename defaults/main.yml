@@ -1,10 +1,33 @@
 ---
-# defaults file for ipr.ansible.xymon
+# .. vim: foldmarker=[[[,]]]:foldmethod=marker
 
-# client
-## packages
+# ipr.ansible.xymon default variables [[[
+# =======================================
+
+# Packages and installation [[[
+# -----------------------------
+
+# .. envvar:: xymon_cli_manage [[[
+#
+# If this role should manage the installation of Xymon client
 xymon_cli_manage: true
+                                                                   # ]]]
+# .. envvar:: xymon_cli_pkg_state [[[
+#
+# What is the desired state which this role's packages should be?
+# Possible options:
+#
+# ``installed``
+#   Default. Ensure the packages are installed.
+#
+# ``absent``
+#   Ensure to remove the packages.
+#
 xymon_cli_pkg_state: 'installed'
+                                                                   # ]]]
+                                                                   # ]]]
+# Server configuration and service [[[
+# ------------------------------------
 
 ## conf
 xymon_cli_default_conf_path: '/etc/default/xymon-client'
@@ -19,28 +42,28 @@ xymon_cli_service_enabled: true
 
 # server
 xymon_srv_list: "monitoring.{{ ansible_domain }}"
+                                                                   # ]]]
+# Plugins management [[[
+# ----------------------
 
-# plugins {{{
+# plugins [[[
 xymon_plug_manage: true
 
-## apt {{{
-xymon_plug_apt_state: True
-xymon_plug_apt_package: [ 'dctrl-tools' ]
+## Plugin apt [[[
+xymon_plug_apt_state: true
+xymon_plug_apt_package: ['dctrl-tools']
 xymon_plug_apt_path: '/etc/xymon/clientlaunch.d/apt.cfg'
 xymon_plug_apt_tpl: 'etc/xymon/clientlaunch.d/apt.cfg.j2'
-
-## }}}
-
-## mq {{{
+## ]]]
+## Plugin mq [[[
 xymon_plug_mq_state: true
-xymon_plug_mq_package: [ 'libtimedate-perl' ]
+xymon_plug_mq_package: ['libtimedate-perl']
 xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
 xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
-## }}}
-
-# libs {{{
+## ]]]
+## Plugin libs [[[
 xymon_plug_libs_state: true
-xymon_plug_libs_package: [ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libsort-naturally-perl' ]
+xymon_plug_libs_package: ['binutils', 'lsof', 'libyaml-tiny-perl', 'libsort-naturally-perl']
 xymon_plug_libs_path: '/etc/xymon/clientlaunch.d/libs.cfg'
 xymon_plug_libs_tpl: 'etc/xymon/clientlaunch.d/libs.cfg.j2'
 
@@ -56,6 +79,8 @@ xymon_plug_libs_default_whitelist:
 xymon_plug_libs_group_whitelist: {}
 xymon_plug_libs_host_whitelist: {}
 
-## }}}
-#
-# }}}
+## ]]]
+                                                                   # ]]]
+
+# ]]]
+                                                                   # ]]]

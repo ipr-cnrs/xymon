@@ -1,4 +1,6 @@
 ---
+# .. vim: foldmarker=[[[,]]]:foldmethod=marker
+#
 # tasks file for ipr.ansible.xymon
 
 - name: Load specific OS vars for xymon
@@ -8,7 +10,7 @@
     - "{{ ansible_distribution|lower }}.yml"
     - "{{ ansible_os_family|lower }}.yml"
 
-# client {{{
+# Manage required client packages [[[1
 - name: client package
   package:
     name: '{{ item }}'
@@ -17,13 +19,14 @@
     - '{{ xymon_cli_pkg_list }}'
   when: xymon_cli_manage|bool
 
+# Manage client configuration [[[1
 - name: CONFIG xymon-client service
   template:
     src: '{{ xymon_cli_default_conf_tpl }}'
     dest: '{{ xymon_cli_default_conf_path }}'
-    owner:  root
-    group:  root
-    mode:   0644
+    owner: root
+    group: root
+    mode: 0644
     backup: true
   when: xymon_cli_manage|bool
   notify: restart xymon-client service
@@ -32,11 +35,11 @@
   user:
     name: xymon
     groups: '{{ xymon_user_groups }}'
-    append: True
+    append: true
   when: xymon_cli_manage|bool
   notify: restart xymon-client service
 
-## service
+# Manage service [[[1
 - name: SERVICE manage '{{ xymon_cli_service_name }}'
   service:
     name: '{{ xymon_cli_service_name }}'
@@ -44,9 +47,8 @@
     enabled: '{{ xymon_cli_service_enabled }}'
   when: (xymon_cli_manage|bool and
          xymon_cli_service_manage|bool)
-# }}}
 
-# plugins {{{
+# Manage apt plugin [[[1
 - name: PLUGIN apt packages
   package:
     name: '{{ item }}'
@@ -61,13 +63,14 @@
   template:
     src: '{{ xymon_plug_apt_tpl }}'
     dest: '{{ xymon_plug_apt_path }}'
-    owner:  root
-    group:  root
-    mode:   0644
+    owner: root
+    group: root
+    mode: 0644
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+# Manage mq plugin [[[1
 - name: PLUGIN mq packages
   package:
     name: '{{ item }}'
@@ -82,13 +85,14 @@
   template:
     src: '{{ xymon_plug_mq_tpl }}'
     dest: '{{ xymon_plug_mq_path }}'
-    owner:  root
-    group:  root
-    mode:   0644
+    owner: root
+    group: root
+    mode: 0644
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+# Manage libs plugin [[[1
 - name: PLUGIN libs packages
   package:
     name: '{{ item }}'
@@ -103,9 +107,9 @@
   template:
     src: '{{ xymon_plug_libs_tpl }}'
     dest: '{{ xymon_plug_libs_path }}'
-    owner:  root
-    group:  root
-    mode:   0644
+    owner: root
+    group: root
+    mode: 0644
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
   notify: restart xymon-client service
@@ -121,4 +125,3 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
-# }}}
