@@ -92,6 +92,28 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+# Manage ipmi plugin [[[1
+- name: PLUGIN ipmi packages
+  package:
+    name: '{{ item }}'
+    state: '{{ "present" if xymon_cli__plug_ipmi_state else "absent" }}'
+  with_items:
+    - '{{ xymon_cli__plug_ipmi_package }}'
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
+- name: PLUGIN ipmi
+  template:
+    src: '{{ xymon_cli__plug_ipmi_tpl }}'
+    dest: '{{ xymon_cli__plug_ipmi_path }}'
+    owner: root
+    group: root
+    mode: 0644
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
 # Manage libs plugin [[[1
 - name: PLUGIN libs packages
   package:
