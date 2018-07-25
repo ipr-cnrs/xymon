@@ -1,5 +1,8 @@
 ## v1.X
 
+### Enhancements
+* Add IPMI probe.
+
 ### Fix
 * Deprecation warning about "installed" for state.
 
