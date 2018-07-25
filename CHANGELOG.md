@@ -1,7 +1,11 @@
+## v1.X
+
+### Fix
+* Deprecation warning about "installed" for state.
 
 ## v1.2
 
-## Enhancements
+### Enhancements
 * Ensure to not override groups of 'xymon' user.
 * Add possibility to install `apt` plugin dependencies.
 * Ensure to apply the config only if wanted.
@@ -11,7 +15,7 @@
 
 ## v1.1
 
-## Enhancements
+### Enhancements
 * Add possibility to install `mq` plugin dependencies.
 * Add possibility to install `libs` plugin dependencies.
 * Add whitelist settings for `libs` plugin.

@@ -17,7 +17,7 @@ Manage Xymon (client) installation and configuration.
 ## Role Variables
 
 * **xymon_cli_manage** : If `xymon-client` should be managed with this role [default : `true`].
-* **xymon_cli_pkg_state** : State of new `xymon-client` package(s) [default : `installed`].
+* **xymon_cli_pkg_state** : State of new `xymon-client` package(s) [default : `present`].
 * **xymon_cli_default_conf_path** : Configuration file for `xymon-client` [default : `/etc/default/xymon-client`].
 * **xymon_cli_default_conf_tpl** : Template used to generate the previous config file [default : `etc/default/xymon-client.j2`].
 * **xymon_cli_hostname** : Allow to override default value of CLIENTHOSTNAME var [default : `{{ ansible_fqdn }}`].
