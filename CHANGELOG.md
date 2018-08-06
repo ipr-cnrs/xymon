@@ -1,10 +1,11 @@
-## v1.X
+## v1.3
 
 ### Enhancements
 * Add IPMI probe.
 
 ### Fix
 * Deprecation warning about "installed" for state.
+* Set empty dependencies line to fix Galaxy warning.
 
 ## v1.2
 
