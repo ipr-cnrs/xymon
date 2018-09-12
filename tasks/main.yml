@@ -70,6 +70,17 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+- name: PLUGIN apt no_repo_accept whitelist
+  template:
+    src: 'etc/xymon/apt_no_repo_accept.j2'
+    dest: '/etc/xymon/apt_no_repo_accept'
+    owner: root
+    group: root
+    mode: 0644
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
 # Manage mq plugin [[[1
 - name: PLUGIN mq packages
   package:

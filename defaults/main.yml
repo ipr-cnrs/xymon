@@ -53,6 +53,15 @@ xymon_plug_apt_state: true
 xymon_plug_apt_package: ['dctrl-tools']
 xymon_plug_apt_path: '/etc/xymon/clientlaunch.d/apt.cfg'
 xymon_plug_apt_tpl: 'etc/xymon/clientlaunch.d/apt.cfg.j2'
+xymon_plug_apt_default_whitelist: []
+xymon_plug_apt_whitelist: []
+xymon_plug_apt_group_whitelist: []
+xymon_plug_apt_host_whitelist: []
+xymon_plug_apt_combined_whitelist: '{{ xymon_plug_apt_default_whitelist
+                                   + xymon_plug_apt_whitelist
+                                   + xymon_plug_apt_group_whitelist
+                                   + xymon_plug_apt_host_whitelist }}'
+
 ## ]]]
 ## Plugin mq [[[
 xymon_plug_mq_state: true

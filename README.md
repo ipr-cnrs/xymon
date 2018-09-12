@@ -31,6 +31,10 @@ Manage Xymon (client) installation and configuration.
 * **xymon_plug_apt_package** : The packages to install to provide `apt` plugin [default : `[ 'libtimedate-perl' ]`].
 * **xymon_plug_apt_path** : Configuration file for the `apt` plugin [default : `/etc/xymon/clientlaunch.d/apt.cfg`].
 * **xymon_plug_apt_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/apt.cfg.j2`].
+* **xymon_plug_apt_default_whitelist: Default list of allowed packages not installed from repositories [default : `[]`].
+* **xymon_plug_apt_whitelist: All hosts list of allowed packages not installed from repositories [default : `[]`].
+* **xymon_plug_apt_group_whitelist: Group list of allowed packages not installed from repositories [default : `[]`].
+* **xymon_plug_apt_host_whitelist: Host list of allowed packages not installed from repositories [default : `[]`].
 * **xymon_plug_mq_state** : The state of plugin `mq` [default : `true`].
 * **xymon_plug_mq_package** : The packages to install to provide `mq` plugin [default : `[ 'libtimedate-perl' ]`].
 * **xymon_plug_mq_path** : Configuration file for the `mq` plugin [default : `/etc/xymon/clientlaunch.d/mq.cfg`].

@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+{% for package in xymon_plug_apt_combined_whitelist %}
+{{ package }}
+{% endfor %}

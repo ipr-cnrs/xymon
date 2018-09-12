@@ -2,6 +2,7 @@
 
 ### Enhancements
 * Add IPMI probe.
+* Add possibility to allow some packages not installed from repos for apt probe.
 
 ### Fix
 * Deprecation warning about "installed" for state.
