@@ -1,3 +1,8 @@
+## v1.3.1
+
+### Fix
+* Restart xymon-client after changes on ZFS plugin.
+
 ## v1.3
 
 ### Enhancements

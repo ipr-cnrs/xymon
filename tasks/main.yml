@@ -179,3 +179,4 @@
     mode: 0755
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
+  notify: restart xymon-client service
