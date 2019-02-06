@@ -17,6 +17,8 @@
     state: '{{ xymon_cli_pkg_state }}'
   with_items:
     - '{{ xymon_cli_pkg_list }}'
+  register: cli_result
+  until: cli_result is success
   when: xymon_cli_manage|bool
 
 # Manage client configuration [[[1
@@ -57,6 +59,8 @@
     - '{{ xymon_plug_apt_package }}'
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
+  register: apt_plug_result
+  until: apt_plug_result is success
   notify: restart xymon-client service
 
 - name: PLUGIN apt
@@ -88,6 +92,8 @@
     state: '{{ "present" if xymon_plug_mq_state else "absent" }}'
   with_items:
     - '{{ xymon_plug_mq_package }}'
+  register: mq_plug_result
+  until: mq_plug_result is success
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
   notify: restart xymon-client service
@@ -110,6 +116,8 @@
     state: '{{ "present" if xymon_cli__plug_ipmi_state else "absent" }}'
   with_items:
     - '{{ xymon_cli__plug_ipmi_package }}'
+  register: ipmi_plug_result
+  until: ipmi_plug_result is success
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
   notify: restart xymon-client service
@@ -132,6 +140,8 @@
     state: '{{ "present" if xymon_plug_libs_state else "absent" }}'
   with_items:
     - '{{ xymon_plug_libs_package }}'
+  register: libs_plug_result
+  until: libs_plug_result is success
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
   notify: restart xymon-client service
