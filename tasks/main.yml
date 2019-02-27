@@ -16,7 +16,7 @@
     name: '{{ item }}'
     state: '{{ xymon_cli_pkg_state }}'
   with_items:
-    - '{{ xymon_cli_pkg_list }}'
+    - '{{ xymon_cli_pkg_list | to_nice_json }}'
   register: cli_result
   until: cli_result is success
   when: xymon_cli_manage|bool
@@ -56,7 +56,7 @@
     name: '{{ item }}'
     state: '{{ "present" if xymon_plug_apt_state else "absent" }}'
   with_items:
-    - '{{ xymon_plug_apt_package }}'
+    - '{{ xymon_plug_apt_package | to_nice_json }}'
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
   register: apt_plug_result
@@ -91,7 +91,7 @@
     name: '{{ item }}'
     state: '{{ "present" if xymon_plug_mq_state else "absent" }}'
   with_items:
-    - '{{ xymon_plug_mq_package }}'
+    - '{{ xymon_plug_mq_package | to_nice_json }}'
   register: mq_plug_result
   until: mq_plug_result is success
   when: (xymon_cli_manage|bool and
@@ -115,7 +115,7 @@
     name: '{{ item }}'
     state: '{{ "present" if xymon_cli__plug_ipmi_state else "absent" }}'
   with_items:
-    - '{{ xymon_cli__plug_ipmi_package }}'
+    - '{{ xymon_cli__plug_ipmi_package | to_nice_json }}'
   register: ipmi_plug_result
   until: ipmi_plug_result is success
   when: (xymon_cli_manage|bool and
@@ -139,7 +139,7 @@
     name: '{{ item }}'
     state: '{{ "present" if xymon_plug_libs_state else "absent" }}'
   with_items:
-    - '{{ xymon_plug_libs_package }}'
+    - '{{ xymon_plug_libs_package | to_nice_json }}'
   register: libs_plug_result
   until: libs_plug_result is success
   when: (xymon_cli_manage|bool and

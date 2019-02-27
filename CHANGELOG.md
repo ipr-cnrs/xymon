@@ -1,3 +1,8 @@
+## v1.3.3
+
+### Enhancements
+* Use to_nice_json to manage packages list.
+
 ## v1.3.2
 
 ### Enhancements
