@@ -50,7 +50,7 @@ xymon_plug_manage: true
 
 ## Plugin apt [[[
 xymon_plug_apt_state: true
-xymon_plug_apt_package: ['dctrl-tools']
+xymon_plug_apt_package: [ 'aptitude', 'dctrl-tools' ]
 xymon_plug_apt_path: '/etc/xymon/clientlaunch.d/apt.cfg'
 xymon_plug_apt_tpl: 'etc/xymon/clientlaunch.d/apt.cfg.j2'
 xymon_plug_apt_interval: '5m'
@@ -73,7 +73,7 @@ xymon_cli__plug_ipmi_interval: '5m'
 ## ]]]
 ## Plugin libs [[[
 xymon_plug_libs_state: true
-xymon_plug_libs_package: ['binutils', 'lsof', 'libyaml-tiny-perl', 'libsort-naturally-perl']
+xymon_plug_libs_package: [ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libfile-slurp-perl', 'libsort-naturally-perl' ]
 xymon_plug_libs_path: '/etc/xymon/clientlaunch.d/libs.cfg'
 xymon_plug_libs_tpl: 'etc/xymon/clientlaunch.d/libs.cfg.j2'
 xymon_plug_libs_interval: '5m'

@@ -6,7 +6,10 @@
 
 ### Fix
 * Don't remove any plugin dependencies cause some plugins might have the same.
-Plugin dependencies will only be installed if the plugin is wanted.
+  Plugin dependencies will only be installed if the plugin is wanted.
+* Add missing plugin dependencies.
+  See [version 20180711][20180711 hobbit-plugins debian changelog]
+  for libs dependencies for example.
 
 ## v1.3.3
 
@@ -65,3 +68,5 @@ Plugin dependencies will only be installed if the plugin is wanted.
 * Manage `xymon-client` service.
 * Add possibility to set the value of CLIENTHOSTNAME `xymon-client` value.
 * Allow to set Xymon servers list for `xymon-client` config.
+
+[20180711 hobbit-plugins debian changelog]: https://salsa.debian.org/debian/hobbit-plugins/blob/debian-20180711/debian/changelog
