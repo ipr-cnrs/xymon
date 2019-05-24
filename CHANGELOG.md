@@ -4,6 +4,10 @@
 * Add variables to manage plugin interval.
 * Add netstats plugin managment.
 
+### Fix
+* Don't remove any plugin dependencies cause some plugins might have the same.
+Plugin dependencies will only be installed if the plugin is wanted.
+
 ## v1.3.3
 
 ### Enhancements

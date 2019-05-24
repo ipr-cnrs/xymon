@@ -54,11 +54,12 @@
 - name: PLUGIN apt packages
   package:
     name: '{{ item }}'
-    state: '{{ "present" if xymon_plug_apt_state else "absent" }}'
+    state: 'present'
   with_items:
     - '{{ xymon_plug_apt_package | to_nice_json }}'
   when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+         xymon_plug_manage|bool and
+         xymon_plug_apt_state|bool)
   register: apt_plug_result
   until: apt_plug_result is success
   notify: restart xymon-client service
@@ -89,13 +90,14 @@
 - name: PLUGIN ipmi packages
   package:
     name: '{{ item }}'
-    state: '{{ "present" if xymon_cli__plug_ipmi_state else "absent" }}'
+    state: 'present'
   with_items:
     - '{{ xymon_cli__plug_ipmi_package | to_nice_json }}'
   register: ipmi_plug_result
   until: ipmi_plug_result is success
   when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+         xymon_plug_manage|bool and
+         xymon_cli__plug_ipmi_state|bool)
   notify: restart xymon-client service
 
 - name: PLUGIN ipmi
@@ -113,13 +115,14 @@
 - name: PLUGIN libs packages
   package:
     name: '{{ item }}'
-    state: '{{ "present" if xymon_plug_libs_state else "absent" }}'
+    state: 'present'
   with_items:
     - '{{ xymon_plug_libs_package | to_nice_json }}'
   register: libs_plug_result
   until: libs_plug_result is success
   when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+         xymon_plug_manage|bool and
+         xymon_plug_libs_state|bool)
   notify: restart xymon-client service
 
 - name: PLUGIN libs
@@ -148,13 +151,14 @@
 - name: PLUGIN mq packages
   package:
     name: '{{ item }}'
-    state: '{{ "present" if xymon_plug_mq_state else "absent" }}'
+    state: 'present'
   with_items:
     - '{{ xymon_plug_mq_package | to_nice_json }}'
   register: mq_plug_result
   until: mq_plug_result is success
   when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+         xymon_plug_manage|bool and
+         xymon_plug_mq_state|bool)
   notify: restart xymon-client service
 
 - name: PLUGIN mq
