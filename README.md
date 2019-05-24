@@ -31,18 +31,26 @@ Manage Xymon (client) installation and configuration.
 * **xymon_plug_apt_package** : The packages to install to provide `apt` plugin [default : `[ 'libtimedate-perl' ]`].
 * **xymon_plug_apt_path** : Configuration file for the `apt` plugin [default : `/etc/xymon/clientlaunch.d/apt.cfg`].
 * **xymon_plug_apt_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/apt.cfg.j2`].
+* **xymon_plug_apt_interval** : Time between each run of the `apt` plugin [default : `5m`].
 * **xymon_plug_apt_default_whitelist: Default list of allowed packages not installed from repositories [default : `[]`].
 * **xymon_plug_apt_whitelist: All hosts list of allowed packages not installed from repositories [default : `[]`].
 * **xymon_plug_apt_group_whitelist: Group list of allowed packages not installed from repositories [default : `[]`].
 * **xymon_plug_apt_host_whitelist: Host list of allowed packages not installed from repositories [default : `[]`].
+* **xymon_cli__plug_ipmi_state** : The state of plugin `ipmi` [default : `false`].
+* **xymon_cli__plug_ipmi_state** : The packages to install to provide `ipmi` plugin [default : `[ 'ipmitool' ]`].
+* **xymon_cli__plug_ipmi_path** : Configuration file for the `ipmi` plugin [default : `/etc/xymon/clientlaunch.d/ipmi.cfg`].
+* **xymon_cli__plug_ipmi_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/ipmi.cfg.j2`].
+* **xymon_cli__plug_ipmi_interval** : Time between each run of the `ipmi` plugin [default : `5m`].
 * **xymon_plug_mq_state** : The state of plugin `mq` [default : `true`].
 * **xymon_plug_mq_package** : The packages to install to provide `mq` plugin [default : `[ 'libtimedate-perl' ]`].
 * **xymon_plug_mq_path** : Configuration file for the `mq` plugin [default : `/etc/xymon/clientlaunch.d/mq.cfg`].
 * **xymon_plug_mq_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/mq.cfg.j2`].
+* **xymon_plug_mq_interval** : Time between each run of the `mq` plugin [default : `5m`].
 * **xymon_plug_libs_state** : The state of plugin `libs` [default : `true`].
 * **xymon_plug_libs_package** : The packages to install to provide `libs` plugin [default : `[ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libsort-naturally-perl' ]`].
 * **xymon_plug_libs_path** : Configuration file for the `libs` plugin [default : `/etc/xymon/clientlaunch.d/libs.cfg`].
 * **xymon_plug_libs_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/libs.cfg.j2`].
+* **xymon_plug_libs_interval** : Time between each run of the `libs` plugin [default : `5m`].
 * **xymon_plug_libs_default_whitelist** : Default whitelist of processes that should not be monitored with `libs` plugin.
 * **xymon_plug_libs_whitelist** : All hosts whitelist of processes that should not be monitored with `libs` plugin.
 * **xymon_plug_libs_group_whitelist** : Group whitelist of processes that should not be monitored with `libs` plugin.
@@ -52,6 +60,7 @@ Manage Xymon (client) installation and configuration.
 * **xymon_cli__plug_zfs_script_tpl** : Template used to generate the previous script [default : `usr/lib/xymon/client/ext/zfs.j2`].
 * **xymon_cli__plug_zfs_path** : Configuration file for the `zfs` plugin [default : `/etc/xymon/clientlaunch.d/zfs.cfg`].
 * **xymon_cli__plug_zfs_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/zfs.cfg.j2`].
+* **xymon_cli__plug_zfs_interval** : Time between each run of the `zfs` plugin [default : `5m`].
 
 ### OS Specific Variables
 

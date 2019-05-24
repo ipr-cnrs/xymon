@@ -53,6 +53,7 @@ xymon_plug_apt_state: true
 xymon_plug_apt_package: ['dctrl-tools']
 xymon_plug_apt_path: '/etc/xymon/clientlaunch.d/apt.cfg'
 xymon_plug_apt_tpl: 'etc/xymon/clientlaunch.d/apt.cfg.j2'
+xymon_plug_apt_interval: '5m'
 xymon_plug_apt_default_whitelist: []
 xymon_plug_apt_whitelist: []
 xymon_plug_apt_group_whitelist: []
@@ -63,23 +64,19 @@ xymon_plug_apt_combined_whitelist: '{{ xymon_plug_apt_default_whitelist
                                    + xymon_plug_apt_host_whitelist }}'
 
 ## ]]]
-## Plugin mq [[[
-xymon_plug_mq_state: true
-xymon_plug_mq_package: ['libtimedate-perl']
-xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
-xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
-## ]]]
 ## Plugin ipmi [[[
 xymon_cli__plug_ipmi_state: false
 xymon_cli__plug_ipmi_package: ['ipmitool']
 xymon_cli__plug_ipmi_path: '/etc/xymon/clientlaunch.d/ipmi.cfg'
 xymon_cli__plug_ipmi_tpl: 'etc/xymon/clientlaunch.d/ipmi.cfg.j2'
+xymon_cli__plug_ipmi_interval: '5m'
 ## ]]]
 ## Plugin libs [[[
 xymon_plug_libs_state: true
 xymon_plug_libs_package: ['binutils', 'lsof', 'libyaml-tiny-perl', 'libsort-naturally-perl']
 xymon_plug_libs_path: '/etc/xymon/clientlaunch.d/libs.cfg'
 xymon_plug_libs_tpl: 'etc/xymon/clientlaunch.d/libs.cfg.j2'
+xymon_plug_libs_interval: '5m'
 
 xymon_plug_libs_default_whitelist:
   /lib/systemd/systemd:
@@ -95,12 +92,20 @@ xymon_plug_libs_group_whitelist: {}
 xymon_plug_libs_host_whitelist: {}
 
                                                                    # ]]]
+## Plugin mq [[[
+xymon_plug_mq_state: true
+xymon_plug_mq_package: ['libtimedate-perl']
+xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
+xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
+xymon_plug_mq_interval: '5m'
+## ]]]
 ## Plugin zfs [[[
 xymon_cli__plug_zfs_state: false
 xymon_cli__plug_zfs_script_path: '/usr/lib/xymon/client/ext/zfs'
 xymon_cli__plug_zfs_script_tpl: 'usr/lib/xymon/client/ext/zfs.j2'
 xymon_cli__plug_zfs_path: '/etc/xymon/clientlaunch.d/zfs.cfg'
 xymon_cli__plug_zfs_tpl: 'etc/xymon/clientlaunch.d/zfs.cfg.j2'
+xymon_cli__plug_zfs_interval: '5m'
 
                                                                    # ]]]
 

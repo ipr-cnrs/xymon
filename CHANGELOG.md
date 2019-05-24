@@ -1,3 +1,8 @@
+## v1.4.X
+
+### Enhancements
+* Add variables to manage plugin interval.
+
 ## v1.3.3
 
 ### Enhancements

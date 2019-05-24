@@ -3,4 +3,4 @@
 	ENVFILE /etc/xymon/xymonclient.cfg
 	CMD /usr/bin/sudo -E -u root $XYMONCLIENTHOME/ext/zfs
 	LOGFILE /var/log/xymon/zfs.log
-	INTERVAL 5m
+	INTERVAL {{ xymon_cli__plug_zfs_interval }}

@@ -3,4 +3,4 @@
 	ENVFILE /etc/xymon/xymonclient.cfg
 	CMD $XYMONCLIENTHOME/ext/libs
 	LOGFILE /var/log/xymon/xymonclient.log
-	INTERVAL 5m
+	INTERVAL {{ xymon_plug_libs_interval }}
