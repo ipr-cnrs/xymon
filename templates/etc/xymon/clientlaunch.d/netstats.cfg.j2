@@ -1,0 +1,6 @@
+[netstats]
+	{{ '#DISABLED' if xymon_cli__plug_netstats_state else 'DISABLED' }}
+	ENVFILE /etc/xymon/xymonclient.cfg
+	CMD $XYMONCLIENTHOME/ext/netstats
+	LOGFILE /var/log/xymon/xymonclient.log
+	INTERVAL {{ xymon_cli__plug_netstats_interval }}

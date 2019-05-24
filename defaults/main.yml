@@ -99,6 +99,13 @@ xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
 xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
 xymon_plug_mq_interval: '5m'
 ## ]]]
+## Plugin netstats [[[
+xymon_cli__plug_netstats_state: false
+xymon_cli__plug_netstats_package: [ 'libfile-which-perl', 'libfile-slurp-perl', 'libipc-run-perl', 'libyaml-tiny-perl', 'iproute2', 'ethtool' ]
+xymon_cli__plug_netstats_path: '/etc/xymon/clientlaunch.d/netstats.cfg'
+xymon_cli__plug_netstats_tpl: 'etc/xymon/clientlaunch.d/netstats.cfg.j2'
+xymon_cli__plug_netstats_interval: '5m'
+## ]]]
 ## Plugin zfs [[[
 xymon_cli__plug_zfs_state: false
 xymon_cli__plug_zfs_script_path: '/usr/lib/xymon/client/ext/zfs'

@@ -2,6 +2,7 @@
 
 ### Enhancements
 * Add variables to manage plugin interval.
+* Add netstats plugin managment.
 
 ## v1.3.3
 
