@@ -1,0 +1,6 @@
+[smart]
+	{{ '#DISABLED' if xymon_cli__plug_smart_state else 'DISABLED' }}
+	ENVFILE /etc/xymon/xymonclient.cfg
+	CMD /usr/bin/sudo -E -u root $XYMONCLIENTHOME/ext/smart
+	LOGFILE /var/log/xymon/smart.log
+	INTERVAL {{ xymon_cli__plug_smart_interval }}

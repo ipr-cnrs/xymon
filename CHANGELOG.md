@@ -1,8 +1,9 @@
-## v1.4.X
+## v1.4.0
 
 ### Enhancements
 * Add variables to manage plugin interval.
 * Add netstats plugin managment.
+* Add smart plugin from https://github.com/skazi0/xymon-plugins
 
 ### Fix
 * Don't remove any plugin dependencies cause some plugins might have the same.

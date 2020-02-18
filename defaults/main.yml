@@ -106,6 +106,17 @@ xymon_cli__plug_netstats_path: '/etc/xymon/clientlaunch.d/netstats.cfg'
 xymon_cli__plug_netstats_tpl: 'etc/xymon/clientlaunch.d/netstats.cfg.j2'
 xymon_cli__plug_netstats_interval: '5m'
 ## ]]]
+## Plugin smart [[[
+### From https://github.com/skazi0/xymon-plugins
+xymon_cli__plug_smart_state: False
+xymon_cli__plug_smart_package: [ 'smartmontools' ]
+xymon_cli__plug_smart_script_path: '/usr/lib/xymon/client/ext/smart'
+xymon_cli__plug_smart_script_tpl: 'usr/lib/xymon/client/ext/smart.j2'
+xymon_cli__plug_smart_path: '/etc/xymon/clientlaunch.d/smart.cfg'
+xymon_cli__plug_smart_tpl: 'etc/xymon/clientlaunch.d/smart.cfg.j2'
+xymon_cli__plug_smart_interval: '10m'
+
+                                                                   # ]]]
 ## Plugin zfs [[[
 xymon_cli__plug_zfs_state: false
 xymon_cli__plug_zfs_script_path: '/usr/lib/xymon/client/ext/zfs'

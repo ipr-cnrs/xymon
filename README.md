@@ -56,10 +56,17 @@ Manage Xymon (client) installation and configuration.
 * **xymon_plug_mq_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/mq.cfg.j2`].
 * **xymon_plug_mq_interval** : Time between each run of the `mq` plugin [default : `5m`].
 * **xymon_cli__plug_netstats_state** : The state of plugin `netstats` [default : `false`].
-* **xymon_cli__plug_netstats_state** : The packages to install to provide `netstats` plugin [default : `[ 'libfile-which-perl', 'libfile-slurp-perl', 'libipc-run-perl', 'libyaml-tiny-perl', 'iproute2', 'ethtool' ]`].
+* **xymon_cli__plug_netstats_package** : The packages to install to provide `netstats` plugin [default : `[ 'libfile-which-perl', 'libfile-slurp-perl', 'libipc-run-perl', 'libyaml-tiny-perl', 'iproute2', 'ethtool' ]`].
 * **xymon_cli__plug_netstats_path** : Configuration file for the `netstats` plugin [default : `/etc/xymon/clientlaunch.d/netstats.cfg`].
 * **xymon_cli__plug_netstats_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/netstats.cfg.j2`].
 * **xymon_cli__plug_netstats_interval** : Time between each run of the `netstats` plugin [default : `5m`].
+* **xymon_cli__plug_smart_state** : The state of plugin `smart` [default : `False`].
+* **xymon_cli__plug_smart_package** : The packages to install to provide `smart` plugin [default : `[ 'smartmontools' ]`].
+* **xymon_cli__plug_smart_script_path** : Path to the `smart` script [default : `'/usr/lib/xymon/client/ext/smart'`].
+* **xymon_cli__plug_smart_script_tpl** : Template used to generate the previous script [default : `'usr/lib/xymon/client/ext/smart.j2'`].
+* **xymon_cli__plug_smart_path** : Configuration file for the `smart` plugin [default : `'/etc/xymon/clientlaunch.d/smart.cfg'`].
+* **xymon_cli__plug_smart_tpl** : Template used to generate the previous config file [default : `'etc/xymon/clientlaunch.d/smart.cfg.j2'`].
+* **xymon_cli__plug_smart_interval** : Time between each run of the `smart` plugin [default : `'10m'`]
 * **xymon_cli__plug_zfs_state** : The state of plugin `zfs` [default : `false`].
 * **xymon_cli__plug_zfs_script_path** : Path to the ZFS script [default : `/usr/lib/xymon/client/ext/zfs`].
 * **xymon_cli__plug_zfs_script_tpl** : Template used to generate the previous script [default : `usr/lib/xymon/client/ext/zfs.j2`].

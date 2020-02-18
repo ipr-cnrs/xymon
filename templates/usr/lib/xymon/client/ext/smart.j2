@@ -1,0 +1,182 @@
+#!/usr/bin/perl
+# $Id: sensors 70 2011-11-25 09:21:18Z skazi $
+# Author: Jacek Tomasiak <jacek.tomasiak@gmail.com>
+
+# {{ ansible_managed }}
+# From ipr-cnrs.xymon role
+# Thanks to Jacek Tomasiak − skazi0
+# https://github.com/skazi0/xymon-plugins/blob/master/client/ext/smart
+
+use strict;
+# add script's directory to module search path for Hobbit.pm on non-debian systems
+use FindBin;
+use lib $FindBin::Bin;
+
+use Hobbit;
+use Data::Dumper;
+
+my $bb = new Hobbit('smart');
+
+my @disks = ();
+my %olderr = {};
+
+my $CACHETIME = 10; # minutes
+my $CACHEFILE = "$ENV{'XYMONTMP'}/$ENV{'MACHINEDOTS'}.smart.cache";
+
+&load_config("$ENV{'XYMONTMP'}/logfetch.$ENV{'MACHINEDOTS'}.cfg");
+
+# fallback to disk detection if nothing defined in the config
+unless (@disks) {
+    opendir(DIR, '/dev') or die $!;
+    while (my $dev = readdir(DIR)) {
+        push(@disks, "/dev/$dev") if ($dev =~ /^[vs]d.*\D$/);
+    }
+    closedir(DIR);
+}
+
+my @stat = stat($CACHEFILE);
+my $mtime = scalar @stat ? $stat[9] : 0;
+# regenerate sensors cache if outdated
+if (time() - $mtime > $CACHETIME * 60)
+{
+    open(OUT, ">$CACHEFILE") or die "cannot open $CACHEFILE";
+
+    foreach my $name (@disks)
+    {
+        print OUT ('=' x 20) . " $name " . ('=' x 20) . "\n";
+        my @output = `sudo smartctl -AHi -l error -l selftest $name 2>&1` or die;
+        my $ncv = '';
+        my $newerr = 1;
+        my $ponhours = undef;
+        my $lasttest = undef;
+        foreach my $line (@output)
+        {
+            # skip header
+            next if ($line =~ /smartctl|Copyright|Home page|===/);
+
+            if ($line =~ /.*overall-health.*:\s*(.*)/)
+            {
+                my $lstatus = ($1 == 'PASSED') ? 'green' : 'red';
+                print OUT "&$lstatus $line";
+            }
+            elsif ($line =~ /^\s*(\d+)\s+(\S+)\s+\S+\s+(\d+)\s+(\d+)\s+(\d+)\s+\S+\s+\S+\s+\S+\s+(.*)$/)
+            {
+                my ($aname, $value, $worst, $thresh, $raw) = ($2, $3, $4, $5, $6);
+                my $lstatus = 'green';
+                if ($aname =~ /Current_Pending_Sector|Offline_Uncorrectable/ and int($raw) > 0)
+                {
+                    $lstatus = 'yellow';
+                }
+                elsif ($aname =~ /Power_On_Hours/)
+                {
+                    $ponhours = $raw;
+                }
+
+                print OUT "&$lstatus $line";
+
+                $ncv .= "$name-$aname-value : $value\n";
+                $ncv .= "$name-$aname-worst : $worst\n";
+                $ncv .= "$name-$aname-thresh : $thresh\n";
+                $ncv .= "$name-$aname-raw : $raw\n";
+            }
+            elsif ($line =~ /^\s*No Errors Logged\s*$/)
+            {
+                $newerr = 0;
+                print OUT "&green $line";
+            }
+            elsif ($line =~ /Error Count:\s*(\d+)/)
+            {
+                $newerr = $1 - $olderr{$name};
+                my $lstatus = $newerr > 0 ? 'red' : 'green';
+                print OUT "&$lstatus $line"
+            }
+            elsif ($line =~ /^\s*Error \d+ occurred/)
+            {
+                my $lstatus = $newerr > 0 ? 'red' : 'green';
+                print OUT "&$lstatus $line"
+            }
+            elsif ($line =~ /^\s*#\s*\d+\s+(Conveyance offline|Extended offline|Short offline|Extended captive)\s+(.*)\s+\d+%\s+(\d+)/)
+            {
+                my $status = $2;
+                my $lifetime = $3;
+                my $lstatus = 'red';
+                $lasttest = $lifetime if (!defined($lasttest));
+                $lstatus = 'yellow' if ($status =~ /Aborted by host|Interrupted \(host reset\)/);
+                $lstatus = 'green' if ($status =~ /Completed without error|Self-test routine in progress|Interrupted \(host reset\)/);
+                print OUT "&$lstatus $line";
+            }
+            else
+            {
+                print OUT "   $line";
+            }
+        }
+        # test status footer
+        my $lasttestage = $ponhours % 65536 - $lasttest;
+        my $lasttestmsg = "$lasttestage hours ago";
+        my $lasttestcolor = 'green';
+        if (!defined($lasttest))
+        {
+                $lasttestcolor = 'yellow';
+                $lasttestmsg = 'no test performed';
+        }
+        elsif ($lasttestage > 24 * 7)
+        {
+                $lasttestcolor = 'red';
+        }
+        elsif ($lasttestage > 24 * 2)
+        {
+                $lasttestcolor = 'yellow';
+        }
+        print OUT "&$lasttestcolor Last Self-test: $lasttestmsg\n";
+
+        # hidden output for ncv
+        print OUT "<!--\n$ncv\n-->\n";
+    }
+
+    close OUT;
+}
+
+# send cached content
+{
+    open IN, $CACHEFILE or die "cannot open $CACHEFILE";
+    while (my $line = <IN>)
+    {
+        if ($line =~ /^\s*&(\S+)/)
+        {
+            $bb->color_print($1, $line);
+        }
+        else
+        {
+            $bb->print($line);
+        }
+    }
+    close IN;
+}
+
+
+$bb->send;
+
+sub load_config
+{
+    my $path = shift;
+
+    open C, "<$path" or return;
+#    print "loading config from $path\n";
+    while (my $line = <C>)
+    {
+        next if ($line =~ /^\s*#/);
+        if ($line =~ /DISKS\s*=\s*['"](.*?)["']/)
+        {
+            @disks = split(/\s+/, $1);
+        }
+        if ($line =~ /SMARTOLDERROR\[([\w\/]+)\]\s+(\d+)/)
+        {
+           $olderr{$1} = $2;
+        }
+        if ($line =~ /SMARTCACHETIME=(\d+)/)
+        {
+           $CACHETIME = $1;
+        }
+    }
+    close C;
+}

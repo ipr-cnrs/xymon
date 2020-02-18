@@ -197,6 +197,42 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+# Manage smart plugin [[[1
+- name: PLUGIN smart packages
+  package:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - '{{ xymon_cli__plug_smart_package | to_nice_json }}'
+  register: smart_plug_result
+  until: smart_plug_result is success
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool and
+         xymon_cli__plug_smart_state|bool)
+  notify: restart xymon-client service
+
+- name: PLUGIN smart config
+  template:
+    src: '{{ xymon_cli__plug_smart_tpl }}'
+    dest: '{{ xymon_cli__plug_smart_path }}'
+    owner: root
+    group: root
+    mode: 0644
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
+- name: PLUGIN smart script file
+  template:
+    src: '{{ xymon_cli__plug_smart_script_tpl }}'
+    dest: '{{ xymon_cli__plug_smart_script_path }}'
+    owner: root
+    group: xymon
+    mode: 0755
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
 # Manage zfs plugin [[[1
 - name: PLUGIN zfs config file
   template:
