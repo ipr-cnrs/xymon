@@ -60,6 +60,13 @@ Manage Xymon (client) installation and configuration.
 * **xymon_cli__plug_netstats_path** : Configuration file for the `netstats` plugin [default : `/etc/xymon/clientlaunch.d/netstats.cfg`].
 * **xymon_cli__plug_netstats_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/netstats.cfg.j2`].
 * **xymon_cli__plug_netstats_interval** : Time between each run of the `netstats` plugin [default : `5m`].
+* **xymon_cli__plug_smartoverall_state** : The state of plugin `smartoverall` [default : `False`].
+* **xymon_cli__plug_smartoverall_package** : The packages to install to provide `smartoverall` plugin [default : `[ 'smartmontools' ]`].
+* **xymon_cli__plug_smartoverall_script_path** : Path to the `smartoverall` script [default : `'/usr/lib/xymon/client/ext/smartoverall'`].
+* **xymon_cli__plug_smartoverall_script_tpl** : Template used to generate the previous script [default : `'usr/lib/xymon/client/ext/smartoverall.j2'`].
+* **xymon_cli__plug_smartoverall_path** : Configuration file for the `smartoverall` plugin [default : `'/etc/xymon/clientlaunch.d/smartoverall.cfg'`].
+* **xymon_cli__plug_smartoverall_tpl** : Template used to generate the previous config file [default : `'etc/xymon/clientlaunch.d/smartoverall.cfg.j2'`].
+* **xymon_cli__plug_smartoverall_interval** : Time between each run of the `smartoverall` plugin [default : `'10m'`]
 * **xymon_cli__plug_smart_state** : The state of plugin `smart` [default : `False`].
 * **xymon_cli__plug_smart_package** : The packages to install to provide `smart` plugin [default : `[ 'smartmontools' ]`].
 * **xymon_cli__plug_smart_script_path** : Path to the `smart` script [default : `'/usr/lib/xymon/client/ext/smart'`].

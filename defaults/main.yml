@@ -106,6 +106,19 @@ xymon_cli__plug_netstats_path: '/etc/xymon/clientlaunch.d/netstats.cfg'
 xymon_cli__plug_netstats_tpl: 'etc/xymon/clientlaunch.d/netstats.cfg.j2'
 xymon_cli__plug_netstats_interval: '5m'
 ## ]]]
+## Plugin smartoverall [[[
+### From https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
+### And based on https://www.xymon.com/xymon-cgi/viewconf.sh?smart
+### Mostly for disks unknown from smartmontools's database
+xymon_cli__plug_smartoverall_state: False
+xymon_cli__plug_smartoverall_package: [ 'smartmontools' ]
+xymon_cli__plug_smartoverall_script_path: '/usr/lib/xymon/client/ext/smartoverall'
+xymon_cli__plug_smartoverall_script_tpl: 'usr/lib/xymon/client/ext/smartoverall.j2'
+xymon_cli__plug_smartoverall_path: '/etc/xymon/clientlaunch.d/smartoverall.cfg'
+xymon_cli__plug_smartoverall_tpl: 'etc/xymon/clientlaunch.d/smartoverall.cfg.j2'
+xymon_cli__plug_smartoverall_interval: '10m'
+
+                                                                   # ]]]
 ## Plugin smart [[[
 ### From https://github.com/skazi0/xymon-plugins
 xymon_cli__plug_smart_state: False

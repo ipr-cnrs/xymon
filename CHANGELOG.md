@@ -4,6 +4,7 @@
 * Add variables to manage plugin interval.
 * Add netstats plugin managment.
 * Add smart plugin from https://github.com/skazi0/xymon-plugins
+* Add smartoverall plugin from https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
 
 ### Fix
 * Don't remove any plugin dependencies cause some plugins might have the same.

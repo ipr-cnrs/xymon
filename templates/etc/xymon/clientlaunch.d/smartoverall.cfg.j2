@@ -1,0 +1,8 @@
+[smartoverall]
+	# {{ ansible_managed }}
+	## From ipr-cnrs.xymon role
+	{{ '#DISABLED' if xymon_cli__plug_smartoverall_state else 'DISABLED' }}
+	ENVFILE /etc/xymon/xymonclient.cfg
+	CMD /usr/bin/sudo -E -u root {{ xymon_cli__plug_smartoverall_script_path }}
+	LOGFILE /var/log/xymon/smartoverall.log
+	INTERVAL {{ xymon_cli__plug_smartoverall_interval }}

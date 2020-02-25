@@ -1,0 +1,229 @@
+#!/bin/sh
+
+# {{ ansible_managed }}
+# From ipr-cnrs.xymon role
+# Source :
+# https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
+
+# NOTE: Must be run as root, so you probably need to setup sudo for this.
+
+# This script is mostly intend to be used with Xymon and rather for devices unknown to the smartmontools base.
+# Based on xymon.com's script : https://www.xymon.com/xymon-cgi/viewconf.sh?smart
+# The script will scan all devices compatible with SMART and for each disk, it will : {{{
+#	* try to guess the expected TYPE (even megaraid,…).
+#	* display health status.
+#	* set a "clear" state for incompatible device.
+#	* display last selftests.
+#	* set a "error" state if no selftest is recorded.
+#	* display basic informations.
+#	* recommend a more advanced SMART script if the disk is known of smartmontools's database (drivedb.h) or redirect to smartmontools's FAQ if not.
+# }}}
+# Things the script CAN'T do : {{{
+#	* ensure a recent selftest was run.
+#	* compare current value with vendor's one (for failure prediction or error).
+#	* give detail about errors.
+#	* Take a look to this more advance script for such features : https://github.com/skazi0/xymon-plugins/blob/master/client/ext/smart
+# }}}
+
+# Vars {{{
+debug="1"
+
+## Colors {{{
+c_redb='\033[1;31m'
+c_magentab='\033[1;35m'
+c_reset='\033[0m'
+## }}}
+
+plugin_name=$(basename "${0}")
+
+# }}}
+
+# Functions
+## Test if a disk really support SMART {{{
+## Smartctl can give an health status even without a full support
+## of SMART for some type (eg. scsi or megaraid).
+## Exemple : SMART support is: Unavailable - device lacks SMART capability.
+is_disk_support_smart() {
+	_disk="${1}"
+	_type="${2}"
+
+	_smarctl_support_result="/tmp/dsupport.$(basename "${_disk}")"
+
+	smart_support_msg=""
+
+	[ "${debug}" -eq "0" ] && printf "${c_magentab}%-6b${c_reset}\n" "DEBUG : is_disk_support_smart func − check if SMART is supported on : ${_disk}."
+
+	## Create or empty previous file
+	true > "${_smarctl_support_result}"
+
+	## Grep only "support" lines from disk's informations
+	smartctl -d "${_type}" -i -- "${_disk}" | grep -E "^SMART support is:" -- >> "${_smarctl_support_result}"
+
+	## If the file is not empty
+	if test -s "${_smarctl_support_result}"; then
+		## Parse all "support" lines
+		while IFS= read -r _LINE; do
+			if ! printf -- '%s' "${_LINE}" | grep -q -E -- "(Enabled|Available)"
+			then
+				smart_support_msg="${_LINE}"
+			fi
+		done < "${_smarctl_support_result}"
+	else
+		smart_support_msg="smartctl was not able to open ${_disk} DEVICE with ${_type} TYPE."
+	fi
+
+	if [ -z "${smart_support_msg}" ]; then
+		[ "${debug}" -eq "0" ] && printf "${c_magentab}%-6b${c_reset}\n" "DEBUG : is_disk_support_smart func − SMART seems fully supported on : ${_disk} with ${_type} type."
+	else
+		[ "${debug}" -eq "0" ] && printf "${c_magentab}%-6b${c_reset}\n" "DEBUG : is_disk_support_smart func − SMART is not fully supported on : ${_disk} with ${_type} type. See smartctl informations :\n${smart_support_msg}"
+	fi
+
+	rm -f -- "${_smarctl_support_result}"
+}
+## }}}
+## Test the type of disk with smartctl {{{
+## Cause the scanned one might not be the one to use
+choose_correct_type() {
+	_disk="${1}"
+	_scanned_type="${2}"
+	_default_type="auto"
+
+	TYPE=""
+	SMART_SUPPORT_MSG=""
+
+	for test_type in "${_default_type}" "${_scanned_type}"; do
+		is_disk_support_smart "${_disk}" "${test_type}"
+
+		## If no message, the type is correct
+		if [ -z "${smart_support_msg}" ]; then
+			TYPE="${test_type}"
+			SMART_SUPPORT_MSG=""
+			return
+		else
+			SMART_SUPPORT_MSG="${smart_support_msg}"
+		fi
+
+	done
+
+}
+## }}}
+
+# Create or empty previous files
+true > /tmp/dres
+true > /tmp/dcheck
+true > /tmp/dscan
+
+# Get the list of all available devices
+smartctl --scan >> /tmp/dscan
+
+# If the file is not empty
+if test -s /tmp/dscan; then
+	while IFS= read -r LINE; do
+		## Get device path
+		DISK=$(echo "${LINE}" | cut -d" " -f1)
+		## Try to determine the best type
+		SCANNED_TYPE=$(echo "${LINE}" | cut -d" " -f3)
+		choose_correct_type "${DISK}" "${SCANNED_TYPE}"
+
+		## If no correct type was found for this device
+		if [ -z "${TYPE}" ]; then
+			[ "${debug}" -eq "0" ] && printf "${c_magentab}%-6b${c_reset}\n" "DEBUG : SMART is not fully supported."
+			DRES=$(printf '%s' "SMART Health Status can't be determine because of:\n${SMART_SUPPORT_MSG}")
+			DCODE="2"
+			TYPE="unsupported"
+			### Still try to display informations about unsupported device (eg. RAID controller,…)
+			DID="unsupported-${DISK}"
+			DINFO=$(smartctl -i -d "${SCANNED_TYPE}" "${DISK}" | grep -v -E "^smartctl|^Copyright|^$" || printf '%s' "Can't get informations due to no SMART support.")
+			DDRIVEDB_MSG=""
+			DSELFTEST=""
+		else
+			[ "${debug}" -eq "0" ] && printf "${c_magentab}%-6b${c_reset}\n" "DEBUG : SMART seems fully supported, proceed normally."
+			### Get SMART Health Status and return code
+			DRES=$(/usr/sbin/smartctl -H -d "${TYPE}" -n standby "${DISK}")
+			DCODE=$?
+			### Get disk's serial number and informations
+			DID=$(smartctl -i -d "${TYPE}" "${DISK}" | awk '/.erial .umber:/ { print $NF }')
+			DINFO=$(smartctl -i -d "${TYPE}" "${DISK}" | grep -v -E "^smartctl|^Copyright|^$")
+
+			## If the model of the disk is known from smartmontools database
+			if smartctl -d "${TYPE}" -P show "${DISK}" | grep -qi -- "drive found in"; then
+				DDRIVEDB_MSG="&green Device is known in smartmontools database. You might consider using a more advanced plugin such as:
+https://github.com/skazi0/xymon-plugins/blob/master/client/ext/smart"
+			else
+				DDRIVEDB_MSG="&clear Device is unknown or not complete in smartmontools database. Please take a look to the FAQ:
+https://www.smartmontools.org/wiki/FAQ#SmartmontoolsDatabase"
+			fi
+
+			DSELFTEST=$(smartctl -d "${TYPE}" -l selftest "${DISK}" | grep -v -E -- "^smartctl|^Copyright|^$")
+			## If no selftest have been recorded
+			if smartctl -d "${TYPE}" -l selftest "${DISK}" | grep -qi -- "No self-tests"; then
+				DSELFTEST_MSG="&red No self-tests recorded:"
+				DCODE="8"
+			else
+				DSELFTEST_MSG=""
+			fi
+
+		fi
+
+		## Test health status
+		DSTBY=$(( DCODE & 2 ))
+		DFAIL=$(( DCODE & 8 ))
+		DWARN=$(( DCODE & 32 ))
+
+		## According to health, give a weight to each color to easily get the page status
+		if test $DSTBY -ne 0
+		then
+			COLOR="4&clear"
+		elif test $DFAIL -ne 0
+		then
+			COLOR="1&red"
+		elif test $DWARN -ne 0
+		then
+			COLOR="2&yellow"
+		else
+			COLOR="3&green"
+		fi
+
+		## Avoid duplicate device
+		if ! grep -q "${DID}" /tmp/dres; then
+			## For summary
+			echo "${COLOR} $DISK ${TYPE}"
+
+			## For detailed informations
+			{
+				echo "${COLOR} $DISK ${TYPE}" | cut -c2-
+				echo ""
+				echo "$DRES" | grep -v -E "^smartctl|^Copyright|^$|^==="
+				echo "${DDRIVEDB_MSG}"
+				echo "${DINFO}"
+				echo "${DSELFTEST_MSG}"
+				echo "${DSELFTEST}" | head -n6
+				echo "------------------------------------------------------------"
+				echo ""
+				echo ""
+			} >> /tmp/dres
+	fi
+	done < /tmp/dscan >> /tmp/dcheck
+
+# If the file is empty
+else
+	echo "1&red Error while scanning devices with smartctl" >> /tmp/dcheck
+fi
+
+# Set the global color according to the highest alert
+COLOR=$(< /tmp/dcheck awk '{print $1}' | sort | uniq | head -1 | cut -c3-)
+
+# Send informations to Xymon server
+$XYMON "${XYMSRV}" "status ${MACHINE}.${plugin_name} ${COLOR} SMART health check
+
+$(< /tmp/dcheck cut -c2-)
+
+==================== Detailed status ====================
+
+$(cat /tmp/dres)
+"
+
+# Clean temp files
+rm -f -- /tmp/dres /tmp/dcheck /tmp/dscan
+
+exit 0
