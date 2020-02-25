@@ -1,4 +1,5 @@
 #!/bin/sh
+# .. vim: foldmarker=[[[,]]]:foldmethod=marker
 
 # {{ ansible_managed }}
 # From ipr-cnrs.xymon role
@@ -9,7 +10,7 @@
 
 # This script is mostly intend to be used with Xymon and rather for devices unknown to the smartmontools base.
 # Based on xymon.com's script : https://www.xymon.com/xymon-cgi/viewconf.sh?smart
-# The script will scan all devices compatible with SMART and for each disk, it will : {{{
+# The script will scan all devices compatible with SMART and for each disk, it will : [[[
 #	* try to guess the expected TYPE (even megaraid,…).
 #	* display health status.
 #	* set a "clear" state for incompatible device.
@@ -17,29 +18,29 @@
 #	* set a "error" state if no selftest is recorded.
 #	* display basic informations.
 #	* recommend a more advanced SMART script if the disk is known of smartmontools's database (drivedb.h) or redirect to smartmontools's FAQ if not.
-# }}}
-# Things the script CAN'T do : {{{
+# ]]]
+# Things the script CAN'T do : [[[
 #	* ensure a recent selftest was run.
 #	* compare current value with vendor's one (for failure prediction or error).
 #	* give detail about errors.
 #	* Take a look to this more advance script for such features : https://github.com/skazi0/xymon-plugins/blob/master/client/ext/smart
-# }}}
+# ]]]
 
-# Vars {{{
+# Vars [[[
 debug="1"
 
-## Colors {{{
+## Colors [[[
 c_redb='\033[1;31m'
 c_magentab='\033[1;35m'
 c_reset='\033[0m'
-## }}}
+## ]]]
 
 plugin_name=$(basename "${0}")
 
-# }}}
+# ]]]
 
 # Functions
-## Test if a disk really support SMART {{{
+## Test if a disk really support SMART [[[
 ## Smartctl can give an health status even without a full support
 ## of SMART for some type (eg. scsi or megaraid).
 ## Exemple : SMART support is: Unavailable - device lacks SMART capability.
@@ -80,8 +81,8 @@ is_disk_support_smart() {
 
 	rm -f -- "${_smarctl_support_result}"
 }
-## }}}
-## Test the type of disk with smartctl {{{
+## ]]]
+## Test the type of disk with smartctl [[[
 ## Cause the scanned one might not be the one to use
 choose_correct_type() {
 	_disk="${1}"
@@ -106,7 +107,7 @@ choose_correct_type() {
 	done
 
 }
-## }}}
+## ]]]
 
 # Create or empty previous files
 true > /tmp/dres
