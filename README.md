@@ -41,10 +41,10 @@ outstanding updates.
 * **xymon_plug_apt_path** : Configuration file for the `apt` plugin [default : `/etc/xymon/clientlaunch.d/apt.cfg`].
 * **xymon_plug_apt_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/apt.cfg.j2`].
 * **xymon_plug_apt_interval** : Time between each run of the `apt` plugin [default : `5m`].
-* **xymon_plug_apt_default_whitelist: Default list of allowed packages not installed from repositories [default : `[]`].
-* **xymon_plug_apt_whitelist: All hosts list of allowed packages not installed from repositories [default : `[]`].
-* **xymon_plug_apt_group_whitelist: Group list of allowed packages not installed from repositories [default : `[]`].
-* **xymon_plug_apt_host_whitelist: Host list of allowed packages not installed from repositories [default : `[]`].
+* **xymon_plug_apt_default_whitelist** : Default list of allowed packages not installed from repositories [default : `[]`].
+* **xymon_plug_apt_whitelist** : All hosts list of allowed packages not installed from repositories [default : `[]`].
+* **xymon_plug_apt_group_whitelist** : Group list of allowed packages not installed from repositories [default : `[]`].
+* **xymon_plug_apt_host_whitelist** : Host list of allowed packages not installed from repositories [default : `[]`].
 
 #### IPMI
 
@@ -63,7 +63,7 @@ Variables for the Libs plugin from hobbit-plugins. The plugin check for running
 processes with upgraded libraries.
 
 * **xymon_plug_libs_state** : The state of plugin `libs` [default : `true`].
-* **xymon_plug_libs_package** : The packages to install to provide `libs` plugin [default : `[ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libsort-naturally-perl' ]`].
+* **xymon_plug_libs_package** : The packages to install to provide `libs` plugin [default : `[ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libfile-slurp-perl', 'libsort-naturally-perl' ]`].
 * **xymon_plug_libs_path** : Configuration file for the `libs` plugin [default : `/etc/xymon/clientlaunch.d/libs.cfg`].
 * **xymon_plug_libs_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/libs.cfg.j2`].
 * **xymon_plug_libs_interval** : Time between each run of the `libs` plugin [default : `5m`].
