@@ -160,6 +160,9 @@ https://www.smartmontools.org/wiki/FAQ#SmartmontoolsDatabase"
 			if smartctl -d "${TYPE}" -l selftest "${DISK}" | grep -qi -- "No self-tests"; then
 				DSELFTEST_MSG="&red No self-tests recorded:"
 				DCODE="8"
+			## If the device doesn't support test logging
+			elif smartctl -d "${TYPE}" -l selftest "${DISK}" | grep -qEi -- "does not support.*logging"; then
+				DSELFTEST_MSG="&clear Test logging are not supported:"
 			else
 				DSELFTEST_MSG=""
 			fi
