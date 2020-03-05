@@ -222,7 +222,7 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
-- name: PLUGIN smartoverall script file
+- name: PLUGIN smartoverall script file from template
   template:
     src: '{{ xymon_cli__plug_smartoverall_script_tpl }}'
     dest: '{{ xymon_cli__plug_smartoverall_script_path }}'
@@ -230,7 +230,20 @@
     group: xymon
     mode: 0755
   when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+         xymon_plug_manage|bool and
+         xymon_cli__plug_smartoverall_script_url|length == 0 )
+  notify: restart xymon-client service
+
+- name: PLUGIN smartoverall script file from URL
+  get_url:
+    url:   '{{ xymon_cli__plug_smartoverall_script_url }}'
+    dest:  '{{ xymon_cli__plug_smartoverall_script_path }}'
+    owner: root
+    group: xymon
+    mode:  0755
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool and
+         xymon_cli__plug_smartoverall_script_url|length > 0 )
   notify: restart xymon-client service
 
 # Manage smart plugin [[[1
@@ -258,7 +271,7 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
-- name: PLUGIN smart script file
+- name: PLUGIN smart script file from template
   template:
     src: '{{ xymon_cli__plug_smart_script_tpl }}'
     dest: '{{ xymon_cli__plug_smart_script_path }}'
@@ -266,8 +279,22 @@
     group: xymon
     mode: 0755
   when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+         xymon_plug_manage|bool and
+         xymon_cli__plug_smart_script_url|length == 0 )
   notify: restart xymon-client service
+
+- name: PLUGIN smart script file from URL
+  get_url:
+    url:   '{{ xymon_cli__plug_smart_script_url }}'
+    dest:  '{{ xymon_cli__plug_smart_script_path }}'
+    owner: root
+    group: xymon
+    mode:  0755
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool and
+         xymon_cli__plug_smart_script_url|length > 0 )
+  notify: restart xymon-client service
+
 
 # Manage zfs plugin [[[1
 - name: PLUGIN zfs config file

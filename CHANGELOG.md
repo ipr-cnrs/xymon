@@ -1,3 +1,8 @@
+## v1.x.y
+
+### Enhancements
+* Possibility to define URLs in order to get the latest version of SMART's scripts.
+
 ## v1.4.0
 
 ### Enhancements
