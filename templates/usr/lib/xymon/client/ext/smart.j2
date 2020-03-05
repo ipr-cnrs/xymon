@@ -17,6 +17,7 @@ use Data::Dumper;
 
 my $bb = new Hobbit('smart');
 
+my $temp_disk_list = "$ENV{'XYMONTMP'}/$ENV{'MACHINEDOTS'}.smart.drivedb.list";
 my @disks = ();
 my %olderr = {};
 
@@ -25,13 +26,33 @@ my $CACHEFILE = "$ENV{'XYMONTMP'}/$ENV{'MACHINEDOTS'}.smart.cache";
 
 &load_config("$ENV{'XYMONTMP'}/logfetch.$ENV{'MACHINEDOTS'}.cfg");
 
+my @disks_stat = stat($temp_disk_list);
+my $disks_mtime = scalar @disks_stat ? $disks_stat[9] : 0;
+#
+# Regenerate disks list if the file is too old (600 minutes)
+if (time() - $disks_mtime > 600)
+{
+    unlink $temp_disk_list;
+}
+
+if (-e $temp_disk_list) {
+    # Should use the existing file
+}
+else {
+    # Create a file with the list of disks
+    system("ls -1 /dev/sd* | grep -vE '[0-9]' > $temp_disk_list") == 0
+        or die "system command to create $temp_disk_list failed: $?";
+}
+
 # fallback to disk detection if nothing defined in the config
 unless (@disks) {
-    opendir(DIR, '/dev') or die $!;
-    while (my $dev = readdir(DIR)) {
-        push(@disks, "/dev/$dev") if ($dev =~ /^[vs]d.*\D$/);
+    ## Put temp_disk_list content to disks array
+    open(my $fh, '<:encoding(UTF-8)', $temp_disk_list)
+        or die "Could not open file '$temp_disk_list' $!";
+    while (my $row = <$fh>) {
+        chomp $row;
+        push(@disks, "$row");
     }
-    closedir(DIR);
 }
 
 my @stat = stat($CACHEFILE);

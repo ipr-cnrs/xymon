@@ -37,6 +37,13 @@ c_reset='\033[0m'
 
 plugin_name=$(basename "${0}")
 
+plugin_result="${XYMONTMP}/${MACHINEDOTS}.smartoverall.plugin_result"
+plugin_state="${XYMONTMP}/${MACHINEDOTS}.smartoverall.plugin_state"
+device_list="${XYMONTMP}/${MACHINEDOTS}.smartoverall.dscan"
+## List of devices known from the smartmontools base and compatible with test logging
+## This file might be used by a more advanced script such as skazi0's one
+drivedb_list="${XYMONTMP}/${MACHINEDOTS}.smart.drivedb.list"
+
 # ]]]
 
 # Functions
@@ -48,7 +55,7 @@ is_disk_support_smart() {
 	_disk="${1}"
 	_type="${2}"
 
-	_smarctl_support_result="/tmp/dsupport.$(basename "${_disk}")"
+	_smarctl_support_result="${XYMONTMP}/${MACHINEDOTS}.smartoverall.support.$(basename "${_disk}")"
 
 	smart_support_msg=""
 
@@ -79,7 +86,10 @@ is_disk_support_smart() {
 		[ "${debug}" -eq "0" ] && printf "${c_magentab}%-6b${c_reset}\n" "DEBUG : is_disk_support_smart func − SMART is not fully supported on : ${_disk} with ${_type} type. See smartctl informations :\n${smart_support_msg}"
 	fi
 
-	rm -f -- "${_smarctl_support_result}"
+## Clean temp files
+### As the Xymon's tmpdir is used to store log files, no need to delete them at
+### the end of the script. They will be emptied at the beginning of the next run.
+
 }
 ## ]]]
 ## Test the type of disk with smartctl [[[
@@ -110,15 +120,16 @@ choose_correct_type() {
 ## ]]]
 
 # Create or empty previous files
-true > /tmp/dres
-true > /tmp/dcheck
-true > /tmp/dscan
+true > "${plugin_result}"
+true > "${plugin_state}"
+true > "${device_list}"
+true > "${drivedb_list}"
 
 # Get the list of all available devices
-smartctl --scan >> /tmp/dscan
+smartctl --scan >> "${device_list}"
 
 # If the file is not empty
-if test -s /tmp/dscan; then
+if test -s "${device_list}"; then
 	while IFS= read -r LINE; do
 		## Get device path
 		DISK=$(echo "${LINE}" | cut -d" " -f1)
@@ -165,6 +176,11 @@ https://www.smartmontools.org/wiki/FAQ#SmartmontoolsDatabase"
 				DSELFTEST_MSG="&clear Test logging are not supported:"
 			else
 				DSELFTEST_MSG=""
+				### If the device is also known from smartmontools database
+				if printf -- '%s' "${DDRIVEDB_MSG}" | grep -q -E -- "green"
+				then
+					echo "${DISK}" >> "${drivedb_list}"
+				fi
 			fi
 
 		fi
@@ -189,7 +205,7 @@ https://www.smartmontools.org/wiki/FAQ#SmartmontoolsDatabase"
 		fi
 
 		## Avoid duplicate device
-		if ! grep -q "${DID}" /tmp/dres; then
+		if ! grep -q "${DID}" "${plugin_result}"; then
 			## For summary
 			echo "${COLOR} $DISK ${TYPE}"
 
@@ -205,29 +221,30 @@ https://www.smartmontools.org/wiki/FAQ#SmartmontoolsDatabase"
 				echo "------------------------------------------------------------"
 				echo ""
 				echo ""
-			} >> /tmp/dres
+			} >> "${plugin_result}"
 	fi
-	done < /tmp/dscan >> /tmp/dcheck
+	done < "${device_list}" >> "${plugin_state}"
 
 # If the file is empty
 else
-	echo "1&red Error while scanning devices with smartctl" >> /tmp/dcheck
+	echo "1&red Error while scanning devices with smartctl" >> "${plugin_state}"
 fi
 
 # Set the global color according to the highest alert
-COLOR=$(< /tmp/dcheck awk '{print $1}' | sort | uniq | head -1 | cut -c3-)
+COLOR=$(< "${plugin_state}" awk '{print $1}' | sort | uniq | head -1 | cut -c3-)
 
 # Send informations to Xymon server
 $XYMON "${XYMSRV}" "status ${MACHINE}.${plugin_name} ${COLOR} SMART health check
 
-$(< /tmp/dcheck cut -c2-)
+$(< "${plugin_state}" cut -c2-)
 
 ==================== Detailed status ====================
 
-$(cat /tmp/dres)
+$(cat "${plugin_result}")
 "
 
 # Clean temp files
-rm -f -- /tmp/dres /tmp/dcheck /tmp/dscan
+## As the Xymon's tmpdir is used to store log files, no need to delete them at
+## the end of the script. They will be emptied at the beginning of the next run.
 
 exit 0
