@@ -83,6 +83,12 @@ xymon_plug_libs_default_whitelist:
     - '.*'
   /usr/lib/x86_64-linux-gnu/sssd/sssd_be:
     - '.*'
+  /usr/lib/x86_64-linux-gnu/sssd/sssd_autofs:
+    - '.*'
+  /usr/lib/x86_64-linux-gnu/sssd/sssd_nss:
+    - '.*'
+  /usr/lib/x86_64-linux-gnu/sssd/sssd_pam:
+    - '.*'
   /usr/sbin/sssd:
     - '.*'
   /sbin/multipathd:
