@@ -94,6 +94,20 @@ network interface states.
 * **xymon_cli__plug_netstats_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/netstats.cfg.j2`].
 * **xymon_cli__plug_netstats_interval** : Time between each run of the `netstats` plugin [default : `5m`].
 
+#### SGE
+
+Variables for sge plugin from [ipr-cnrs.scripts][sge plugin source].
+The plugin check health status for SGE queues and display informations about
+SGE jobs and host.
+
+* **xymon_cli__plug_sge_state** : The state of plugin `sge` [default : `False`].
+* **xymon_cli__plug_sge_script_path** : Path to the `sge` script [default : `'/usr/lib/xymon/client/ext/sge'`].
+* **xymon_cli__plug_sge_script_tpl** : Template used to generate the previous script [default : `'usr/lib/xymon/client/ext/sge.j2'`].
+* **xymon_cli__plug_sge_script_url** : Use a remote file to get the previous script instead of a template [default : `''`].
+* **xymon_cli__plug_sge_path** : Configuration file for the `sge` plugin [default : `'/etc/xymon/clientlaunch.d/sge.cfg'`].
+* **xymon_cli__plug_sge_tpl** : Template used to generate the previous config file [default : `'etc/xymon/clientlaunch.d/sge.cfg.j2'`].
+* **xymon_cli__plug_sge_interval** : Time between each run of the `sge` plugin [default : `'10m'`]
+
 #### Smartoverall
 
 Variables for Smartoverall plugin from [ipr-cnrs.scripts][smartoverall plugin source].
@@ -194,6 +208,7 @@ Jérémy Gardais
 [wtfpl website]: http://www.wtfpl.net/about/
 [ipr website]: https://ipr.univ-rennes1.fr/
 
+[sge plugin source]: https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
 [smartoverall plugin source]: https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
 [smart plugin source]: https://github.com/skazi0/xymon-plugins
 [zfs plugin source]: https://wiki.xymonton.org/doku.php/monitors:bb-zfs

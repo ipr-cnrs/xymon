@@ -1,7 +1,8 @@
-## v1.x.y
+## v1.5.0
 
 ### Enhancements
 * Possibility to define URLs in order to get the latest version of SMART's scripts.
+* Add sge plugin from https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
 
 ## v1.4.0
 

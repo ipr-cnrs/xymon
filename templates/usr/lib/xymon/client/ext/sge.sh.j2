@@ -1,0 +1,252 @@
+#!/bin/sh
+
+# {{ ansible_managed }}
+# From ipr-cnrs.xymon role
+# https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
+#
+# SGE: Sun Grid Engine check - Xymon external script test
+#
+#####  Purpose is to report back to a central server, all Sun
+#####     Grid Engine software faults.
+#####
+#
+# version 0.4
+#
+# BIG BROTHER / XXXXXXXXXXXXXXXX status
+#
+# Written by Butch Deal <butchdeal@yahoo.com>
+#	     Daniel Gomez <dgomez@tigr.org,daniel@ixplosive.com>
+#	     Jérémy Gardais <jeremy.gardais@univ-rennes1.fr>
+#
+# v0.4 09/06/20  clean, correction,… for Xymon 4.3.28
+# v0.3e 10/14/08 cut down on the number of qhost runs
+# v0.3d 03/31/06 added alarm/suspend state identification
+# v0.3c 03/01/06 propogated yellow state upon UNAVAILABLE queue intances
+# v0.3b 01/31/06 fixed yellow warning queue status for ambigious config test
+# v0.3a 01/31/06 added unknown queue status and ambigious config test
+# v0.3 01/26/06 fixed status reporting and optimized job status
+# v0.2 08/03/05 flag disabled queues as clear
+# v0.1 07/28/05 authored
+
+########################################
+# NOTE
+# The version v0.4 has only been tested with Xymon (server and client) 4.2.x.
+#
+# The color status with respects to queue status is arbitrary and should be
+# reviewed for your particular environment.
+#
+# Tested on :
+#   Solaris & Linux
+#   Linux only (for v0.4)
+########################################
+
+########################################
+# INSTALLATION
+#  step 1  - copy to Xymon client's ext dir
+#  step 2  - New clientlaunch.d/sge.cfg file
+#  step 3  - restart Xymon client
+#
+# NOTE - the TEST variable in the configuration section, this is the name used
+#        as the column header.
+########################################
+
+##################################
+# CONFIGURE IT HERE
+##################################
+readonly PLUGIN_NAME=$(basename "${0}")
+
+readonly TEST="sge"
+readonly PLUGIN_RESULT="${XYMONTMP}/${MACHINEDOTS}.${TEST}.plugin_result"
+
+readonly QSTAT=$(command -v qstat)
+readonly QHOST=$(command -v qhost)
+readonly QSELECT=$(command -v qselect)
+export QSTAT QHOST QSELECT
+
+# define colours for graphics
+# Comment these out if using older BB versions
+CLEAR_PIC="&clear"
+RED_PIC="&red"
+YELLOW_PIC="&yellow"
+GREEN_PIC="&green"
+UNKNOWN_PIC="&purple"
+
+##################################
+# Start of script
+##################################
+
+get_header()
+{
+	echo ""
+	#echo "<FONT SIZE=+2><b>$1</b></FONT> ($2)<BR>"
+	echo "<FONT SIZE=+2><b>$1</b></FONT> <BR>"
+	# If you do not want the header in a bigger font use line below instead
+	#echo "<b>$1</b> ($2)"
+	# If you want the "Paul Luzzi" look uncomment this section and comment
+	# out the above sections:
+	#echo "<P><DIV ALIGN=\"CENTER\"><HR>"
+	#echo "<B>============== $1 ==============</B>"
+	#echo "<B>--- ($2) ---</B>"
+	#echo "<HR></DIV>"
+	#echo "<BLOCKQUOTE>"
+}
+get_header_small()
+{
+	echo ""
+	#echo "<FONT SIZE=+2><b>$1</b></FONT> ($2)<BR>"
+	echo "<FONT SIZE=+1><b>$1</b></FONT> <BR>"
+	# If you do not want the header in a bigger font use line below instead
+	# echo "<b>$1</b> ($2)"
+	# If you want the "Paul Luzzi" look uncomment this section and comment
+	# out the above sections:
+	#echo "<P><DIV ALIGN=\"CENTER\"><HR>"
+	#echo "<B>============== $1 ==============</B>"
+	#echo "<B>--- ($2) ---</B>"
+	#echo "<HR></DIV>"
+	#echo "<BLOCKQUOTE>"
+}
+
+
+get_footer()
+{
+	echo ""
+	# If you want the "Paul Luzzi" look uncomment this section and comment
+	# out the above sections:
+	#echo "</BLOCKQUOTE>"
+}
+
+#####
+#####  Get Status proc - used to get all responses
+#####
+get_status()
+{
+	#####
+	#####  Setup some variables for use later
+	#####
+	COLOR="green"
+
+	# Check defaults have been set
+	if [ "${QSTAT}" = "" ]; then
+		readonly QSTAT=$(command -v qstat)
+		echo ""
+		echo "$YELLOW_PIC QSTAT command is not defined in etc/bbsys.local - using default: ${QSTAT}"
+	fi
+
+	if [ "${QHOST}" = "" ]; then
+		readonly QHOST=$(command -v qhost)
+		echo ""
+		echo "$YELLOW_PIC QHOST command is not defined in etc/bbsys.local - using default: ${QHOST}"
+	fi
+
+	if [ "${QSELECT}" = "" ]; then
+		readonly QSELECT=$(command -v qselect)
+		echo ""
+		echo "$YELLOW_PIC QSELECT command is not defined in etc/bbsys.local - using default: ${QSELECT}"
+	fi
+
+	###
+	### Check the jobs
+	###
+	get_header "Jobs" "$QSTAT -l hostname=$MACHINEDOTS"
+	jobs=$(${QSTAT} -l hostname="${MACHINEDOTS}" -s r -u \*)
+	if [ -z "$jobs" ]; then
+		echo "No Running Jobs"
+	else
+		${QSTAT} -l hostname="${MACHINEDOTS}" -s r -u \*
+	fi
+	get_footer
+
+	###
+	### Check the host
+	###
+	get_header "Host" "$METAHS -i"
+	${QHOST} -h "${MACHINEDOTS}" | grep -v "global"
+	get_footer
+
+	###
+	### Identify queue memberships
+	###
+	#get_header "Queue Membership" "$QHOST -q"
+	#${QHOST} -h ${MACHINEDOTS} -q | tail +5
+	#get_footer
+
+	###
+	### Check queue instance states
+	###
+	queueTriggered=false;
+	#  Queueset=$(${QHOST} -h ${MACHINEDOTS} -q | tail +5 | awk '{ print $1 }')
+	${QHOST} -h "${MACHINEDOTS}" -q | tail +5 > "${PLUGIN_RESULT}.QSTATE"
+	Queueset=$(< "${PLUGIN_RESULT}.QSTATE" awk '{ print $1 }')
+	for Qset in $Queueset; do
+		#    qstate=$(${QHOST} -q -h "${MACHINEDOTS}" | tail +5 | grep " $Qset" | awk '{print $4}')
+		qstate=$(grep " $Qset" "${PLUGIN_RESULT}.QSTATE" |  awk '{print $4}')
+
+		# Order determines more significant color status
+		if [ "$(echo "${qstate}" | grep -c d)" != "0" ]; then
+			COLOR="clear"
+			queueMsg=$(echo "$queueMsg<BR>$CLEAR_PIC $Qset@$HOST is DISABLED")
+			queueTriggered=true;
+		elif [ "$(echo "${qstate}" | grep -c E)" != "0" ]; then
+			COLOR="red"
+			queueMsg=$(echo "$queueMsg<BR>$RED_PIC $Qset@$HOST is in ERROR!")
+			queueTriggered=true;
+		elif [ "$(echo "${qstate}" | grep -c c)" != "0" ]; then
+			COLOR="yellow"
+			queueMsg=$(echo "$queueMsg<BR>$YELLOW_PIC $Qset@$HOST has an ambigious configuration!")
+			queueTriggered=true;
+		elif [ "$(echo "${qstate}" | grep -c a)" != "0" ] || \
+			[ "$(echo "${qstate}" | grep -c A)" != "0" ]; then
+				queueMsg=$(echo "$queueMsg<BR>$YELLOW_PIC $Qset@$HOST is in ALARM")
+			elif [ "$(echo "${qstate}" | grep -c s)" != "0" ] || \
+				[ "$(echo "${qstate}" | grep -c S)" != "0" ]; then
+					queueMsg=$(echo "$queueMsg<BR>$YELLOW_PIC $Qset@$HOST is SUSPENDED")
+				elif [ "$(echo "${qstate}" | grep -c u)" != "0" ]; then
+					COLOR="yellow"
+					queueMsg=$(echo "$queueMsg<BR>$YELLOW_PIC $Qset@$HOST is UNAVAILABLE!")
+					queueTriggered=true;
+				elif [ "$qstate" = "" ]; then
+					queueMsg=$(echo "$queueMsg<BR>$GREEN_PIC $Qset@$HOST is OK")
+				else
+					queueMsg=$(echo "$queueMsg<BR>$UNKNOWN_PIC $Qset@$HOST is UNKNOWN")
+					queueTriggered=true;
+		fi
+	done
+
+	if [ -f "${PLUGIN_RESULT}.QSTATE" ]; then
+		rm -f -- "${PLUGIN_RESULT}.QSTATE"
+	fi
+
+	get_header "Queue Instance Status Report"
+	echo "$queueMsg"
+	get_footer
+
+	#####
+	#####  Make sure to export COLOR so that it gets back to "central"
+	#####
+	export COLOR
+
+#####
+#####  End of get_status proc
+#####
+}
+
+#####
+#####  Main body
+#####
+get_status > "${PLUGIN_RESULT}"
+
+	# NOW USE THE XYMON COMMAND TO SEND THE DATA ACROSS
+	$XYMON "${XYMSRV}" "status ${MACHINE}.${TEST} ${COLOR} $($DATE) $(cat ${PLUGIN_RESULT})"
+	#For testing only
+	#       echo $XYMON "${XYMSRV}" "status ${MACHINE}.${TEST} ${COLOR} $($DATE) $(cat ${PLUGIN_RESULT})" > /tmp/sgetmp
+
+# Clean up our mess
+# Checking for existence of each file since the whole test may be optional
+#   and may not actually run on every client
+#
+if [ -f "${PLUGIN_RESULT}" ]; then
+	rm -f -- "${PLUGIN_RESULT}"
+fi
+##############################################
+# end of script
+##############################################

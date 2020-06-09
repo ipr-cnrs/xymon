@@ -197,6 +197,42 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+# Manage sge plugin [[[1
+- name: PLUGIN sge config
+  template:
+    src: '{{ xymon_cli__plug_sge_tpl }}'
+    dest: '{{ xymon_cli__plug_sge_path }}'
+    owner: root
+    group: root
+    mode: 0644
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
+- name: PLUGIN sge script file from template
+  template:
+    src: '{{ xymon_cli__plug_sge_script_tpl }}'
+    dest: '{{ xymon_cli__plug_sge_script_path }}'
+    owner: root
+    group: xymon
+    mode: 0755
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool and
+         xymon_cli__plug_sge_script_url|length == 0 )
+  notify: restart xymon-client service
+
+- name: PLUGIN sge script file from URL
+  get_url:
+    url:   '{{ xymon_cli__plug_sge_script_url }}'
+    dest:  '{{ xymon_cli__plug_sge_script_path }}'
+    owner: root
+    group: xymon
+    mode:  0755
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool and
+         xymon_cli__plug_sge_script_url|length > 0 )
+  notify: restart xymon-client service
+
 # Manage smartoverall plugin [[[1
 - name: PLUGIN smartoverall packages
   package:
@@ -294,7 +330,6 @@
          xymon_plug_manage|bool and
          xymon_cli__plug_smart_script_url|length > 0 )
   notify: restart xymon-client service
-
 
 # Manage zfs plugin [[[1
 - name: PLUGIN zfs config file

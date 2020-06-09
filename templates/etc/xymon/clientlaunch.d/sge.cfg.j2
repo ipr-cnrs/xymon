@@ -1,0 +1,8 @@
+[sge]
+	# {{ ansible_managed }}
+	## From ipr-cnrs.xymon role
+	{{ '#DISABLED' if xymon_cli__plug_sge_state else 'DISABLED' }}
+	ENVFILE /etc/xymon/xymonclient.cfg
+	CMD {{ xymon_cli__plug_sge_script_path }}
+	LOGFILE /var/log/xymon/sge.log
+	INTERVAL {{ xymon_cli__plug_sge_interval }}
