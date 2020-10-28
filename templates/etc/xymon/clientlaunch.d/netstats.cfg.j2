@@ -1,4 +1,6 @@
 [netstats]
+	# {{ ansible_managed }}
+	## From ipr-cnrs.xymon role
 	{{ '#DISABLED' if xymon_cli__plug_netstats_state else 'DISABLED' }}
 	ENVFILE /etc/xymon/xymonclient.cfg
 	CMD $XYMONCLIENTHOME/ext/netstats

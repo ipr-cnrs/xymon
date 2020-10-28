@@ -1,4 +1,6 @@
 [apt]
+	# {{ ansible_managed }}
+	## From ipr-cnrs.xymon role
 	{{ '#DISABLED' if xymon_plug_apt_state else 'DISABLED' }}
 	ENVFILE /etc/xymon/xymonclient.cfg
 	CMD $XYMONCLIENTHOME/ext/apt

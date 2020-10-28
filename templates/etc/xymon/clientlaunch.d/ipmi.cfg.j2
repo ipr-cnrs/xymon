@@ -1,4 +1,6 @@
 [ipmi]
+	# {{ ansible_managed }}
+	## From ipr-cnrs.xymon role
 	{{ '#DISABLED' if xymon_cli__plug_ipmi_state else 'DISABLED' }}
 	ENVFILE /etc/xymon/xymonclient.cfg
 	CMD /usr/bin/sudo -E -u root $XYMONCLIENTHOME/ext/ipmi
