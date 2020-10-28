@@ -1,0 +1,8 @@
+[temp]
+	# {{ ansible_managed }}
+	## From ipr-cnrs.xymon role
+	{{ '#DISABLED' if xymon_cli__plug_temp_state else 'DISABLED' }}
+	ENVFILE /etc/xymon/xymonclient.cfg
+	CMD $XYMONCLIENTHOME/ext/temp
+	LOGFILE /var/log/xymon/xymonclient.log
+	INTERVAL {{ xymon_cli__plug_temp_interval }}

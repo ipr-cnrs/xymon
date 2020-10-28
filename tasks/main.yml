@@ -331,6 +331,31 @@
          xymon_cli__plug_smart_script_url|length > 0 )
   notify: restart xymon-client service
 
+# Manage temp plugin [[[1
+- name: PLUGIN temp packages
+  package:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - '{{ xymon_cli__plug_temp_package | to_nice_json }}'
+  register: temp_plug_result
+  until: temp_plug_result is success
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool and
+         xymon_cli__plug_temp_state|bool)
+  notify: restart xymon-client service
+
+- name: PLUGIN temp
+  template:
+    src: '{{ xymon_cli__plug_temp_tpl }}'
+    dest: '{{ xymon_cli__plug_temp_path }}'
+    owner: root
+    group: root
+    mode: 0644
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
 # Manage zfs plugin [[[1
 - name: PLUGIN zfs config file
   template:

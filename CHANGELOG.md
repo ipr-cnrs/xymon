@@ -1,3 +1,8 @@
+## v1.X.Y
+
+### Enhancements
+* Add temp probe configuration.
+
 ## v1.5.0
 
 ### Enhancements

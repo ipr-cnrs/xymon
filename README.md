@@ -140,6 +140,16 @@ one's recommended by the vendor and check a recent (<24h) test was done.
 * **xymon_cli__plug_smart_tpl** : Template used to generate the previous config file [default : `'etc/xymon/clientlaunch.d/smart.cfg.j2'`].
 * **xymon_cli__plug_smart_interval** : Time between each run of the `smart` plugin [default : `'10m'`]
 
+#### Temp
+
+Variables for the Mq plugin from hobbit-plugins. Simple temperature monitor.
+
+* **xymon_cli__plug_temp_state** : The state of plugin `temp` [default : `False`].
+* **xymon_cli__plug_temp_package** : The packages to install to provide `temp` plugin [default : `[ 'libfile-which-perl', 'libyaml-tiny-perl', 'hddtemp', 'smartmontools', 'libxml-twig-perl' ]`].
+* **xymon_cli__plug_temp_path** : Configuration file for the `temp` plugin [default : `'/etc/xymon/clientlaunch.d/temp.cfg'`].
+* **xymon_cli__plug_temp_tpl** : Template used to generate the previous config file [default : `'etc/xymon/clientlaunch.d/temp.cfg.j2'`].
+* **xymon_cli__plug_temp_interval** : Time between each run of the `temp` plugin [default : `'5m'`]
+
 #### ZFS
 
 Variables for ZFS plugin from [Xymonton][zfs plugin source]. The plugin check

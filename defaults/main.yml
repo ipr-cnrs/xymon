@@ -149,6 +149,15 @@ xymon_cli__plug_smart_tpl: 'etc/xymon/clientlaunch.d/smart.cfg.j2'
 xymon_cli__plug_smart_interval: '10m'
 
                                                                    # ]]]
+## Plugin temp [[[
+### Enable by default on hardware host
+xymon_cli__plug_temp_state: False
+xymon_cli__plug_temp_package: [ 'libfile-which-perl', 'libyaml-tiny-perl', 'hddtemp', 'smartmontools', 'libxml-twig-perl' ]
+xymon_cli__plug_temp_path: '/etc/xymon/clientlaunch.d/temp.cfg'
+xymon_cli__plug_temp_tpl: 'etc/xymon/clientlaunch.d/temp.cfg.j2'
+xymon_cli__plug_temp_interval: '5m'
+
+                                                                   # ]]]
 ## Plugin zfs [[[
 xymon_cli__plug_zfs_state: false
 xymon_cli__plug_zfs_script_path: '/usr/lib/xymon/client/ext/zfs'
