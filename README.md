@@ -150,6 +150,16 @@ Variables for the Mq plugin from hobbit-plugins. Simple temperature monitor.
 * **xymon_cli__plug_temp_tpl** : Template used to generate the previous config file [default : `'etc/xymon/clientlaunch.d/temp.cfg.j2'`].
 * **xymon_cli__plug_temp_interval** : Time between each run of the `temp` plugin [default : `'5m'`]
 
+##### Nvidia support
+
+The temp can also checks NVidia GPU temperature. In order to get those
+informations, you need to install `nvidia-smi` package by your own or override
+**xymon_cli__plug_temp_package** var :
+
+``` yml
+xymon_cli__plug_temp_package: [ 'libfile-which-perl', 'libyaml-tiny-perl', 'hddtemp', 'smartmontools', 'libxml-twig-perl', 'nvidia-smi' ]
+```
+
 #### ZFS
 
 Variables for ZFS plugin from [Xymonton][zfs plugin source]. The plugin check
@@ -161,6 +171,18 @@ health (global and for pools), capacity and snapshot status.
 * **xymon_cli__plug_zfs_path** : Configuration file for the `zfs` plugin [default : `/etc/xymon/clientlaunch.d/zfs.cfg`].
 * **xymon_cli__plug_zfs_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/zfs.cfg.j2`].
 * **xymon_cli__plug_zfs_interval** : Time between each run of the `zfs` plugin [default : `5m`].
+
+#### Automatically enable some probes
+
+It can be useful to automatically enable some probes according to the type of
+servers :
+* Enable temp probe on hardware hosts (also useful for Smartoverall and Smart):
+
+``` yml
+xymon_cli__plug_temp_state: '{{ True
+                                 if (ansible_virtualization_role == "host")
+                                 else False }}'
+```
 
 ### OS Specific Variables
 

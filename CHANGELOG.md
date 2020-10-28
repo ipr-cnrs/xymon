@@ -1,7 +1,8 @@
-## v1.X.Y
+## v1.5.1
 
 ### Enhancements
 * Add temp probe configuration.
+* Add example to enable probes for hardware hosts.
 
 ## v1.5.0
 
