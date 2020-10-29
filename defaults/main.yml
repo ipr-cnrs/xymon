@@ -105,6 +105,13 @@ xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
 xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
 xymon_plug_mq_interval: '5m'
 ## ]]]
+## Plugin net [[[
+xymon_cli__plug_net_state: false
+xymon_cli__plug_net_package: [ 'ethtool', 'iproute2', 'libfile-slurp-perl', 'libfile-which-perl', 'libipc-run-perl', 'libyaml-tiny-perl' ]
+xymon_cli__plug_net_path: '/etc/xymon/clientlaunch.d/net.cfg'
+xymon_cli__plug_net_tpl: 'etc/xymon/clientlaunch.d/net.cfg.j2'
+xymon_cli__plug_net_interval: '5m'
+## ]]]
 ## Plugin netstats [[[
 xymon_cli__plug_netstats_state: false
 xymon_cli__plug_netstats_package: [ 'libfile-which-perl', 'libfile-slurp-perl', 'libipc-run-perl', 'libyaml-tiny-perl', 'iproute2', 'ethtool' ]

@@ -1,3 +1,8 @@
+## v1.X.Y
+
+### Enhancements
+* Add net probe management.
+
 ## v1.5.1
 
 ### Enhancements

@@ -83,6 +83,18 @@ mail queue.
 * **xymon_plug_mq_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/mq.cfg.j2`].
 * **xymon_plug_mq_interval** : Time between each run of the `mq` plugin [default : `5m`].
 
+#### Net
+
+Variables for the Net plugin from hobbit-plugins. The plugin check network
+interface states. Check the [Readme](net plugin doc) of the project for more
+informations.
+
+* **xymon_cli__plug_net_state** : The state of plugin `net` [default : `false`].
+* **xymon_cli__plug_net_package** : The packages to install to provide `net` plugin [default : `[ 'ethtool', 'iproute2', 'libfile-slurp-perl', 'libfile-which-perl', 'libipc-run-perl', 'libyaml-tiny-perl' ]`].
+* **xymon_cli__plug_net_path** : Configuration file for the `net` plugin [default : `/etc/xymon/clientlaunch.d/net.cfg`].
+* **xymon_cli__plug_net_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/net.cfg.j2`].
+* **xymon_cli__plug_net_interval** : Time between each run of the `net` plugin [default : `5m`].
+
 #### Netstats
 
 Variables for the Net/Netstats plugin from hobbit-plugins. The plugin check
@@ -240,6 +252,7 @@ Jérémy Gardais
 [wtfpl website]: http://www.wtfpl.net/about/
 [ipr website]: https://ipr.univ-rennes1.fr/
 
+[net plugin doc]: https://salsa.debian.org/debian/hobbit-plugins#net-check-network-interface-states
 [sge plugin source]: https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
 [smartoverall plugin source]: https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
 [smart plugin source]: https://github.com/skazi0/xymon-plugins
