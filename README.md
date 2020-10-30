@@ -94,6 +94,12 @@ informations.
 * **xymon_cli__plug_net_path** : Configuration file for the `net` plugin [default : `/etc/xymon/clientlaunch.d/net.cfg`].
 * **xymon_cli__plug_net_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/net.cfg.j2`].
 * **xymon_cli__plug_net_interval** : Time between each run of the `net` plugin [default : `5m`].
+* **xymon_cli__plug_net_conf_path**: Configuration file for the `net` script (probe silently exit if not present) [default : `/etc/xymon/net.yaml`].
+* **xymon_cli__plug_net_conf_tpl**: Template used to generate the previous config file [default : `etc/xymon/net.yaml.j2`].
+
+You really should consider writing your own template for `net` script,
+specific to your host(s) network configuration and override
+**xymon_cli__plug_net_conf_tpl** variable.
 
 #### Netstats
 

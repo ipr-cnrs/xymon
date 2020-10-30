@@ -111,6 +111,9 @@ xymon_cli__plug_net_package: [ 'ethtool', 'iproute2', 'libfile-slurp-perl', 'lib
 xymon_cli__plug_net_path: '/etc/xymon/clientlaunch.d/net.cfg'
 xymon_cli__plug_net_tpl: 'etc/xymon/clientlaunch.d/net.cfg.j2'
 xymon_cli__plug_net_interval: '5m'
+xymon_cli__plug_net_conf_path: '/etc/xymon/net.yaml'
+xymon_cli__plug_net_conf_tpl: 'etc/xymon/net.yaml.j2'
+#
 ## ]]]
 ## Plugin netstats [[[
 xymon_cli__plug_netstats_state: false
@@ -118,6 +121,7 @@ xymon_cli__plug_netstats_package: [ 'libfile-which-perl', 'libfile-slurp-perl', 
 xymon_cli__plug_netstats_path: '/etc/xymon/clientlaunch.d/netstats.cfg'
 xymon_cli__plug_netstats_tpl: 'etc/xymon/clientlaunch.d/netstats.cfg.j2'
 xymon_cli__plug_netstats_interval: '5m'
+
 ## ]]]
 ## Plugin SGE [[[
 ### From https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh

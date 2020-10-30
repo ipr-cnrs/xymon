@@ -1,0 +1,39 @@
+# {{ ansible_managed }}
+## From ipr-cnrs.xymon role
+{{ ansible_hostname }}:
+  - {{ ansible_default_ipv4.interface }}
+
+## This file is just here to allow the net probe, you juste enable,
+## to send something.
+
+## Check the README of hobbit-plugins project :
+## https://salsa.debian.org/debian/hobbit-plugins#net-check-network-interface-states
+## To get an overview of what can be done with this probe and how to get
+## a working and more complete configuration file (check speed, mtu,…).
+
+## You really should consider writing your own template and override
+## `xymon_cli__plug_net_conf_tpl` variable.
+## As the probe search for the hostname to get it's configuration, you can
+## write one single configuration file with several hosts definition.
+## And if you don't like template, you can simply put static informations ;)
+
+## Example for "host1"
+#host1:
+#  ### Ensure eno1 is up with a "Direct Attach Copper" (see ethtool) and
+#  ### with a speed of 10000Mb/s
+#  eno1:
+#    UP: red
+#    "Port: Direct Attach Copper": red
+#    "Speed: 10000Mb/s": red
+#  ### Ensure bond0 and vmbr0 are up
+#  bond0:
+#    UP: red
+#  vmbr0:
+#    UP: red
+#  ### Ensure vlan2 as MTU 9000
+#  vlan2:
+#    "mtu 9000": red
+#  ### Ensure eno3 is up with a speed of 1000Mb/s
+#  eno3:
+#    UP: red
+#    "1000Mb/s": red

@@ -197,6 +197,17 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+- name: PLUGIN net config template
+  template:
+    src: '{{ xymon_cli__plug_net_conf_tpl }}'
+    dest: '{{ xymon_cli__plug_net_conf_path }}'
+    owner: root
+    group: root
+    mode: 0644
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
 # Manage netstats plugin [[[1
 - name: PLUGIN netstats packages
   package:

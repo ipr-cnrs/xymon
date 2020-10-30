@@ -2,6 +2,8 @@
 
 ### Enhancements
 * Add net probe management.
+* Add configuration file for `net` script (/etc/xymon/net.yaml) and
+  possibility to set your own template. Check [net documentation](net plugin doc).
 
 ## v1.5.1
 
@@ -90,3 +92,4 @@
 * Allow to set Xymon servers list for `xymon-client` config.
 
 [20180711 hobbit-plugins debian changelog]: https://salsa.debian.org/debian/hobbit-plugins/blob/debian-20180711/debian/changelog
+[net plugin doc]: https://salsa.debian.org/debian/hobbit-plugins#net-check-network-interface-states
