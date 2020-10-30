@@ -209,19 +209,6 @@
   notify: restart xymon-client service
 
 # Manage netstats plugin [[[1
-- name: PLUGIN netstats packages
-  package:
-    name: '{{ item }}'
-    state: 'present'
-  with_items:
-    - '{{ xymon_cli__plug_netstats_package | to_nice_json }}'
-  register: netstats_plug_result
-  until: netstats_plug_result is success
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_cli__plug_netstats_state|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN netstats config
   template:
     src: '{{ xymon_cli__plug_netstats_tpl }}'

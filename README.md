@@ -107,7 +107,6 @@ Variables for the Net/Netstats plugin from hobbit-plugins. The plugin check
 network interface states.
 
 * **xymon_cli__plug_netstats_state** : The state of plugin `netstats` [default : `false`].
-* **xymon_cli__plug_netstats_package** : The packages to install to provide `netstats` plugin [default : `[ 'libfile-which-perl', 'libfile-slurp-perl', 'libipc-run-perl', 'libyaml-tiny-perl', 'iproute2', 'ethtool' ]`].
 * **xymon_cli__plug_netstats_path** : Configuration file for the `netstats` plugin [default : `/etc/xymon/clientlaunch.d/netstats.cfg`].
 * **xymon_cli__plug_netstats_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/netstats.cfg.j2`].
 * **xymon_cli__plug_netstats_interval** : Time between each run of the `netstats` plugin [default : `5m`].

@@ -1,9 +1,12 @@
-## v1.X.Y
+## v1.5.2
 
 ### Enhancements
 * Add net probe management.
 * Add configuration file for `net` script (/etc/xymon/net.yaml) and
   possibility to set your own template. Check [net documentation](net plugin doc).
+* Remove unecessary netstats dependencies (due to a previous misunderstanding)
+  between `net` and `netstats` probes. `netstats` only
+  reads /proc/net/{netstat,snmp} files.
 
 ## v1.5.1
 
