@@ -85,6 +85,8 @@ mail queue.
 
 #### Net
 
+Require hobbit-plugins > 20190129.
+
 Variables for the Net plugin from hobbit-plugins. The plugin check network
 interface states. Check the [Readme](net plugin doc) of the project for more
 informations.
