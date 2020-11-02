@@ -1,0 +1,9 @@
+# Requires megaclisas-status package from https://hwraid.le-vert.net/wiki/DebianPackages
+[megaraid]
+	# {{ ansible_managed }}
+	## From ipr-cnrs.xymon role
+	{{ '#DISABLED' if xymon_cli__plug_megaraid_state else 'DISABLED' }}
+	ENVFILE /etc/xymon/xymonclient.cfg
+	CMD /usr/bin/xynagios --test=megaraid -- sudo megaclisas-status --nagios
+	LOGFILE /var/log/xymon/xymonclient.log
+	INTERVAL 5m

@@ -1,6 +1,7 @@
 ## v1.5.2
 
 ### Enhancements
+* Add megaraid probe management.
 * Add net probe management.
 * Add configuration file for `net` script (/etc/xymon/net.yaml) and
   possibility to set your own template. Check [net documentation](net plugin doc).

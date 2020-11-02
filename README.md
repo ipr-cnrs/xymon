@@ -72,6 +72,22 @@ processes with upgraded libraries.
 * **xymon_plug_libs_group_whitelist** : Group whitelist of processes that should not be monitored with `libs` plugin.
 * **xymon_plug_libs_host_whitelist** : Host whitelist of processes that should not be monitored with `libs` plugin.
 
+#### Net
+
+Require hobbit-plugins > 20200525.
+
+Variables for the Megaraid plugin from hobbit-plugins. The plugin check
+hardware raid status with Megacli tools [from hwraid.le-vert](url hwraid).
+You will need to install `megaclisas-status` by your own to get this plugin
+running correctly. Please take a look to the [Readme](megaraid plugin doc) of
+the project for more informations.
+
+* **xymon_cli__plug_megaraid_state** : The state of plugin `megaraid` [default : `false`].
+* **xymon_cli__plug_megaraid_package** : The packages to install to provide `megaraid` plugin [default : `[ 'libipc-run-perl' ]`].
+* **xymon_cli__plug_megaraid_path** : Configuration file for the `megaraid` plugin [default : `/etc/xymon/clientlaunch.d/megaraid.cfg`].
+* **xymon_cli__plug_megaraid_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/megaraid.cfg.j2`].
+* **xymon_cli__plug_megaraid_interval** : Time between each run of the `megaraid` plugin [default : `5m`].
+
 #### Mq
 
 Variables for the Mq plugin from hobbit-plugins. The plugin check Postfix's
@@ -259,6 +275,8 @@ Jérémy Gardais
 [wtfpl website]: http://www.wtfpl.net/about/
 [ipr website]: https://ipr.univ-rennes1.fr/
 
+[url hwraid]: https://hwraid.le-vert.net/wiki/DebianPackages
+[megaraid plugin doc]: https://salsa.debian.org/debian/hobbit-plugins#megaraid-check-state-of-lsi-megaraid-sas-controllers
 [net plugin doc]: https://salsa.debian.org/debian/hobbit-plugins#net-check-network-interface-states
 [sge plugin source]: https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
 [smartoverall plugin source]: https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall

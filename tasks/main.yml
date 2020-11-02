@@ -147,6 +147,31 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+# Manage megaraid plugin [[[1
+- name: PLUGIN megaraid packages
+  package:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - '{{ xymon_cli__plug_megaraid_package | to_nice_json }}'
+  register: megaraid_plug_result
+  until: megaraid_plug_result is success
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool and
+         xymon_cli__plug_megaraid_state|bool)
+  notify: restart xymon-client service
+
+- name: PLUGIN megaraid
+  template:
+    src: '{{ xymon_cli__plug_megaraid_tpl }}'
+    dest: '{{ xymon_cli__plug_megaraid_path }}'
+    owner: root
+    group: root
+    mode: 0644
+  when: (xymon_cli_manage|bool and
+         xymon_plug_manage|bool)
+  notify: restart xymon-client service
+
 # Manage mq plugin [[[1
 - name: PLUGIN mq packages
   package:
