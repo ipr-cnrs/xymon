@@ -14,41 +14,41 @@
 - name: client package
   package:
     name: '{{ item }}'
-    state: '{{ xymon_cli_pkg_state }}'
+    state: '{{ xymon_cli__pkg_state }}'
   with_items:
-    - '{{ xymon_cli_pkg_list | to_nice_json }}'
+    - '{{ xymon_cli__pkg_list | to_nice_json }}'
   register: cli_result
   until: cli_result is success
-  when: xymon_cli_manage|bool
+  when: xymon_cli__manage|bool
 
 # Manage client configuration [[[1
 - name: CONFIG xymon-client service
   template:
-    src: '{{ xymon_cli_default_conf_tpl }}'
-    dest: '{{ xymon_cli_default_conf_path }}'
+    src: '{{ xymon_cli__default_conf_tpl }}'
+    dest: '{{ xymon_cli__default_conf_path }}'
     owner: root
     group: root
     mode: 0644
     backup: true
-  when: xymon_cli_manage|bool
+  when: xymon_cli__manage|bool
   notify: restart xymon-client service
 
 - name: CONFIG xymon user's groups
   user:
     name: xymon
-    groups: '{{ xymon_user_groups }}'
+    groups: '{{ xymon_cli__user_groups }}'
     append: true
-  when: xymon_cli_manage|bool
+  when: xymon_cli__manage|bool
   notify: restart xymon-client service
 
 # Manage service [[[1
-- name: SERVICE manage '{{ xymon_cli_service_name }}'
+- name: SERVICE manage '{{ xymon_cli__service_name }}'
   service:
-    name: '{{ xymon_cli_service_name }}'
+    name: '{{ xymon_cli__service_name }}'
     state: started
-    enabled: '{{ xymon_cli_service_enabled }}'
-  when: (xymon_cli_manage|bool and
-         xymon_cli_service_manage|bool)
+    enabled: '{{ xymon_cli__service_enabled }}'
+  when: (xymon_cli__manage|bool and
+         xymon_cli__service_manage|bool)
 
 # Manage all plugins's dependencies [[[1
 - name: PLUGINS dependencies
@@ -57,8 +57,8 @@
     state: 'present'
   with_items:
     - '{{ xymon_cli__plug_combined_packages | to_nice_json }}'
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool)
   register: combined_packages_plug_result
   until: combined_packages_plug_result is success
   notify: restart xymon-client service
@@ -73,8 +73,8 @@
     mode: 0644
   with_items:
     - '{{ xymon_cli__plug_combined_clientlaunch }}'
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool)
   notify: restart xymon-client service
 
 # Manage apt plugin [[[1
@@ -85,8 +85,8 @@
     owner: root
     group: root
     mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool)
   notify: restart xymon-client service
 
 # Manage libs plugin [[[1
@@ -97,8 +97,8 @@
     owner: root
     group: root
     mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool)
   notify: restart xymon-client service
 
 # Manage net plugin [[[1
@@ -109,8 +109,8 @@
     owner: root
     group: root
     mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool)
   notify: restart xymon-client service
 
 # Manage sge plugin [[[1
@@ -121,8 +121,8 @@
     owner: root
     group: xymon
     mode: 0755
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool and
          xymon_cli__plug_sge_script_url|length == 0 )
   notify: restart xymon-client service
 
@@ -133,8 +133,8 @@
     owner: root
     group: xymon
     mode:  0755
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool and
          xymon_cli__plug_sge_script_url|length > 0 )
   notify: restart xymon-client service
 
@@ -146,8 +146,8 @@
     owner: root
     group: xymon
     mode: 0755
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool and
          xymon_cli__plug_smartoverall_script_url|length == 0 )
   notify: restart xymon-client service
 
@@ -158,8 +158,8 @@
     owner: root
     group: xymon
     mode:  0755
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool and
          xymon_cli__plug_smartoverall_script_url|length > 0 )
   notify: restart xymon-client service
 
@@ -171,8 +171,8 @@
     owner: root
     group: xymon
     mode: 0755
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool and
          xymon_cli__plug_smart_script_url|length == 0 )
   notify: restart xymon-client service
 
@@ -183,8 +183,8 @@
     owner: root
     group: xymon
     mode:  0755
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool and
          xymon_cli__plug_smart_script_url|length > 0 )
   notify: restart xymon-client service
 
@@ -196,6 +196,6 @@
     owner: root
     group: xymon
     mode: 0755
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
+  when: (xymon_cli__manage|bool and
+         xymon_cli__plug_manage|bool)
   notify: restart xymon-client service

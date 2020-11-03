@@ -1,6 +1,8 @@
 ## v2.X.Y
 
 ### Enhancements
+* All vars now starts with "xymon_cli__" for more readability.
+  No backward compatibility with old variable naming! Update your configuration!
 * Add megaraid probe management.
 * Add net probe management.
 * Add configuration file for `net` script (/etc/xymon/net.yaml) and

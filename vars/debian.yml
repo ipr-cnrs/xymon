@@ -1,5 +1,5 @@
 ---
 # vars file for Debian-based distros
-xymon_cli_pkg_list:
+xymon_cli__pkg_list:
   - xymon-client
   - hobbit-plugins

@@ -13,7 +13,7 @@
 # or (multiple servers)
 #   XYMONSERVERS="10.0.0.1 192.168.1.1"
 
-XYMONSERVERS="{{ xymon_srv_list }}"
+XYMONSERVERS="{{ xymon_cli__srv_list }}"
 
 # The defaults usually suffice for the rest of this file,
 # but you can tweak the hostname that the client reports
@@ -23,7 +23,7 @@ XYMONSERVERS="{{ xymon_srv_list }}"
 # CLIENTHOSTNAME=""
 # CLIENTOS="rhel3"
 
-CLIENTHOSTNAME="{{ xymon_cli_hostname }}"
+CLIENTHOSTNAME="{{ xymon_cli__hostname }}"
 
 # Optionally mount a tmpfs on /var/lib/xymon/tmp. On client systems this has
 # the advantage that client reports will continue to work even if the /var

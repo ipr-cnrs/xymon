@@ -7,12 +7,12 @@
 # Packages and installation [[[
 # -----------------------------
 
-# .. envvar:: xymon_cli_manage [[[
+# .. envvar:: xymon_cli__manage [[[
 #
 # If this role should manage the installation of Xymon client
-xymon_cli_manage: true
+xymon_cli__manage: true
                                                                    # ]]]
-# .. envvar:: xymon_cli_pkg_state [[[
+# .. envvar:: xymon_cli__pkg_state [[[
 #
 # What is the desired state which this role's packages should be?
 # Possible options:
@@ -23,45 +23,45 @@ xymon_cli_manage: true
 # ``absent``
 #   Ensure to remove the packages.
 #
-xymon_cli_pkg_state: 'present'
+xymon_cli__pkg_state: 'present'
                                                                    # ]]]
                                                                    # ]]]
 # Server configuration and service [[[
 # ------------------------------------
 
 ## conf
-xymon_cli_default_conf_path: '/etc/default/xymon-client'
-xymon_cli_default_conf_tpl: 'etc/default/xymon-client.j2'
-xymon_cli_hostname: "{{ ansible_fqdn }}"
-xymon_user_groups: 'xymon'
+xymon_cli__default_conf_path: '/etc/default/xymon-client'
+xymon_cli__default_conf_tpl: 'etc/default/xymon-client.j2'
+xymon_cli__hostname: "{{ ansible_fqdn }}"
+xymon_cli__user_groups: 'xymon'
 
 ## service
-xymon_cli_service_manage: true
-xymon_cli_service_name: 'xymon-client'
-xymon_cli_service_enabled: true
+xymon_cli__service_manage: true
+xymon_cli__service_name: 'xymon-client'
+xymon_cli__service_enabled: true
 
 # server
-xymon_srv_list: "monitoring.{{ ansible_domain }}"
+xymon_cli__srv_list: "monitoring.{{ ansible_domain }}"
                                                                    # ]]]
 # Plugins management [[[
 # ----------------------
 
-xymon_plug_manage: true
+xymon_cli__plug_manage: true
 
 ## Plugin apt [[[
-xymon_plug_apt_state: true
-xymon_plug_apt_package: [ 'aptitude', 'dctrl-tools' ]
-xymon_plug_apt_path: '/etc/xymon/clientlaunch.d/apt.cfg'
-xymon_plug_apt_tpl: 'etc/xymon/clientlaunch.d/apt.cfg.j2'
-xymon_plug_apt_interval: '5m'
-xymon_plug_apt_default_whitelist: []
-xymon_plug_apt_whitelist: []
-xymon_plug_apt_group_whitelist: []
-xymon_plug_apt_host_whitelist: []
-xymon_plug_apt_combined_whitelist: '{{ xymon_plug_apt_default_whitelist
-                                   + xymon_plug_apt_whitelist
-                                   + xymon_plug_apt_group_whitelist
-                                   + xymon_plug_apt_host_whitelist }}'
+xymon_cli__plug_apt_state: true
+xymon_cli__plug_apt_package: [ 'aptitude', 'dctrl-tools' ]
+xymon_cli__plug_apt_path: '/etc/xymon/clientlaunch.d/apt.cfg'
+xymon_cli__plug_apt_tpl: 'etc/xymon/clientlaunch.d/apt.cfg.j2'
+xymon_cli__plug_apt_interval: '5m'
+xymon_cli__plug_apt_default_whitelist: []
+xymon_cli__plug_apt_whitelist: []
+xymon_cli__plug_apt_group_whitelist: []
+xymon_cli__plug_apt_host_whitelist: []
+xymon_cli__plug_apt_combined_whitelist: '{{ xymon_cli__plug_apt_default_whitelist
+                                   + xymon_cli__plug_apt_whitelist
+                                   + xymon_cli__plug_apt_group_whitelist
+                                   + xymon_cli__plug_apt_host_whitelist }}'
 
 ## ]]]
 ## Plugin ipmi [[[
@@ -73,13 +73,13 @@ xymon_cli__plug_ipmi_interval: '5m'
 
 ## ]]]
 ## Plugin libs [[[
-xymon_plug_libs_state: true
-xymon_plug_libs_package: [ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libfile-slurp-perl', 'libsort-naturally-perl' ]
-xymon_plug_libs_path: '/etc/xymon/clientlaunch.d/libs.cfg'
-xymon_plug_libs_tpl: 'etc/xymon/clientlaunch.d/libs.cfg.j2'
-xymon_plug_libs_interval: '5m'
+xymon_cli__plug_libs_state: true
+xymon_cli__plug_libs_package: [ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libfile-slurp-perl', 'libsort-naturally-perl' ]
+xymon_cli__plug_libs_path: '/etc/xymon/clientlaunch.d/libs.cfg'
+xymon_cli__plug_libs_tpl: 'etc/xymon/clientlaunch.d/libs.cfg.j2'
+xymon_cli__plug_libs_interval: '5m'
 
-xymon_plug_libs_default_whitelist:
+xymon_cli__plug_libs_default_whitelist:
   /lib/systemd/systemd:
     - '.*'
   /usr/lib/x86_64-linux-gnu/sssd/sssd_be:
@@ -94,9 +94,9 @@ xymon_plug_libs_default_whitelist:
     - '.*'
   /sbin/multipathd:
     - '.*'
-xymon_plug_libs_whitelist: {}
-xymon_plug_libs_group_whitelist: {}
-xymon_plug_libs_host_whitelist: {}
+xymon_cli__plug_libs_whitelist: {}
+xymon_cli__plug_libs_group_whitelist: {}
+xymon_cli__plug_libs_host_whitelist: {}
 
                                                                    # ]]]
 ## Plugin Megaraid [[[
@@ -108,11 +108,11 @@ xymon_cli__plug_megaraid_interval: '5m'
 
 ## ]]]
 ## Plugin mq [[[
-xymon_plug_mq_state: true
-xymon_plug_mq_package: ['libtimedate-perl']
-xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
-xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
-xymon_plug_mq_interval: '5m'
+xymon_cli__plug_mq_state: true
+xymon_cli__plug_mq_package: ['libtimedate-perl']
+xymon_cli__plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
+xymon_cli__plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
+xymon_cli__plug_mq_interval: '5m'
 
 ## ]]]
 ## Plugin net [[[
@@ -192,11 +192,11 @@ xymon_cli__plug_zfs_interval: '5m'
 #
 # Combined packages vars of all enabled plugins.
 #
-xymon_cli__plug_combined_packages: '{{ ((xymon_plug_apt_package               if xymon_plug_apt_state|bool else [])
+xymon_cli__plug_combined_packages: '{{ ((xymon_cli__plug_apt_package          if xymon_cli__plug_apt_state|bool else [])
                                       + (xymon_cli__plug_ipmi_package         if xymon_cli__plug_ipmi_state|bool else [])
-                                      + (xymon_plug_libs_package              if xymon_plug_libs_state|bool else [])
+                                      + (xymon_cli__plug_libs_package         if xymon_cli__plug_libs_state|bool else [])
                                       + (xymon_cli__plug_megaraid_package     if xymon_cli__plug_megaraid_state|bool else [])
-                                      + (xymon_plug_mq_package                if xymon_plug_mq_state|bool else [])
+                                      + (xymon_cli__plug_mq_package           if xymon_cli__plug_mq_state|bool else [])
                                       + (xymon_cli__plug_net_package          if xymon_cli__plug_net_state|bool else [])
                                       + (xymon_cli__plug_smartoverall_package if xymon_cli__plug_smartoverall_state|bool else [])
                                       + (xymon_cli__plug_smart_package        if xymon_cli__plug_smart_state|bool else [])
@@ -209,20 +209,20 @@ xymon_cli__plug_combined_packages: '{{ ((xymon_plug_apt_package               if
 #
 xymon_cli__plug_combined_clientlaunch:
   - name: apt
-    path: '{{ xymon_plug_apt_path }}'
-    template: '{{ xymon_plug_apt_tpl }}'
+    path: '{{ xymon_cli__plug_apt_path }}'
+    template: '{{ xymon_cli__plug_apt_tpl }}'
   - name: ipmi
     path: '{{ xymon_cli__plug_ipmi_path }}'
     template: '{{ xymon_cli__plug_ipmi_tpl }}'
   - name: libs
-    path: '{{ xymon_plug_libs_path }}'
-    template: '{{ xymon_plug_libs_tpl }}'
+    path: '{{ xymon_cli__plug_libs_path }}'
+    template: '{{ xymon_cli__plug_libs_tpl }}'
   - name: megaraid
     path: '{{ xymon_cli__plug_megaraid_path }}'
     template: '{{ xymon_cli__plug_megaraid_tpl }}'
   - name: mq
-    path: '{{ xymon_plug_mq_path }}'
-    template: '{{ xymon_plug_mq_tpl }}'
+    path: '{{ xymon_cli__plug_mq_path }}'
+    template: '{{ xymon_cli__plug_mq_tpl }}'
   - name: net
     path: '{{ xymon_cli__plug_net_path }}'
     template: '{{ xymon_cli__plug_net_tpl }}'

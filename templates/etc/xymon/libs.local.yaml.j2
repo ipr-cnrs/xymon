@@ -1,9 +1,9 @@
 # {{ ansible_managed }}
 ## From ipr-cnrs.xymon role
-{% set inputmerged = xymon_plug_libs_default_whitelist.copy() %}
-{% set _ = inputmerged.update(xymon_plug_libs_whitelist) %}
-{% set _ = inputmerged.update(xymon_plug_libs_group_whitelist) %}
-{% set _ = inputmerged.update(xymon_plug_libs_host_whitelist) %}
+{% set inputmerged = xymon_cli__plug_libs_default_whitelist.copy() %}
+{% set _ = inputmerged.update(xymon_cli__plug_libs_whitelist) %}
+{% set _ = inputmerged.update(xymon_cli__plug_libs_group_whitelist) %}
+{% set _ = inputmerged.update(xymon_cli__plug_libs_host_whitelist) %}
 ---
 whitelist:
 {% for group, rules in inputmerged|dictsort  %}

@@ -1,8 +1,8 @@
 [mq]
 	# {{ ansible_managed }}
 	## From ipr-cnrs.xymon role
-	{{ '#DISABLED' if xymon_plug_mq_state else 'DISABLED' }}
+	{{ '#DISABLED' if xymon_cli__plug_mq_state else 'DISABLED' }}
 	ENVFILE /etc/xymon/xymonclient.cfg
 	CMD $XYMONCLIENTHOME/ext/mq
 	LOGFILE /var/log/xymon/xymonclient.log
-	INTERVAL {{ xymon_plug_mq_interval }}
+	INTERVAL {{ xymon_cli__plug_mq_interval }}

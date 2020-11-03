@@ -122,6 +122,6 @@ then
 fi
 # What: Sent out the final bb message to hobbit server.
 $XYMON $XYMONSRV $XYMONSERVERS "status $MACHINE.$TEST $DISPCOLOR `date` $FIRST_LINE $STRING"
-echo "$XYMON $XYMONSRV $XYMONSERVERS --debug status $MACHINE.$TEST $DISPCOLOR `date` $FIRST_LINE $STRING" > /tmp/xymon_zfs
+echo "$XYMON $XYMONSRV $XYMONSERVERS --debug status $MACHINE.$TEST $DISPCOLOR `date` $FIRST_LINE $STRING" > /tmp/xymon_cli__zfs
 $XYMON $XYMONSRV $XYMONSERVERS "data $MACHINE.$TEST $DISPCOLOR $(echo; echo "$DATA" ;echo;echo)"
 

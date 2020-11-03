@@ -1,5 +1,5 @@
 ---
 # handlers file for ipr.ansible.xymon
 - name: restart xymon-client service
-  service: name={{ xymon_cli_service_name }} state=restarted
-  when: xymon_cli_service_manage
+  service: name={{ xymon_cli__service_name }} state=restarted
+  when: xymon_cli__service_manage
