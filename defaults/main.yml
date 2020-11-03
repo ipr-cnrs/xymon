@@ -186,5 +186,20 @@ xymon_cli__plug_zfs_interval: '5m'
 
                                                                    # ]]]
 
+# .. envvar:: xymon_cli__plug_combined_packages [[[
+#
+# Combined packages vars of all enabled plugins.
+#
+xymon_cli__plug_combined_packages: '{{ ((xymon_plug_apt_package               if xymon_plug_apt_state|bool else [])
+                                      + (xymon_cli__plug_ipmi_package         if xymon_cli__plug_ipmi_state|bool else [])
+                                      + (xymon_plug_libs_package              if xymon_plug_libs_state|bool else [])
+                                      + (xymon_cli__plug_megaraid_package     if xymon_cli__plug_megaraid_state|bool else [])
+                                      + (xymon_plug_mq_package                if xymon_plug_mq_state|bool else [])
+                                      + (xymon_cli__plug_net_package          if xymon_cli__plug_net_state|bool else [])
+                                      + (xymon_cli__plug_smartoverall_package if xymon_cli__plug_smartoverall_state|bool else [])
+                                      + (xymon_cli__plug_smart_package        if xymon_cli__plug_smart_state|bool else [])
+                                      + (xymon_cli__plug_temp_package         if xymon_cli__plug_temp_state|bool else []))
+                                      | sort | unique }}'
+                                                                   # ]]]
 # ]]]
                                                                    # ]]]

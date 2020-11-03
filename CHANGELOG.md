@@ -8,6 +8,7 @@
 * Remove unecessary netstats dependencies (due to a previous misunderstanding)
   between `net` and `netstats` probes. `netstats` only
   reads /proc/net/{netstat,snmp} files.
+* Combine packages vars of all enabled plugins to install them in _one_ task.
 
 ## v1.5.1
 

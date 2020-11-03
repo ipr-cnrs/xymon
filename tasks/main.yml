@@ -50,20 +50,20 @@
   when: (xymon_cli_manage|bool and
          xymon_cli_service_manage|bool)
 
-# Manage apt plugin [[[1
-- name: PLUGIN apt packages
+# Manage all plugins's dependencies [[[1
+- name: PLUGINS dependencies
   package:
     name: '{{ item }}'
     state: 'present'
   with_items:
-    - '{{ xymon_plug_apt_package | to_nice_json }}'
+    - '{{ xymon_cli__plug_combined_packages | to_nice_json }}'
   when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_plug_apt_state|bool)
-  register: apt_plug_result
-  until: apt_plug_result is success
+         xymon_plug_manage|bool)
+  register: combined_packages_plug_result
+  until: combined_packages_plug_result is success
   notify: restart xymon-client service
 
+# Manage apt plugin [[[1
 - name: PLUGIN apt
   template:
     src: '{{ xymon_plug_apt_tpl }}'
@@ -87,19 +87,6 @@
   notify: restart xymon-client service
 
 # Manage ipmi plugin [[[1
-- name: PLUGIN ipmi packages
-  package:
-    name: '{{ item }}'
-    state: 'present'
-  with_items:
-    - '{{ xymon_cli__plug_ipmi_package | to_nice_json }}'
-  register: ipmi_plug_result
-  until: ipmi_plug_result is success
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_cli__plug_ipmi_state|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN ipmi
   template:
     src: '{{ xymon_cli__plug_ipmi_tpl }}'
@@ -112,19 +99,6 @@
   notify: restart xymon-client service
 
 # Manage libs plugin [[[1
-- name: PLUGIN libs packages
-  package:
-    name: '{{ item }}'
-    state: 'present'
-  with_items:
-    - '{{ xymon_plug_libs_package | to_nice_json }}'
-  register: libs_plug_result
-  until: libs_plug_result is success
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_plug_libs_state|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN libs
   template:
     src: '{{ xymon_plug_libs_tpl }}'
@@ -148,19 +122,6 @@
   notify: restart xymon-client service
 
 # Manage megaraid plugin [[[1
-- name: PLUGIN megaraid packages
-  package:
-    name: '{{ item }}'
-    state: 'present'
-  with_items:
-    - '{{ xymon_cli__plug_megaraid_package | to_nice_json }}'
-  register: megaraid_plug_result
-  until: megaraid_plug_result is success
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_cli__plug_megaraid_state|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN megaraid
   template:
     src: '{{ xymon_cli__plug_megaraid_tpl }}'
@@ -173,19 +134,6 @@
   notify: restart xymon-client service
 
 # Manage mq plugin [[[1
-- name: PLUGIN mq packages
-  package:
-    name: '{{ item }}'
-    state: 'present'
-  with_items:
-    - '{{ xymon_plug_mq_package | to_nice_json }}'
-  register: mq_plug_result
-  until: mq_plug_result is success
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_plug_mq_state|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN mq
   template:
     src: '{{ xymon_plug_mq_tpl }}'
@@ -198,19 +146,6 @@
   notify: restart xymon-client service
 
 # Manage net plugin [[[1
-- name: PLUGIN net packages
-  package:
-    name: '{{ item }}'
-    state: 'present'
-  with_items:
-    - '{{ xymon_cli__plug_net_package | to_nice_json }}'
-  register: net_plug_result
-  until: net_plug_result is success
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_cli__plug_net_state|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN net
   template:
     src: '{{ xymon_cli__plug_net_tpl }}'
@@ -282,19 +217,6 @@
   notify: restart xymon-client service
 
 # Manage smartoverall plugin [[[1
-- name: PLUGIN smartoverall packages
-  package:
-    name: '{{ item }}'
-    state: 'present'
-  with_items:
-    - '{{ xymon_cli__plug_smartoverall_package | to_nice_json }}'
-  register: smartoverall_plug_result
-  until: smartoverall_plug_result is success
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_cli__plug_smartoverall_state|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN smartoverall config
   template:
     src: '{{ xymon_cli__plug_smartoverall_tpl }}'
@@ -331,19 +253,6 @@
   notify: restart xymon-client service
 
 # Manage smart plugin [[[1
-- name: PLUGIN smart packages
-  package:
-    name: '{{ item }}'
-    state: 'present'
-  with_items:
-    - '{{ xymon_cli__plug_smart_package | to_nice_json }}'
-  register: smart_plug_result
-  until: smart_plug_result is success
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_cli__plug_smart_state|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN smart config
   template:
     src: '{{ xymon_cli__plug_smart_tpl }}'
@@ -380,19 +289,6 @@
   notify: restart xymon-client service
 
 # Manage temp plugin [[[1
-- name: PLUGIN temp packages
-  package:
-    name: '{{ item }}'
-    state: 'present'
-  with_items:
-    - '{{ xymon_cli__plug_temp_package | to_nice_json }}'
-  register: temp_plug_result
-  until: temp_plug_result is success
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool and
-         xymon_cli__plug_temp_state|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN temp
   template:
     src: '{{ xymon_cli__plug_temp_tpl }}'
