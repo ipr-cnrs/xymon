@@ -63,18 +63,21 @@
   until: combined_packages_plug_result is success
   notify: restart xymon-client service
 
-# Manage apt plugin [[[1
-- name: PLUGIN apt
+# Manage plugins clientlaunch files [[[1
+- name: PLUGINS clientlaunch files
   template:
-    src: '{{ xymon_plug_apt_tpl }}'
-    dest: '{{ xymon_plug_apt_path }}'
+    src: '{{ item.template }}'
+    dest: '{{ item.path }}'
     owner: root
     group: root
     mode: 0644
+  with_items:
+    - '{{ xymon_cli__plug_combined_clientlaunch }}'
   when: (xymon_cli_manage|bool and
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
+# Manage apt plugin [[[1
 - name: PLUGIN apt no_repo_accept whitelist
   template:
     src: 'etc/xymon/apt_no_repo_accept.j2'
@@ -86,30 +89,7 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
-# Manage ipmi plugin [[[1
-- name: PLUGIN ipmi
-  template:
-    src: '{{ xymon_cli__plug_ipmi_tpl }}'
-    dest: '{{ xymon_cli__plug_ipmi_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 # Manage libs plugin [[[1
-- name: PLUGIN libs
-  template:
-    src: '{{ xymon_plug_libs_tpl }}'
-    dest: '{{ xymon_plug_libs_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN libs whitelist
   template:
     src: 'etc/xymon/libs.local.yaml.j2'
@@ -121,42 +101,7 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
-# Manage megaraid plugin [[[1
-- name: PLUGIN megaraid
-  template:
-    src: '{{ xymon_cli__plug_megaraid_tpl }}'
-    dest: '{{ xymon_cli__plug_megaraid_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
-# Manage mq plugin [[[1
-- name: PLUGIN mq
-  template:
-    src: '{{ xymon_plug_mq_tpl }}'
-    dest: '{{ xymon_plug_mq_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 # Manage net plugin [[[1
-- name: PLUGIN net
-  template:
-    src: '{{ xymon_cli__plug_net_tpl }}'
-    dest: '{{ xymon_cli__plug_net_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN net config template
   template:
     src: '{{ xymon_cli__plug_net_conf_tpl }}'
@@ -168,30 +113,7 @@
          xymon_plug_manage|bool)
   notify: restart xymon-client service
 
-# Manage netstats plugin [[[1
-- name: PLUGIN netstats config
-  template:
-    src: '{{ xymon_cli__plug_netstats_tpl }}'
-    dest: '{{ xymon_cli__plug_netstats_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 # Manage sge plugin [[[1
-- name: PLUGIN sge config
-  template:
-    src: '{{ xymon_cli__plug_sge_tpl }}'
-    dest: '{{ xymon_cli__plug_sge_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN sge script file from template
   template:
     src: '{{ xymon_cli__plug_sge_script_tpl }}'
@@ -217,17 +139,6 @@
   notify: restart xymon-client service
 
 # Manage smartoverall plugin [[[1
-- name: PLUGIN smartoverall config
-  template:
-    src: '{{ xymon_cli__plug_smartoverall_tpl }}'
-    dest: '{{ xymon_cli__plug_smartoverall_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN smartoverall script file from template
   template:
     src: '{{ xymon_cli__plug_smartoverall_script_tpl }}'
@@ -253,17 +164,6 @@
   notify: restart xymon-client service
 
 # Manage smart plugin [[[1
-- name: PLUGIN smart config
-  template:
-    src: '{{ xymon_cli__plug_smart_tpl }}'
-    dest: '{{ xymon_cli__plug_smart_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN smart script file from template
   template:
     src: '{{ xymon_cli__plug_smart_script_tpl }}'
@@ -288,30 +188,7 @@
          xymon_cli__plug_smart_script_url|length > 0 )
   notify: restart xymon-client service
 
-# Manage temp plugin [[[1
-- name: PLUGIN temp
-  template:
-    src: '{{ xymon_cli__plug_temp_tpl }}'
-    dest: '{{ xymon_cli__plug_temp_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 # Manage zfs plugin [[[1
-- name: PLUGIN zfs config file
-  template:
-    src: '{{ xymon_cli__plug_zfs_tpl }}'
-    dest: '{{ xymon_cli__plug_zfs_path }}'
-    owner: root
-    group: root
-    mode: 0644
-  when: (xymon_cli_manage|bool and
-         xymon_plug_manage|bool)
-  notify: restart xymon-client service
-
 - name: PLUGIN zfs script file
   template:
     src: '{{ xymon_cli__plug_zfs_script_tpl }}'

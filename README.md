@@ -28,9 +28,11 @@ Manage Xymon (client) installation and configuration.
 * **xymon_cli_service_enabled** : Set `xymon-client` service available at startup [default : `true`].
 * **xymon_srv_list** : The list of Xymon servers (you must give an hostname, IP,… reachable from any clients) [defaults : `monitoring.{{ ansible_domain }}`].
 * **xymon_plug_manage** : If this role should manage plugins configuration [default : `true`].
-* **xymon_cli__plug_combined_packages** : Combine packages vars of all enabled plugins defined below.
 
 ### Plugins Variables
+
+* **xymon_cli__plug_combined_packages** : Combine packages vars of all enabled plugins defined below.
+* **xymon_cli__plug_combined_clientlaunch** : Combine clientlaunch files for all plugins.
 
 #### APT
 

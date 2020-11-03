@@ -70,6 +70,7 @@ xymon_cli__plug_ipmi_package: ['ipmitool']
 xymon_cli__plug_ipmi_path: '/etc/xymon/clientlaunch.d/ipmi.cfg'
 xymon_cli__plug_ipmi_tpl: 'etc/xymon/clientlaunch.d/ipmi.cfg.j2'
 xymon_cli__plug_ipmi_interval: '5m'
+
 ## ]]]
 ## Plugin libs [[[
 xymon_plug_libs_state: true
@@ -104,7 +105,7 @@ xymon_cli__plug_megaraid_package: [ 'libipc-run-perl' ]
 xymon_cli__plug_megaraid_path: '/etc/xymon/clientlaunch.d/megaraid.cfg'
 xymon_cli__plug_megaraid_tpl: 'etc/xymon/clientlaunch.d/megaraid.cfg.j2'
 xymon_cli__plug_megaraid_interval: '5m'
-#
+
 ## ]]]
 ## Plugin mq [[[
 xymon_plug_mq_state: true
@@ -112,6 +113,7 @@ xymon_plug_mq_package: ['libtimedate-perl']
 xymon_plug_mq_path: '/etc/xymon/clientlaunch.d/mq.cfg'
 xymon_plug_mq_tpl: 'etc/xymon/clientlaunch.d/mq.cfg.j2'
 xymon_plug_mq_interval: '5m'
+
 ## ]]]
 ## Plugin net [[[
 xymon_cli__plug_net_state: false
@@ -121,7 +123,7 @@ xymon_cli__plug_net_tpl: 'etc/xymon/clientlaunch.d/net.cfg.j2'
 xymon_cli__plug_net_interval: '5m'
 xymon_cli__plug_net_conf_path: '/etc/xymon/net.yaml'
 xymon_cli__plug_net_conf_tpl: 'etc/xymon/net.yaml.j2'
-#
+
 ## ]]]
 ## Plugin netstats [[[
 xymon_cli__plug_netstats_state: false
@@ -201,5 +203,49 @@ xymon_cli__plug_combined_packages: '{{ ((xymon_plug_apt_package               if
                                       + (xymon_cli__plug_temp_package         if xymon_cli__plug_temp_state|bool else []))
                                       | sort | unique }}'
                                                                    # ]]]
+# .. envvar:: xymon_cli__plug_combined_clientlaunch [[[
+#
+# Combine clientlaunch files for all plugins
+#
+xymon_cli__plug_combined_clientlaunch:
+  - name: apt
+    path: '{{ xymon_plug_apt_path }}'
+    template: '{{ xymon_plug_apt_tpl }}'
+  - name: ipmi
+    path: '{{ xymon_cli__plug_ipmi_path }}'
+    template: '{{ xymon_cli__plug_ipmi_tpl }}'
+  - name: libs
+    path: '{{ xymon_plug_libs_path }}'
+    template: '{{ xymon_plug_libs_tpl }}'
+  - name: megaraid
+    path: '{{ xymon_cli__plug_megaraid_path }}'
+    template: '{{ xymon_cli__plug_megaraid_tpl }}'
+  - name: mq
+    path: '{{ xymon_plug_mq_path }}'
+    template: '{{ xymon_plug_mq_tpl }}'
+  - name: net
+    path: '{{ xymon_cli__plug_net_path }}'
+    template: '{{ xymon_cli__plug_net_tpl }}'
+  - name: netstats
+    path: '{{ xymon_cli__plug_netstats_path }}'
+    template: '{{ xymon_cli__plug_netstats_tpl }}'
+  - name: sge
+    path: '{{ xymon_cli__plug_sge_path }}'
+    template: '{{ xymon_cli__plug_sge_tpl }}'
+  - name: smartoverall
+    path: '{{ xymon_cli__plug_smartoverall_path }}'
+    template: '{{ xymon_cli__plug_smartoverall_tpl }}'
+  - name: smart
+    path: '{{ xymon_cli__plug_smart_path }}'
+    template: '{{ xymon_cli__plug_smart_tpl }}'
+  - name: temp
+    path: '{{ xymon_cli__plug_temp_path }}'
+    template: '{{ xymon_cli__plug_temp_tpl }}'
+  - name: zfs
+    path: '{{ xymon_cli__plug_zfs_path }}'
+    template: '{{ xymon_cli__plug_temp_tpl }}'
+
+                                                                   # ]]]
+
 # ]]]
                                                                    # ]]]

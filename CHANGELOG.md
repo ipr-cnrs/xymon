@@ -1,4 +1,4 @@
-## v1.5.2
+## v2.X.Y
 
 ### Enhancements
 * Add megaraid probe management.
@@ -9,6 +9,7 @@
   between `net` and `netstats` probes. `netstats` only
   reads /proc/net/{netstat,snmp} files.
 * Combine packages vars of all enabled plugins to install them in _one_ task.
+* Combine clientlaunch files for plugins to manage them in _one_ dedicated task.
 
 ## v1.5.1
 
