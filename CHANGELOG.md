@@ -14,6 +14,7 @@
 * Combine clientlaunch files for plugins to manage them in _one_ dedicated task.
 * Split base package list in order to allow installation of `xymon-client` without
   "hobbit-plugins".
+* Add extra var for Nvidia support with temp plugin.
 
 ## v1.5.1
 

@@ -191,11 +191,11 @@ Variables for the temp plugin from hobbit-plugins. Simple temperature monitor.
 ##### Nvidia support
 
 The temp plugin can also checks NVidia GPU temperature. In order to get those
-informations, you need to install `nvidia-smi` package by your own or override
-**xymon_cli__plug_temp_package** var :
+informations, you need to install `nvidia-smi` package by your own or define
+**xymon_cli__plug_temp_extra_package** var :
 
 ``` yml
-xymon_cli__plug_temp_package: [ 'libfile-which-perl', 'libyaml-tiny-perl', 'hddtemp', 'smartmontools', 'libxml-twig-perl', 'nvidia-smi' ]
+xymon_cli__plug_temp_extra_package: [ 'nvidia-smi' ]
 ```
 
 #### ZFS

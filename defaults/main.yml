@@ -173,6 +173,9 @@ xymon_cli__plug_smart_interval: '10m'
 ### Enable by default on hardware host
 xymon_cli__plug_temp_state: False
 xymon_cli__plug_temp_package: [ 'libfile-which-perl', 'libyaml-tiny-perl', 'hddtemp', 'smartmontools', 'libxml-twig-perl' ]
+# Define xymon_cli__plug_temp_extra_package in your own inventory.
+# See Nvidia support in README for more informations
+#xymon_cli__plug_temp_extra_package: [ 'nvidia-smi' ]
 xymon_cli__plug_temp_path: '/etc/xymon/clientlaunch.d/temp.cfg'
 xymon_cli__plug_temp_tpl: 'etc/xymon/clientlaunch.d/temp.cfg.j2'
 xymon_cli__plug_temp_interval: '5m'
@@ -192,16 +195,17 @@ xymon_cli__plug_zfs_interval: '5m'
 #
 # Combine all packages vars related to plugins (only enabled plugins).
 #
-xymon_cli__plug_combined_packages: '{{ ((xymon_cli__plug_pkg_list|d([])       if xymon_cli__plug_manage|bool else [])
-                                      + (xymon_cli__plug_apt_package          if xymon_cli__plug_apt_state|bool else [])
-                                      + (xymon_cli__plug_ipmi_package         if xymon_cli__plug_ipmi_state|bool else [])
-                                      + (xymon_cli__plug_libs_package         if xymon_cli__plug_libs_state|bool else [])
-                                      + (xymon_cli__plug_megaraid_package     if xymon_cli__plug_megaraid_state|bool else [])
-                                      + (xymon_cli__plug_mq_package           if xymon_cli__plug_mq_state|bool else [])
-                                      + (xymon_cli__plug_net_package          if xymon_cli__plug_net_state|bool else [])
-                                      + (xymon_cli__plug_smartoverall_package if xymon_cli__plug_smartoverall_state|bool else [])
-                                      + (xymon_cli__plug_smart_package        if xymon_cli__plug_smart_state|bool else [])
-                                      + (xymon_cli__plug_temp_package         if xymon_cli__plug_temp_state|bool else []))
+xymon_cli__plug_combined_packages: '{{ ((xymon_cli__plug_pkg_list|d([])            if xymon_cli__plug_manage|bool else [])
+                                      + (xymon_cli__plug_apt_package               if xymon_cli__plug_apt_state|bool else [])
+                                      + (xymon_cli__plug_ipmi_package              if xymon_cli__plug_ipmi_state|bool else [])
+                                      + (xymon_cli__plug_libs_package              if xymon_cli__plug_libs_state|bool else [])
+                                      + (xymon_cli__plug_megaraid_package          if xymon_cli__plug_megaraid_state|bool else [])
+                                      + (xymon_cli__plug_mq_package                if xymon_cli__plug_mq_state|bool else [])
+                                      + (xymon_cli__plug_net_package               if xymon_cli__plug_net_state|bool else [])
+                                      + (xymon_cli__plug_smartoverall_package      if xymon_cli__plug_smartoverall_state|bool else [])
+                                      + (xymon_cli__plug_smart_package             if xymon_cli__plug_smart_state|bool else [])
+                                      + (xymon_cli__plug_temp_package              if xymon_cli__plug_temp_state|bool else [])
+                                      + (xymon_cli__plug_temp_extra_package|d([])  if xymon_cli__plug_temp_state|bool else []))
                                       | sort | unique }}'
                                                                    # ]]]
 # .. envvar:: xymon_cli__plug_combined_clientlaunch [[[
