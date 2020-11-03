@@ -190,9 +190,10 @@ xymon_cli__plug_zfs_interval: '5m'
 
 # .. envvar:: xymon_cli__plug_combined_packages [[[
 #
-# Combined packages vars of all enabled plugins.
+# Combine all packages vars related to plugins (only enabled plugins).
 #
-xymon_cli__plug_combined_packages: '{{ ((xymon_cli__plug_apt_package          if xymon_cli__plug_apt_state|bool else [])
+xymon_cli__plug_combined_packages: '{{ ((xymon_cli__plug_pkg_list|d([])       if xymon_cli__plug_manage|bool else [])
+                                      + (xymon_cli__plug_apt_package          if xymon_cli__plug_apt_state|bool else [])
                                       + (xymon_cli__plug_ipmi_package         if xymon_cli__plug_ipmi_state|bool else [])
                                       + (xymon_cli__plug_libs_package         if xymon_cli__plug_libs_state|bool else [])
                                       + (xymon_cli__plug_megaraid_package     if xymon_cli__plug_megaraid_state|bool else [])

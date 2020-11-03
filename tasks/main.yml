@@ -50,8 +50,8 @@
   when: (xymon_cli__manage|bool and
          xymon_cli__service_manage|bool)
 
-# Manage all plugins's dependencies [[[1
-- name: PLUGINS dependencies
+# Manage all plugins's packages [[[1
+- name: PLUGINS package and dependencies
   package:
     name: '{{ item }}'
     state: 'present'

@@ -12,6 +12,8 @@
   reads /proc/net/{netstat,snmp} files.
 * Combine packages vars of all enabled plugins to install them in _one_ task.
 * Combine clientlaunch files for plugins to manage them in _one_ dedicated task.
+* Split base package list in order to allow installation of `xymon-client` without
+  "hobbit-plugins".
 
 ## v1.5.1
 

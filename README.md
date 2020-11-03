@@ -2,7 +2,7 @@
 
 1. [Overview](#overview)
 2. [Role Variables](#role-variables)
-     * [Plugins Specific Variables](#plugins-specific-variables)
+     * [Plugins Specific Variables](#plugins-variables)
      * [OS Specific Variables](#os-specific-variables)
 3. [Example Playbook](#example-playbook)
 4. [Configuration](#configuration)
@@ -31,7 +31,7 @@ Manage Xymon (client) installation and configuration.
 
 ### Plugins Variables
 
-* **xymon_cli__plug_combined_packages** : Combine packages vars of all enabled plugins defined below.
+* **xymon_cli__plug_combined_packages** : Combine all packages vars related to plugins (only enabled plugins).
 * **xymon_cli__plug_combined_clientlaunch** : Combine clientlaunch files for all plugins.
 
 #### APT
@@ -180,7 +180,7 @@ one's recommended by the vendor and check a recent (<24h) test was done.
 
 #### Temp
 
-Variables for the Mq plugin from hobbit-plugins. Simple temperature monitor.
+Variables for the temp plugin from hobbit-plugins. Simple temperature monitor.
 
 * **xymon_cli__plug_temp_state** : The state of plugin `temp` [default : `False`].
 * **xymon_cli__plug_temp_package** : The packages to install to provide `temp` plugin [default : `[ 'libfile-which-perl', 'libyaml-tiny-perl', 'hddtemp', 'smartmontools', 'libxml-twig-perl' ]`].
@@ -190,7 +190,7 @@ Variables for the Mq plugin from hobbit-plugins. Simple temperature monitor.
 
 ##### Nvidia support
 
-The temp can also checks NVidia GPU temperature. In order to get those
+The temp plugin can also checks NVidia GPU temperature. In order to get those
 informations, you need to install `nvidia-smi` package by your own or override
 **xymon_cli__plug_temp_package** var :
 
@@ -227,6 +227,7 @@ xymon_cli__plug_temp_state: '{{ True
 Please see default value by Operating System file in [vars][vars directory] directory.
 
 * **xymon_cli__pkg_list** : The list of packages to install to provide `xymon-client`.
+* **xymon_cli__plug_pkg_list** : The list of packages to install to provide extra plugins to Xymon client.
 
 ## Example Playbook
 
