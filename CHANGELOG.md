@@ -1,4 +1,4 @@
-## v2.X.Y
+## v2.0.0
 
 ### Enhancements
 * All vars now starts with "xymon_cli__" for more readability.
