@@ -5,6 +5,7 @@
   No backward compatibility with old variable naming! Update your configuration!
 * Add megaraid probe management.
 * Add net probe management.
+* Add ntpq probe management.
 * Add configuration file for `net` script (/etc/xymon/net.yaml) and
   possibility to set your own template. Check [net documentation](net plugin doc).
 * Remove unecessary netstats dependencies (due to a previous misunderstanding)

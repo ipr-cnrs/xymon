@@ -132,6 +132,13 @@ xymon_cli__plug_netstats_tpl: 'etc/xymon/clientlaunch.d/netstats.cfg.j2'
 xymon_cli__plug_netstats_interval: '5m'
 
 ## ]]]
+## Plugin ntpq [[[
+xymon_cli__plug_ntpq_state: true
+xymon_cli__plug_ntpq_path: '/etc/xymon/clientlaunch.d/ntpq.cfg'
+xymon_cli__plug_ntpq_tpl: 'etc/xymon/clientlaunch.d/ntpq.cfg.j2'
+xymon_cli__plug_ntpq_interval: '5m'
+
+## ]]]
 ## Plugin SGE [[[
 ### From https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
 xymon_cli__plug_sge_state: False
@@ -234,6 +241,9 @@ xymon_cli__plug_combined_clientlaunch:
   - name: netstats
     path: '{{ xymon_cli__plug_netstats_path }}'
     template: '{{ xymon_cli__plug_netstats_tpl }}'
+  - name: ntpq
+    path: '{{ xymon_cli__plug_ntpq_path }}'
+    template: '{{ xymon_cli__plug_ntpq_tpl }}'
   - name: sge
     path: '{{ xymon_cli__plug_sge_path }}'
     template: '{{ xymon_cli__plug_sge_tpl }}'

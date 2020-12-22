@@ -124,13 +124,23 @@ specific to your host(s) network configuration and override
 
 #### Netstats
 
-Variables for the Net/Netstats plugin from hobbit-plugins. The plugin check
+Variables for the Netstats plugin from hobbit-plugins. The plugin check
 network interface states.
 
 * **xymon_cli__plug_netstats_state** : The state of plugin `netstats` [default : `false`].
 * **xymon_cli__plug_netstats_path** : Configuration file for the `netstats` plugin [default : `/etc/xymon/clientlaunch.d/netstats.cfg`].
 * **xymon_cli__plug_netstats_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/netstats.cfg.j2`].
 * **xymon_cli__plug_netstats_interval** : Time between each run of the `netstats` plugin [default : `5m`].
+
+#### Ntpq
+
+Variables for the Ntpq plugin from hobbit-plugins. The plugin check
+the ntpd daemon synchronization status (needs manual ntp installation).
+
+* **xymon_cli__plug_ntpq_state** : The state of plugin `ntpq` [default : `false`].
+* **xymon_cli__plug_ntpq_path** : Configuration file for the `ntpq` plugin [default : `/etc/xymon/clientlaunch.d/ntpq.cfg`].
+* **xymon_cli__plug_ntpq_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/ntpq.cfg.j2`].
+* **xymon_cli__plug_ntpq_interval** : Time between each run of the `ntpq` plugin [default : `5m`].
 
 #### SGE
 
