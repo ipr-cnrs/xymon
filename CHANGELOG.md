@@ -1,3 +1,9 @@
+## v2.0.1
+
+### Fix
+* Correct the path for ZFS probe.
+
+
 ## v2.0.0
 
 ### Enhancements

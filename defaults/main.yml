@@ -258,7 +258,7 @@ xymon_cli__plug_combined_clientlaunch:
     template: '{{ xymon_cli__plug_temp_tpl }}'
   - name: zfs
     path: '{{ xymon_cli__plug_zfs_path }}'
-    template: '{{ xymon_cli__plug_temp_tpl }}'
+    template: '{{ xymon_cli__plug_zfs_tpl }}'
 
                                                                    # ]]]
 
