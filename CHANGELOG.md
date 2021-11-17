@@ -1,8 +1,12 @@
+## v2.0.2
+
+### Fix
+* Prefix **net** probe command with **sudo** (required for some interfaces).
+
 ## v2.0.1
 
 ### Fix
 * Correct the path for ZFS probe.
-
 
 ## v2.0.0
 
