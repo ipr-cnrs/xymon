@@ -1,3 +1,8 @@
+## vX.Y.Z
+
+### Enhancements
+* Works with Debian Bullseye
+
 ## v2.0.2
 
 ### Fix
