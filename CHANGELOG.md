@@ -1,4 +1,7 @@
-## vX.Y.Z
+## v2.0.3
+
+### Fix
+* Use flatten to manage packages list.
 
 ### Enhancements
 * Works with Debian Bullseye

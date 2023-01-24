@@ -13,10 +13,8 @@
 # Manage required client packages [[[1
 - name: client package
   package:
-    name: '{{ item }}'
+    name: '{{ xymon_cli__pkg_list | flatten }}'
     state: '{{ xymon_cli__pkg_state }}'
-  with_items:
-    - '{{ xymon_cli__pkg_list | to_nice_json }}'
   register: cli_result
   until: cli_result is success
   when: xymon_cli__manage|bool
@@ -53,10 +51,8 @@
 # Manage all plugins's packages [[[1
 - name: PLUGINS package and dependencies
   package:
-    name: '{{ item }}'
+    name: '{{ xymon_cli__plug_combined_packages | flatten }}'
     state: 'present'
-  with_items:
-    - '{{ xymon_cli__plug_combined_packages | to_nice_json }}'
   when: (xymon_cli__manage|bool and
          xymon_cli__plug_manage|bool)
   register: combined_packages_plug_result
