@@ -2,6 +2,7 @@
 
 ### Fix
 * Use flatten to manage packages list.
+* Prefix module with "ansible.builtin.".
 
 ### Enhancements
 * Works with Debian Bullseye

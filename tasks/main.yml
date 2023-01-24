@@ -4,7 +4,7 @@
 # tasks file for ipr.ansible.xymon
 
 - name: Load specific OS vars for xymon
-  include_vars: "{{ item }}"
+  ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution|lower }}-{{ ansible_distribution_version }}.yml"
     - "{{ ansible_distribution|lower }}.yml"
@@ -12,7 +12,7 @@
 
 # Manage required client packages [[[1
 - name: client package
-  package:
+  ansible.builtin.package:
     name: '{{ xymon_cli__pkg_list | flatten }}'
     state: '{{ xymon_cli__pkg_state }}'
   register: cli_result
@@ -21,7 +21,7 @@
 
 # Manage client configuration [[[1
 - name: CONFIG xymon-client service
-  template:
+  ansible.builtin.template:
     src: '{{ xymon_cli__default_conf_tpl }}'
     dest: '{{ xymon_cli__default_conf_path }}'
     owner: root
@@ -32,7 +32,7 @@
   notify: restart xymon-client service
 
 - name: CONFIG xymon user's groups
-  user:
+  ansible.builtin.user:
     name: xymon
     groups: '{{ xymon_cli__user_groups }}'
     append: true
@@ -41,7 +41,7 @@
 
 # Manage service [[[1
 - name: SERVICE manage '{{ xymon_cli__service_name }}'
-  service:
+  ansible.builtin.service:
     name: '{{ xymon_cli__service_name }}'
     state: started
     enabled: '{{ xymon_cli__service_enabled }}'
@@ -50,7 +50,7 @@
 
 # Manage all plugins's packages [[[1
 - name: PLUGINS package and dependencies
-  package:
+  ansible.builtin.package:
     name: '{{ xymon_cli__plug_combined_packages | flatten }}'
     state: 'present'
   when: (xymon_cli__manage|bool and
@@ -61,7 +61,7 @@
 
 # Manage plugins clientlaunch files [[[1
 - name: PLUGINS clientlaunch files
-  template:
+  ansible.builtin.template:
     src: '{{ item.template }}'
     dest: '{{ item.path }}'
     owner: root
@@ -75,7 +75,7 @@
 
 # Manage apt plugin [[[1
 - name: PLUGIN apt no_repo_accept whitelist
-  template:
+  ansible.builtin.template:
     src: 'etc/xymon/apt_no_repo_accept.j2'
     dest: '/etc/xymon/apt_no_repo_accept'
     owner: root
@@ -87,7 +87,7 @@
 
 # Manage libs plugin [[[1
 - name: PLUGIN libs whitelist
-  template:
+  ansible.builtin.template:
     src: 'etc/xymon/libs.local.yaml.j2'
     dest: '/etc/xymon/libs.local.yaml'
     owner: root
@@ -99,7 +99,7 @@
 
 # Manage net plugin [[[1
 - name: PLUGIN net config template
-  template:
+  ansible.builtin.template:
     src: '{{ xymon_cli__plug_net_conf_tpl }}'
     dest: '{{ xymon_cli__plug_net_conf_path }}'
     owner: root
@@ -111,7 +111,7 @@
 
 # Manage sge plugin [[[1
 - name: PLUGIN sge script file from template
-  template:
+  ansible.builtin.template:
     src: '{{ xymon_cli__plug_sge_script_tpl }}'
     dest: '{{ xymon_cli__plug_sge_script_path }}'
     owner: root
@@ -123,7 +123,7 @@
   notify: restart xymon-client service
 
 - name: PLUGIN sge script file from URL
-  get_url:
+  ansible.builtin.get_url:
     url:   '{{ xymon_cli__plug_sge_script_url }}'
     dest:  '{{ xymon_cli__plug_sge_script_path }}'
     owner: root
@@ -136,7 +136,7 @@
 
 # Manage smartoverall plugin [[[1
 - name: PLUGIN smartoverall script file from template
-  template:
+  ansible.builtin.template:
     src: '{{ xymon_cli__plug_smartoverall_script_tpl }}'
     dest: '{{ xymon_cli__plug_smartoverall_script_path }}'
     owner: root
@@ -148,7 +148,7 @@
   notify: restart xymon-client service
 
 - name: PLUGIN smartoverall script file from URL
-  get_url:
+  ansible.builtin.get_url:
     url:   '{{ xymon_cli__plug_smartoverall_script_url }}'
     dest:  '{{ xymon_cli__plug_smartoverall_script_path }}'
     owner: root
@@ -161,7 +161,7 @@
 
 # Manage smart plugin [[[1
 - name: PLUGIN smart script file from template
-  template:
+  ansible.builtin.template:
     src: '{{ xymon_cli__plug_smart_script_tpl }}'
     dest: '{{ xymon_cli__plug_smart_script_path }}'
     owner: root
@@ -173,7 +173,7 @@
   notify: restart xymon-client service
 
 - name: PLUGIN smart script file from URL
-  get_url:
+  ansible.builtin.get_url:
     url:   '{{ xymon_cli__plug_smart_script_url }}'
     dest:  '{{ xymon_cli__plug_smart_script_path }}'
     owner: root
@@ -186,7 +186,7 @@
 
 # Manage zfs plugin [[[1
 - name: PLUGIN zfs script file
-  template:
+  ansible.builtin.template:
     src: '{{ xymon_cli__plug_zfs_script_tpl }}'
     dest: '{{ xymon_cli__plug_zfs_script_path }}'
     owner: root
