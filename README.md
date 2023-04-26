@@ -60,6 +60,17 @@ sensors and event log.
 * **xymon_cli__plug_ipmi_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/ipmi.cfg.j2`].
 * **xymon_cli__plug_ipmi_interval** : Time between each run of the `ipmi` plugin [default : `5m`].
 
+#### Kern
+
+Variables for the kern plugin from hobbit-plugins. The plugin check for running
+outdated running kernel and need for reboot.
+
+* **xymon_cli__plug_kern_state** : The state of plugin `kern` [default : `true`].
+* **xymon_cli__plug_kern_package** : The packages to install to provide `kern` plugin [default : `[ 'binutils', 'libfile-slurp-perl', 'libsort-naturally-perl' ]`].
+* **xymon_cli__plug_kern_path** : Configuration file for the `kern` plugin [default : `/etc/xymon/clientlaunch.d/kern.cfg`].
+* **xymon_cli__plug_kern_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/kern.cfg.j2`].
+* **xymon_cli__plug_kern_interval** : Time between each run of the `kern` plugin [default : `5m`].
+
 #### Libs
 
 Variables for the Libs plugin from hobbit-plugins. The plugin check for running
@@ -260,6 +271,7 @@ This role will :
 
 Some plugins and options can be managed with this role :
 * apt : Check state of packages and repositories.
+* kern : Check for outdated running kernel and need for reboot.
 * libs : Check for running processes with upgraded libraries.
 * mq : Check mail queue.
 * zfs : Check ZFS pools status.

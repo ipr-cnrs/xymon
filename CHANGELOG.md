@@ -1,3 +1,8 @@
+## v2.1.0
+
+### Enhancements
+* Add new kern probe management.
+
 ## v2.0.3
 
 ### Fix

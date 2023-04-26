@@ -72,6 +72,14 @@ xymon_cli__plug_ipmi_tpl: 'etc/xymon/clientlaunch.d/ipmi.cfg.j2'
 xymon_cli__plug_ipmi_interval: '5m'
 
 ## ]]]
+## Plugin kern [[[
+xymon_cli__plug_kern_state: true
+xymon_cli__plug_kern_package: [ 'binutils', 'libfile-slurp-perl', 'libsort-naturally-perl' ]
+xymon_cli__plug_kern_path: '/etc/xymon/clientlaunch.d/kern.cfg'
+xymon_cli__plug_kern_tpl: 'etc/xymon/clientlaunch.d/kern.cfg.j2'
+xymon_cli__plug_kern_interval: '5m'
+
+                                                                   # ]]]
 ## Plugin libs [[[
 xymon_cli__plug_libs_state: true
 xymon_cli__plug_libs_package: [ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libfile-slurp-perl', 'libsort-naturally-perl' ]
@@ -205,6 +213,7 @@ xymon_cli__plug_zfs_interval: '5m'
 xymon_cli__plug_combined_packages: '{{ ((xymon_cli__plug_pkg_list|d([])            if xymon_cli__plug_manage|bool else [])
                                       + (xymon_cli__plug_apt_package               if xymon_cli__plug_apt_state|bool else [])
                                       + (xymon_cli__plug_ipmi_package              if xymon_cli__plug_ipmi_state|bool else [])
+                                      + (xymon_cli__plug_kern_package              if xymon_cli__plug_kern_state|bool else [])
                                       + (xymon_cli__plug_libs_package              if xymon_cli__plug_libs_state|bool else [])
                                       + (xymon_cli__plug_megaraid_package          if xymon_cli__plug_megaraid_state|bool else [])
                                       + (xymon_cli__plug_mq_package                if xymon_cli__plug_mq_state|bool else [])
@@ -226,6 +235,9 @@ xymon_cli__plug_combined_clientlaunch:
   - name: ipmi
     path: '{{ xymon_cli__plug_ipmi_path }}'
     template: '{{ xymon_cli__plug_ipmi_tpl }}'
+  - name: kern
+    path: '{{ xymon_cli__plug_kern_path }}'
+    template: '{{ xymon_cli__plug_kern_tpl }}'
   - name: libs
     path: '{{ xymon_cli__plug_libs_path }}'
     template: '{{ xymon_cli__plug_libs_tpl }}'
