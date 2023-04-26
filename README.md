@@ -77,7 +77,7 @@ Variables for the Libs plugin from hobbit-plugins. The plugin check for running
 processes with upgraded libraries.
 
 * **xymon_cli__plug_libs_state** : The state of plugin `libs` [default : `true`].
-* **xymon_cli__plug_libs_package** : The packages to install to provide `libs` plugin [default : `[ 'binutils', 'lsof', 'libyaml-tiny-perl', 'libfile-slurp-perl', 'libsort-naturally-perl' ]`].
+* **xymon_cli__plug_libs_package** : The packages to install to provide `libs` plugin [default : `[ 'lsof', 'sudo', 'libyaml-tiny-perl' ]`].
 * **xymon_cli__plug_libs_path** : Configuration file for the `libs` plugin [default : `/etc/xymon/clientlaunch.d/libs.cfg`].
 * **xymon_cli__plug_libs_tpl** : Template used to generate the previous config file [default : `etc/xymon/clientlaunch.d/libs.cfg.j2`].
 * **xymon_cli__plug_libs_interval** : Time between each run of the `libs` plugin [default : `5m`].

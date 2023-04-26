@@ -2,6 +2,7 @@
 
 ### Enhancements
 * Add new kern probe management.
+* Update dependencies for libs probe after hobbit-plugins 20230301 upgrade
 
 ## v2.0.3
 
