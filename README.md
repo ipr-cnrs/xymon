@@ -204,7 +204,7 @@ one's recommended by the vendor and check a recent (<24h) test was done.
 Variables for the temp plugin from hobbit-plugins. Simple temperature monitor.
 
 * **xymon_cli__plug_temp_state** : The state of plugin `temp` [default : `False`].
-* **xymon_cli__plug_temp_package** : The packages to install to provide `temp` plugin [default : `[ 'libfile-which-perl', 'libyaml-tiny-perl', 'hddtemp', 'smartmontools', 'libxml-twig-perl' ]`].
+* **xymon_cli__plug_temp_package** : The packages to install to provide `temp` plugin [default : `[ 'libfile-which-perl', 'libyaml-tiny-perl', 'smartmontools', 'libxml-twig-perl' ]`].
 * **xymon_cli__plug_temp_path** : Configuration file for the `temp` plugin [default : `'/etc/xymon/clientlaunch.d/temp.cfg'`].
 * **xymon_cli__plug_temp_tpl** : Template used to generate the previous config file [default : `'etc/xymon/clientlaunch.d/temp.cfg.j2'`].
 * **xymon_cli__plug_temp_interval** : Time between each run of the `temp` plugin [default : `'5m'`]

@@ -187,7 +187,7 @@ xymon_cli__plug_smart_interval: '10m'
 ## Plugin temp [[[
 ### Enable by default on hardware host
 xymon_cli__plug_temp_state: False
-xymon_cli__plug_temp_package: [ 'libfile-which-perl', 'libyaml-tiny-perl', 'hddtemp', 'smartmontools', 'libxml-twig-perl' ]
+xymon_cli__plug_temp_package: [ 'libfile-which-perl', 'libyaml-tiny-perl', 'smartmontools', 'libxml-twig-perl' ]
 # Define xymon_cli__plug_temp_extra_package in your own inventory.
 # See Nvidia support in README for more informations
 #xymon_cli__plug_temp_extra_package: [ 'nvidia-smi' ]

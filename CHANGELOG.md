@@ -4,6 +4,10 @@
 * Add new kern probe management.
 * Update dependencies for libs probe after hobbit-plugins 20230301 upgrade
 
+### Removed
+* Remove hddtemp dependency. Package is no longer available in Debian Bookworm
+  and replaced by **drivetemp** kernel module (working since Debian Bullseye).
+
 ## v2.0.3
 
 ### Fix
