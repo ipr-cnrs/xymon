@@ -56,7 +56,7 @@
 
 ### Enhancements
 * Possibility to define URLs in order to get the latest version of SMART's scripts.
-* Add sge plugin from https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
+* Add sge plugin from https://git.ipr.univ-rennes.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
 
 ## v1.4.0
 
@@ -64,7 +64,7 @@
 * Add variables to manage plugin interval.
 * Add netstats plugin managment.
 * Add smart plugin from https://github.com/skazi0/xymon-plugins
-* Add smartoverall plugin from https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
+* Add smartoverall plugin from https://git.ipr.univ-rennes.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
 * Add description for plugins.
 
 ### Fix

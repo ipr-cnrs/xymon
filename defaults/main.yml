@@ -148,7 +148,7 @@ xymon_cli__plug_ntpq_interval: '5m'
 
 ## ]]]
 ## Plugin SGE [[[
-### From https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
+### From https://git.ipr.univ-rennes.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
 xymon_cli__plug_sge_state: False
 xymon_cli__plug_sge_script_path: '/usr/lib/xymon/client/ext/sge.sh'
 xymon_cli__plug_sge_script_tpl: 'usr/lib/xymon/client/ext/sge.sh.j2'
@@ -159,7 +159,7 @@ xymon_cli__plug_sge_interval: '5m'
 
                                                                    # ]]]
 ## Plugin smartoverall [[[
-### From https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
+### From https://git.ipr.univ-rennes.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
 ### And based on https://www.xymon.com/xymon-cgi/viewconf.sh?smart
 ### Mostly for disks unknown from smartmontools's database
 xymon_cli__plug_smartoverall_state: False

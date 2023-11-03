@@ -296,7 +296,7 @@ Jérémy Gardais
 
 [vars directory]: ./vars
 [gogs to github hook]: https://stackoverflow.com/a/21998477
-[xymon source]: https://git.ipr.univ-rennes1.fr/cellinfo/ansible.xymon
+[xymon source]: https://git.ipr.univ-rennes.fr/cellinfo/ansible.xymon
 [xymon github]: https://github.com/ipr-cnrs/xymon
 [wtfpl website]: http://www.wtfpl.net/about/
 [ipr website]: https://ipr.univ-rennes1.fr/
@@ -304,7 +304,7 @@ Jérémy Gardais
 [url hwraid]: https://hwraid.le-vert.net/wiki/DebianPackages
 [megaraid plugin doc]: https://salsa.debian.org/debian/hobbit-plugins#megaraid-check-state-of-lsi-megaraid-sas-controllers
 [net plugin doc]: https://salsa.debian.org/debian/hobbit-plugins#net-check-network-interface-states
-[sge plugin source]: https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
-[smartoverall plugin source]: https://git.ipr.univ-rennes1.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
+[sge plugin source]: https://git.ipr.univ-rennes.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/sge.sh
+[smartoverall plugin source]: https://git.ipr.univ-rennes.fr/cellinfo/scripts/src/master/xymon/plugins/client/ext/smartoverall
 [smart plugin source]: https://github.com/skazi0/xymon-plugins
 [zfs plugin source]: https://wiki.xymonton.org/doku.php/monitors:bb-zfs
