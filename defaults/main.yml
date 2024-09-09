@@ -90,13 +90,19 @@ xymon_cli__plug_libs_interval: '5m'
 xymon_cli__plug_libs_default_whitelist:
   /lib/systemd/systemd:
     - '.*'
-  /usr/lib/x86_64-linux-gnu/sssd/sssd_be:
+  /usr/libexec/sssd/sssd_autofs:
     - '.*'
-  /usr/lib/x86_64-linux-gnu/sssd/sssd_autofs:
+  /usr/libexec/sssd/sssd_be:
     - '.*'
-  /usr/lib/x86_64-linux-gnu/sssd/sssd_nss:
+  /usr/libexec/sssd/sssd_nss:
     - '.*'
-  /usr/lib/x86_64-linux-gnu/sssd/sssd_pam:
+  /usr/libexec/sssd/sssd_pac:
+    - '.*'
+  /usr/libexec/sssd/sssd_pam:
+    - '.*'
+  /usr/libexec/sssd/sssd_ssh:
+    - '.*'
+  /usr/libexec/sssd/sssd_sudo:
     - '.*'
   /usr/sbin/sssd:
     - '.*'

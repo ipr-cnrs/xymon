@@ -2,6 +2,7 @@
 
 ### Enhancements
 * Use **comment** filter for ansible_managed, to allow multi-lines.
+* Update SSSD path for libs white list.
 
 ## v2.1.0
 
