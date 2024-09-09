@@ -1,3 +1,8 @@
+## v2.2.0
+
+### Enhancements
+* Use **comment** filter for ansible_managed, to allow multi-lines.
+
 ## v2.1.0
 
 ### Enhancements

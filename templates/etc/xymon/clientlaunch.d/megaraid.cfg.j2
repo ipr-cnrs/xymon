@@ -1,6 +1,6 @@
 # Requires megaclisas-status package from https://hwraid.le-vert.net/wiki/DebianPackages
 [megaraid]
-	# {{ ansible_managed }}
+	# {{ ansible_managed | comment }}
 	## From ipr-cnrs.xymon role
 	{{ '#DISABLED' if xymon_cli__plug_megaraid_state else 'DISABLED' }}
 	ENVFILE /etc/xymon/xymonclient.cfg
