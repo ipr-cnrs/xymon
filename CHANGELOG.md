@@ -1,3 +1,10 @@
+## v2.3.0
+
+### Enhancements
+* Add variable/template to fix **kern**'s probe related message on Ubuntu
+  (`Can't check kernel version!`)
+    * See : https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725/comments/35
+
 ## v2.2.0
 
 ### Enhancements

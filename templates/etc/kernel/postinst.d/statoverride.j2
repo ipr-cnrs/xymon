@@ -1,0 +1,18 @@
+#!/bin/sh
+
+{# Use | comment to manage multilines #}
+# {{ ansible_managed | comment }}
+# Ansible template : {{ template_path }}
+#
+# Allow to fix the warning :
+#   "Kernel image /boot/vmlinuz… unreadable. Can't check kernel version!"
+
+# https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725
+# See comment #34 - https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725/comments/34
+
+set -e
+version="$1"
+if [ -z "$version" ]; then
+	exit 0
+fi
+exec dpkg-statoverride --force-statoverride-add --update --add root root 0644 "/boot/vmlinuz-${version}"
