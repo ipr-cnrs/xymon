@@ -79,6 +79,13 @@ xymon_cli__plug_kern_path: '/etc/xymon/clientlaunch.d/kern.cfg'
 xymon_cli__plug_kern_tpl: 'etc/xymon/clientlaunch.d/kern.cfg.j2'
 xymon_cli__plug_kern_interval: '5m'
 
+### Related to "Ubuntu - Can't check kernel version" warning message
+### See : https://bugs.launchpad.net/ubuntu/+source/linux/+bug/759725/comments/35
+xymon_cli__plug_kern_fix: '{{ True if (ansible_distribution == "Ubuntu")
+                                   else False }}'
+xymon_cli__plug_kern_fix_path: '/etc/kernel/postinst.d/statoverride'
+xymon_cli__plug_kern_fix_tpl: 'etc/kernel/postinst.d/statoverride.j2'
+
                                                                    # ]]]
 ## Plugin libs [[[
 xymon_cli__plug_libs_state: true
