@@ -139,6 +139,9 @@
   ansible.builtin.get_url:
     url:   '{{ xymon_cli__plug_sge_script_url }}'
     dest:  '{{ xymon_cli__plug_sge_script_path }}'
+    headers:
+      Content-Type: application/json
+      Authorization: 'Bearer {{ xymon_cli__plug_sge_script_pat }}'
     owner: root
     group: xymon
     mode:  0755
@@ -164,6 +167,9 @@
   ansible.builtin.get_url:
     url:   '{{ xymon_cli__plug_smartoverall_script_url }}'
     dest:  '{{ xymon_cli__plug_smartoverall_script_path }}'
+    headers:
+      Content-Type: application/json
+      Authorization: 'Bearer {{ xymon_cli__plug_smartoverall_script_pat }}'
     owner: root
     group: xymon
     mode:  0755
@@ -189,6 +195,9 @@
   ansible.builtin.get_url:
     url:   '{{ xymon_cli__plug_smart_script_url }}'
     dest:  '{{ xymon_cli__plug_smart_script_path }}'
+    headers:
+      Content-Type: application/json
+      Authorization: 'Bearer {{ xymon_cli__plug_smart_script_pat }}'
     owner: root
     group: xymon
     mode:  0755

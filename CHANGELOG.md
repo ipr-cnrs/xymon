@@ -1,3 +1,9 @@
+## v2.3.1
+
+### Enhancements
+* Added support for the urls with authentication by adding personal access token variables. This feature is available for the resources `plug_sge_script`, `plug_smartoverall_script` and `plug_smart_script`. work related to [https://bugzilla.ipr.univ-rennes.fr/show_bug.cgi?id=4078]
+
+
 ## v2.3.0
 
 ### Enhancements
